@@ -20,6 +20,12 @@ AI:   [回答...]
 3. RAG 效果量化评估（RAGAS）
 当前靠人工抽检判断回答质量。可以引入 RAGAS 框架做自动化评估：
 
+python run_eval.py                          # 全量评估
+python run_eval.py --metrics faithfulness   # 单指标，省 API 费用
+python run_eval.py --verbose                # 查看每题明细
+python run_eval.py --output result.json     # 导出 JSON
+
+
 
 4. Agent 能力扩展
 当前 Agent 只有检索能力，可以扩展：
@@ -41,3 +47,145 @@ PDF → Unstructured.io 解析
    ├── 表格 → 结构化提取 → 存入 SQLite
    └── 图表 → OCR/多模态模型描述 → 向量化
 用户问"紫金矿业 Q1 营收多少"，不再靠碰运气匹配文本，而是直接从结构化表格里精准取数。
+
+
+
+
+
+
+
+
+=========================================================
+
+以下是完整的 RAG 实现步骤。
+
+RAG 整体架构
+
+用户提问 → Agent 调用工具 → RagSummarizeService.summarize()
+                              ├── 1. query_rewriter.rewrite()      查询改写
+                              ├── 2. retrieve_docs()               多路检索
+                              │       └── _retrieve() × N 个子查询
+                              │           ├── hybrid_search()       混合检索
+                              │           └── reranker.rerank()     重排序
+                              ├── 3. context_assembler.assemble()  上下文组装
+                              └── 4. chain.invoke()                LLM 总结
+Phase 0：知识库构建（离线） — vector_store.py
+
+data/*.txt, data/*.pdf
+  │
+  ├── 1. 扫描文件 (listdir_with_allowed_type)
+  ├── 2. MD5 去重：已加载过的文件跳过
+  ├── 3. 文档加载：txt_loader() / pdf_loader()
+  ├── 4. 注入来源元数据 (source: 文件名)
+  ├── 5. RecursiveCharacterTextSplitter 分片
+  │      chunk_size=200, overlap=20
+  │      分隔符: \n\n → 。→ . → ? → ？→ ! → 空格
+  ├── 6. DashScopeEmbeddings (text-embedding-v4) 向量化
+  ├── 7. 存入 ChromaDB
+  └── 8. 重建 BM25 索引
+关键配置（chroma.yaml）：
+
+
+
+参数	值	作用
+chunk_size	200	中文短分片，避免噪声
+chunk_overlap	20	防止关键信息被切断
+k	3	默认返回 top-3
+Phase 1：查询改写 — query_rewriter.py
+解决问题：用户输入是口语化的，不适合直接做向量检索。
+
+
+用户: "紫金矿业最近涨得怎么样"
+         │
+         ▼
+  QueryRewriter.rewrite()
+  提示词模板 (query_rewrite.txt):
+    - 口语→专业术语 ("涨价"→"价格上涨")
+    - 补全时间信息 ("最新"→"2025/2026")
+    - 拆分复合问题为 2-3 个独立检索词
+    - 股票问题增加行业/产业链维度
+         │
+         ▼
+  输出: [ "紫金矿业 2025年 股价走势 业绩分析",
+          "黄金 铜 有色金属 行业景气度",
+          "紫金矿业 产业链 竞争格局" ]
+技术细节：
+
+用 chat_model.invoke() 调用 LLM 做改写，不是规则匹配
+LRU 缓存（128条），热点查询不改写第二次
+改写失败时兜底返回原始查询
+Phase 2：混合检索 — vector_store.py → hybrid_search()
+每个改写后的子查询都会独立走这个流程。核心思想：向量检索 + 关键词检索 → RRF 融合，互补长短。
+
+2a. 向量检索（语义相似度）
+
+ChromaDB.as_retriever(k = k*2)    取 top-2k 候选
+  │
+  └── 基于 DashScope text-embedding-v4 的余弦相似度
+      优势：理解语义，"涨价"能匹配到"价格上行"
+2b. BM25 关键词检索
+
+BM25Retriever.search(query, k*2)  取 top-2k 候选
+  │
+  └── 基于词频-逆文档频率的精确匹配
+      优势：专业术语、股票代码等精确匹配
+      BM25 索引在文档加载/删除时重建
+2c. RRF 融合（Reciprocal Rank Fusion）
+
+rrf_fusion(vector_results, bm25_results, k=3, rrf_k=60)
+公式: score(doc) = Σ 1/(60 + rank_i + 1)
+      对每个来源分别算排名分，加和，再排序取 top-k
+优势：不依赖原始分数的绝对数值，只关心相对排名
+Phase 3：重排序 — reranker.py → LLMReranker.rerank()
+混合检索返回的结果是粗排的，重排序做精细筛选。  BGE-Reranker-v2-m3/Qwen3-Reranker
+
+3a. Jaccard 去重
+
+比较前 200 字符的字符集交集/并集
+相似度 > 0.7 → 判定为重复 → 保留第一个
+3b. 启发式评分
+
+score(doc) =
+  + 2.0    标题/首句包含查询关键词
+  + 0.5×N  正文中关键词出现次数
+  + 1.0    长度适中 (100-500 字符)
+  - 1.0    过短 (< 20 字符)
+按分数降序 → 取 top_k（默认 3）
+Phase 4：多查询融合 — retrieve_docs()
+
+对改写后的每个子查询:
+  ├── _retrieve(sub_query): hybrid_search + rerank
+  └── 合并结果，按内容前100字符去重
+好处：比如"紫金矿业股价"和"铜价走势"两个子查询，分别拉回不同维度的资料，拼在一起更全面。
+
+Phase 5：上下文组装 — context_assembler.py
+把检索到的文档片段组装成 LLM 能消费的格式，核心是 Token 预算控制。
+
+
+1. _group_by_source():    按来源文件名分组
+2. _sort_groups():        按与查询相关性排序组
+3. max_tokens=3000:       逐组填充，超出截断，打 "..." 标记
+4. 格式化为:
+   --- 文档1：紫金矿业深度报告.pdf ---
+   紫金矿业2025年营收...
+   --- 文档2：有色金属行业周报.pdf ---
+   铜价受全球供给影响...
+Phase 6：LLM 生成总结 — rag_summarize.txt
+
+chain = PromptTemplate(template=rag_summarize.txt) | chat_model | StrOutputParser()
+chain.invoke({"input": query, "context": assembled_context})
+提示词约束（prompts/rag_summarize.txt）：
+
+完全基于参考资料，不编造数据
+开头不复述问题，直接进入分析
+正文不嵌入式标注来源，末尾统一附引用清单
+参考资料无相关内容时明确告知用户
+整体数据流小结
+
+用户: "紫金矿业最近怎么样"
+ Phase 1 → ["紫金矿业 2025年 股价走势", "黄金铜矿 行业景气", "紫金矿业 产业链"]
+ Phase 2 → 每个子查询: 向量检索 ∩ BM25 → RRF融合 → top-3
+ Phase 3 → Jaccard去重 + 启发式评分 → 精选 top-3
+ Phase 4 → 多查询结果合并去重 → 约 5-8 个文档片段
+ Phase 5 → 按来源分组 + Token预算(3000) → 结构化上下文字符串
+ Phase 6 → Prompt模板填入 {query} + {context} → LLM → 返回用户

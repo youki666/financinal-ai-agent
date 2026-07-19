@@ -51,22 +51,20 @@ def rrf_fusion(
         k: int = 3,
         rrf_k: int = 60,
 ) -> list[Document]:
-    """RRF (Reciprocal Rank Fusion) 混合检索融合算法"""
     scores: dict[str, float] = {}
-
-    for rank, doc in enumerate(vector_results):
-        doc_id = doc.page_content[:100]
-        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
-
-    for rank, (doc, _) in enumerate(bm25_results):
-        doc_id = doc.page_content[:100]
-        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
-
     all_docs: dict[str, Document] = {}
-    for doc in vector_results:
-        all_docs[doc.page_content[:100]] = doc
-    for doc, _ in bm25_results:
-        all_docs[doc.page_content[:100]] = doc
+
+    # 处理向量结果
+    for rank, doc in enumerate(vector_results):
+        doc_id = hash(doc.page_content)          # 每次重新计算
+        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
+        all_docs[doc_id] = doc                  # 同时存入
+
+    # 处理 BM25 结果
+    for rank, (doc, _) in enumerate(bm25_results):
+        doc_id = hash(doc.page_content)          # 每次重新计算
+        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
+        all_docs[doc_id] = doc                  # 同时存入
 
     sorted_ids = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     return [all_docs[doc_id] for doc_id, _ in sorted_ids[:k]]

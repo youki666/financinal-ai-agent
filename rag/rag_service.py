@@ -43,6 +43,33 @@ class RagSummarizeService:
 
         return list(all_docs.values())
 
+    def summarize_with_context(self, query: str) -> dict:
+        """完整的 RAG 总结流程，同时返回检索到的上下文文档列表（供评估使用）。
+
+        Returns:
+            dict: {"answer": str, "contexts": list[str]}
+        """
+        logger.info(f"[RAG] [Eval] 开始处理: '{query}'")
+
+        context_docs = self.retrieve_docs(query)
+        logger.info(f"[RAG] [Eval] 检索到 {len(context_docs)} 篇相关文档")
+
+        if not context_docs:
+            return {
+                "answer": (
+                    "当前知识库中暂未检索到与您问题直接相关的资料。"
+                    "建议：1) 尝试使用更具体的检索词 2) 上传相关研究报告 PDF 到知识库"
+                ),
+                "contexts": [],
+            }
+
+        context = context_assembler.assemble(query, context_docs)
+        result = self.chain.invoke({"input": query, "context": context})
+        return {
+            "answer": result,
+            "contexts": [doc.page_content for doc in context_docs],
+        }
+
     def summarize(self, query: str) -> str:
         """完整的 RAG 总结流程"""
         logger.info(f"[RAG] 开始处理: '{query}'")
