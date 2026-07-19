@@ -8,10 +8,29 @@ from utils.config_handler import rag_conf
 
 load_dotenv()
 
-# ============================================================
-# 嵌入模型（不变，始终用同一个）
-# ============================================================
-embed_model = DashScopeEmbeddings(model=rag_conf["embedding_model_name"])
+
+def _get_api_key() -> str:
+    key = os.getenv("DASHSCOPE_API_KEY", "")
+    if key:
+        return key
+    try:
+        import streamlit as st
+        return st.secrets.get("DASHSCOPE_API_KEY", "")
+    except Exception:
+        return ""
+
+
+_embed_model_cache: DashScopeEmbeddings | None = None
+
+
+def get_embed_model() -> DashScopeEmbeddings:
+    global _embed_model_cache
+    if _embed_model_cache is None:
+        _embed_model_cache = DashScopeEmbeddings(
+            model=rag_conf["embedding_model_name"],
+            dashscope_api_key=_get_api_key(),
+        )
+    return _embed_model_cache
 
 # ============================================================
 # 多模型配置（可按需扩展）
