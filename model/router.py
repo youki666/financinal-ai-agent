@@ -1,4 +1,5 @@
 """模型路由器：根据查询内容动态选择合适的 LLM"""
+import os
 
 from dataclasses import dataclass, field
 from typing import Any, Iterator, Sequence
@@ -104,14 +105,26 @@ class RoutableChatModel(BaseChatModel):
 
         return self._model_cache[cache_key]
 
+    @staticmethod
+    def _resolve_api_key() -> str:
+        key = os.getenv("DASHSCOPE_API_KEY", "")
+        if key:
+            return key
+        try:
+            import streamlit as st
+            return st.secrets.get("DASHSCOPE_API_KEY", "")
+        except Exception:
+            return ""
+
     def _build_model(self, config: LLMConfig) -> BaseChatModel:
+        api_key = config.api_key or self._resolve_api_key()
         kwargs: dict = {
             "model": config.model_name,
             "temperature": config.temperature,
             "model_provider": config.provider,
         }
-        if config.api_key:
-            kwargs["api_key"] = config.api_key
+        if api_key:
+            kwargs["api_key"] = api_key
         if config.base_url:
             kwargs["base_url"] = config.base_url
         return init_chat_model(**kwargs)
