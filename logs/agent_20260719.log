@@ -1,0 +1,528 @@
+2026-07-19 12:24:59,575 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:25:09,732 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:25:31,936 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:25:43,515 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:25:58,268 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:26:18,839 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:27:22,717 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:27:22,744 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 226f34b3f475 (streaming-test)
+2026-07-19 12:27:22,753 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:27:22,757 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:27:26,990 - agent - INFO - react_agent.py:127 - [Thread] 删除对话: 226f34b3f475
+2026-07-19 12:27:50,368 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:27:50,396 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 214dcccd0541 (debug)
+2026-07-19 12:27:50,403 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:27:50,406 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:27:52,627 - agent - WARNING - middleware.py:182 - [ResponseGuard] 输出过短 (1 字符)
+2026-07-19 12:27:52,630 - agent - INFO - react_agent.py:127 - [Thread] 删除对话: 214dcccd0541
+2026-07-19 12:28:23,692 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:28:23,721 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 3ef33e025887 (debug2)
+2026-07-19 12:28:23,728 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:28:23,733 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:28:26,227 - agent - WARNING - middleware.py:182 - [ResponseGuard] 输出过短 (1 字符)
+2026-07-19 12:28:26,230 - agent - INFO - react_agent.py:127 - [Thread] 删除对话: 3ef33e025887
+2026-07-19 12:29:05,126 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:29:05,147 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 955f573087af (test-dedup)
+2026-07-19 12:29:05,154 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:29:05,156 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:29:07,437 - agent - WARNING - middleware.py:182 - [ResponseGuard] 输出过短 (9 字符)
+2026-07-19 12:29:07,441 - agent - INFO - react_agent.py:127 - [Thread] 删除对话: 955f573087af
+2026-07-19 12:29:18,393 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:29:18,423 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: d3be7214d2ed (test-tools)
+2026-07-19 12:29:18,430 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:29:18,433 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:29:23,025 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: stock_brief
+2026-07-19 12:29:23,026 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: industry_overview
+2026-07-19 12:29:23,026 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'stock_code': '紫金矿业'}
+2026-07-19 12:29:23,026 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'industry': '有色金属'}
+2026-07-19 12:29:23,028 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业 主营业务 财务数据 近期动态 公司概况'
+2026-07-19 12:29:23,028 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '有色金属 产业链 竞争格局 政策 发展趋势 行业分析'
+2026-07-19 12:29:23,029 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:29:23,030 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:29:24,421 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业 主营业务 财务数据 近期动态 公司概况' → ['紫金矿业 公司概况 主营业务', '紫金矿业 财务数据 2025年', '紫金矿业 近期动态 有色金属行业 产业链']
+2026-07-19 12:29:24,455 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '有色金属 产业链 竞争格局 政策 发展趋势 行业分析' → ['有色金属行业产业链结构与上下游协同分析', '有色金属行业竞争格局及龙头企业市场份额（2025年）', '有色金属行业政策导向与发展路径（“十五五”规划及双碳目标影响）']
+2026-07-19 12:29:24,767 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:29:24,767 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:24,782 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:29:24,782 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:25,087 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 12:29:25,087 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:25,131 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:29:25,132 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:25,484 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:29:25,485 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:25,485 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:29:25,485 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 748 字符
+2026-07-19 12:29:25,486 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:29:25,500 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:29:25,500 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:29:25,500 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:29:25,500 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 700 字符
+2026-07-19 12:29:25,501 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:29:29,717 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 4 个来源
+2026-07-19 12:29:29,717 - agent - INFO - middleware.py:31 - [ToolMonitor] stock_brief 调用成功, 结果预览: content='紫金矿业主营业务为有色金属开采与冶炼，核心产品包括黄金和铜，同时碳酸锂业务已开始贡献利润【来源：紫金矿业(601899).pdf】。  \n2026年一季度实现营业收入985亿元，同比增长25%；归母净利润201亿元，同比增长98%；经营活动产生的现金流量净额278亿元，同比增长122%【来源：紫金矿业(601899).pdf】。  \n近期动态方面，巨龙铜矿二期自2026年1月下旬投产后产能持续爬坡，一季度贡献矿产铜6万吨；加纳阿基姆金矿与哈萨克斯坦瑞果多金矿等2025年新并购资产开始释放黄金增量，2026年Q1矿产金达23.5吨，同比增长23%【来源：紫金矿业(60189
+2026-07-19 12:29:30,266 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 3 个来源
+2026-07-19 12:29:30,266 - agent - WARNING - middleware.py:67 - [QualityGuard] industry_overview 未检索到有效内容, query={'industry': '有色金属'}
+2026-07-19 12:29:30,266 - agent - INFO - middleware.py:31 - [ToolMonitor] industry_overview 调用成功, 结果预览: content='有色金属行业当前呈现结构性增长特征，黄金与铜板块产能持续释放，碳酸锂成为新兴增长引擎。紫金矿业2025年矿产金达23.5吨（同比+23%），增量主要来自加纳阿基姆金矿及哈萨克斯坦瑞果多金矿；矿产铜26万吨，巨龙铜矿二期自2026年1月下旬投产后产能稳步爬坡，2026年一季度贡献6万吨【来源：紫金矿业(601899).pdf】。成本端控制良好，2026年一季度金精矿、铜精矿、碳酸锂单吨成本分别环比下降5.7%、5.1%、14.0%【来源：紫金矿业(601899).pdf】。中长期规划明确，2028年目标矿产金130–140吨、矿产铜150–160万吨、当量碳酸锂27–32万吨，
+2026-07-19 12:29:30,269 - agent - INFO - react_agent.py:127 - [Thread] 删除对话: d3be7214d2ed
+2026-07-19 12:34:15,484 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:34:16,204 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:34:32,412 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 4b040627ba80 (新对话)
+2026-07-19 12:34:32,499 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:34:32,503 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:34:37,615 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: stock_brief
+2026-07-19 12:34:37,615 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'stock_code': '青岛啤酒'}
+2026-07-19 12:34:37,616 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '青岛啤酒 主营业务 财务数据 近期动态 公司概况'
+2026-07-19 12:34:37,617 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:34:38,781 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒 主营业务 财务数据 近期动态 公司概况' → ['青岛啤酒 公司概况 主营业务', '青岛啤酒 财务数据 2025年', '青岛啤酒 近期动态 啤酒行业 产业链']
+2026-07-19 12:34:39,126 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:34:39,126 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:34:39,342 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:34:39,343 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:34:39,665 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:34:39,665 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:34:39,665 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:34:39,665 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 884 字符
+2026-07-19 12:34:39,667 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:03,559 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 5 个来源
+2026-07-19 12:35:03,559 - agent - WARNING - middleware.py:67 - [QualityGuard] stock_brief 未检索到有效内容, query={'stock_code': '青岛啤酒'}
+2026-07-19 12:35:03,559 - agent - INFO - middleware.py:31 - [ToolMonitor] stock_brief 调用成功, 结果预览: content='根据东海证券2025年9月1日发布的研报，青岛啤酒（600600）近期呈现"量价稳定、行稳致远"的态势，评级维持"买入"。【来源：青岛啤酒报告】\n\n**近期动态与经营数据**：2024年第二季度，主品牌销量133.8万千升，同比增长3.88%；中高端及以上产品销量98.1万千升，同比增长4.81%，中高端产品增速快于主品牌整体，产品结构持续优化。【来源：青岛啤酒报告】吨价方面，2025年上半年均价为4330.30元/千升，同比微降0.09%；其中第二季度均价4065.56元/千升，同比提升0.27%，显示二季度价格端企稳回升。【来源：青岛啤酒报告】报告指出，成本红利持续释
+2026-07-19 12:35:03,561 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=3, 最后消息类型=ToolMessage
+2026-07-19 12:35:03,563 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:08,798 - agent - WARNING - middleware.py:171 - [ResponseGuard] 模型输出为空
+2026-07-19 12:35:08,800 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:35:08,800 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '青岛啤酒 股价 估值 投资分析 2025'}
+2026-07-19 12:35:08,801 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: industry_overview
+2026-07-19 12:35:08,802 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '青岛啤酒 股价 估值 投资分析 2025'
+2026-07-19 12:35:08,802 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'industry': '啤酒'}
+2026-07-19 12:35:08,802 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:08,803 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '啤酒 产业链 竞争格局 政策 发展趋势 行业分析'
+2026-07-19 12:35:08,806 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:09,863 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '啤酒 产业链 竞争格局 政策 发展趋势 行业分析' → ['啤酒行业产业链结构', '啤酒行业竞争格局与龙头企业分析', '啤酒行业政策动向及2025-2026年发展趋势']
+2026-07-19 12:35:09,885 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒 股价 估值 投资分析 2025' → ['青岛啤酒 2025年股价走势与估值分析', '青岛啤酒 所属啤酒行业产业链及竞争格局', '青岛啤酒 2025年财务指标与投资价值评估']
+2026-07-19 12:35:10,101 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:35:10,102 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,131 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:10,131 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,435 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:10,435 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,465 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:35:10,465 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,666 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:10,666 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,666 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:35:10,666 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 694 字符
+2026-07-19 12:35:10,667 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:10,705 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:35:10,705 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:10,705 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:35:10,705 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 2 组, 728 字符
+2026-07-19 12:35:10,706 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:20,912 - agent - WARNING - middleware.py:62 - [QualityGuard] industry_overview 检索结果为空或过短, query={'industry': '啤酒'}
+2026-07-19 12:35:20,913 - agent - INFO - middleware.py:31 - [ToolMonitor] industry_overview 调用成功, 结果预览: content='' name='industry_overview' tool_call_id='call_64dcdbed46914ed99d5bd56d'
+2026-07-19 12:35:29,425 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 8 个来源
+2026-07-19 12:35:29,426 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='东海证券于2025年9月1日发布青岛啤酒（600600）公司简评报告，维持"买入"评级，报告标题为"量价稳定，行稳致远"【来源：青岛啤酒报告】。\n\n从估值角度看，截至2025年8月29日，青岛啤酒12个月内最高价为86.18元，最低价为53.20元【来源：青岛啤酒报告】。机构预测公司未来几年归母净利润对应PE呈逐年下降趋势：2024年PE为21.82倍，2025年PE为20.38倍，2026年PE为18.96倍，2027年PE为17.36倍，反映盈利持续改善预期【来源：青岛啤酒报告】。加权净资产收益率为12.80%【来源：青岛啤酒报告】。\n\n经营层面，2025年上半年
+2026-07-19 12:35:29,428 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=6, 最后消息类型=ToolMessage
+2026-07-19 12:35:29,429 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:35,297 - agent - WARNING - middleware.py:171 - [ResponseGuard] 模型输出为空
+2026-07-19 12:35:35,299 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:35:35,299 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '啤酒行业 竞争格局 高端化 消费趋势 2025'}
+2026-07-19 12:35:35,300 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '啤酒行业 竞争格局 高端化 消费趋势 2025'
+2026-07-19 12:35:35,300 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:35,303 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:35:35,303 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '青岛啤酒 成本 原材料 盈利能力 吨价'}
+2026-07-19 12:35:35,304 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '青岛啤酒 成本 原材料 盈利能力 吨价'
+2026-07-19 12:35:35,305 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:36,587 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '啤酒行业 竞争格局 高端化 消费趋势 2025' → ['啤酒行业竞争格局分析 2025', '啤酒行业高端化趋势与驱动因素 2025', '啤酒消费结构升级与人群画像 2025']
+2026-07-19 12:35:36,689 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒 成本 原材料 盈利能力 吨价' → ['青岛啤酒 原材料成本结构 2025年', '青岛啤酒 吨酒销售收入与毛利率分析', '啤酒行业 上游大麦价格波动对酿造企业盈利影响']
+2026-07-19 12:35:36,806 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:35:36,806 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:36,905 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:36,905 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:37,112 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:35:37,112 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:37,143 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:37,143 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:37,356 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:35:37,356 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:37,356 - agent - INFO - rag_service.py:51 - [RAG] 检索到 6 篇相关文档
+2026-07-19 12:35:37,357 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 1048 字符
+2026-07-19 12:35:37,357 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:37,365 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:35:37,366 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:37,366 - agent - INFO - rag_service.py:51 - [RAG] 检索到 3 篇相关文档
+2026-07-19 12:35:37,366 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 534 字符
+2026-07-19 12:35:37,367 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:42,124 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '啤酒行业 竞争格局 高端化 消费趋势 2025'}
+2026-07-19 12:35:42,124 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。' name='rag_summarize' tool_call_id='call_2da3fa8976b0410ba98efb3a'
+2026-07-19 12:35:47,868 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 4 个来源
+2026-07-19 12:35:47,869 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='青岛啤酒2025年上半年成本端红利持续释放，盈利能力显著改善。2025Q2吨成本为2,201.94元/千升，同比下降5.08%，主要受益于大麦、包材等原材料价格下行【来源：青岛啤酒报告】。截至2025年6月，进口大麦均价同比下降1.27%，瓦楞纸同比下降3.32%，成本端红利预计延续【来源：青岛啤酒报告】。吨价方面，2025H1均价为4,330.30元/千升（同比微降0.09%），其中Q2均价为4,065.56元/千升（同比提升0.27%），价格保持稳定，产品结构持续优化，中高端及以上销量同比增长4.81%【来源：青岛啤酒报告】。盈利能力上，2025Q2毛利率达45.84%，
+2026-07-19 12:35:47,870 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=9, 最后消息类型=ToolMessage
+2026-07-19 12:35:47,872 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:55,772 - agent - WARNING - middleware.py:171 - [ResponseGuard] 模型输出为空
+2026-07-19 12:35:55,774 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:35:55,774 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '啤酒行业 2025 市场规模 消费量 趋势'}
+2026-07-19 12:35:55,775 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '啤酒行业 2025 市场规模 消费量 趋势'
+2026-07-19 12:35:55,775 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:55,776 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:35:55,778 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '青岛啤酒 风险 挑战 竞争 市场份额'}
+2026-07-19 12:35:55,779 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '青岛啤酒 风险 挑战 竞争 市场份额'
+2026-07-19 12:35:55,780 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:35:56,608 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '啤酒行业 2025 市场规模 消费量 趋势' → ['啤酒行业市场规模预测 2025', '啤酒行业消费量数据 2025', '啤酒行业发展趋势及增长驱动因素']
+2026-07-19 12:35:56,816 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:35:56,816 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,036 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒 风险 挑战 竞争 市场份额' → ['青岛啤酒 风险因素 2025年', '青岛啤酒 市场份额 竞争格局 啤酒行业', '青岛啤酒 主要挑战 原料成本与消费升级影响']
+2026-07-19 12:35:57,112 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:35:57,112 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,295 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:57,295 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,428 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:35:57,429 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,429 - agent - INFO - rag_service.py:51 - [RAG] 检索到 6 篇相关文档
+2026-07-19 12:35:57,429 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 1063 字符
+2026-07-19 12:35:57,430 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:35:57,596 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:57,596 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,814 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 12:35:57,815 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:35:57,815 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:35:57,815 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 679 字符
+2026-07-19 12:35:57,816 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:36:13,429 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 4 个来源
+2026-07-19 12:36:13,432 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '啤酒行业 2025 市场规模 消费量 趋势'}
+2026-07-19 12:36:13,432 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='2025年上半年啤酒规模以上企业实现产量1904万千升，同比小幅下降0.3%，行业整体产量略有承压【来源：青岛啤酒报告】。龙头企业表现优于行业，青岛啤酒同期实现销量473.2万千升，同比增长2.3%，其中Q2销量247.1万千升（+1.02%），主品牌及中高端以上产品销量分别增长3.88%和4.81%，产品结构升级持续推进【来源：青岛啤酒报告】。\n\n价格方面，2025H1行业均价为4330.30元/千升（同比微降0.09%），Q2均价回升至4065.56元/千升（+0.27%），吨价总体保持稳定【来源：青岛啤酒报告】。当前啤酒行业呈现以下趋势：一是产品结构持续向中高端升级
+2026-07-19 12:36:20,753 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 5 个来源
+2026-07-19 12:36:20,754 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '青岛啤酒 风险 挑战 竞争 市场份额'}
+2026-07-19 12:36:20,754 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='从行业格局来看，2025年上半年啤酒规模以上企业产量1904万千升，同比下滑0.3%，行业整体需求承压，而青岛啤酒同期实现销量473.2万千升，同比增长2.3%，增速显著高于行业平均水平，表明公司在存量市场中份额有所提升【来源：青岛啤酒报告】。\n\n竞争层面，公司产品结构持续向中高端升级。2024年Q2主品牌销量133.8万千升，同比增长3.88%，其中中高端及以上产品销量98.1万千升，同比增长4.81%，中高端增速快于主品牌整体增速，结构优化趋势延续【来源：青岛啤酒报告】。但2025年上半年整体吨价为4330.30元/千升，同比微降0.09%，反映出价格端存在一定压力【
+2026-07-19 12:36:20,756 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=12, 最后消息类型=ToolMessage
+2026-07-19 12:36:20,759 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:36:28,625 - agent - WARNING - middleware.py:171 - [ResponseGuard] 模型输出为空
+2026-07-19 12:36:28,627 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: generate_report
+2026-07-19 12:36:28,627 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'topic': '青岛啤酒（600600）股价分析报告'}
+2026-07-19 12:36:28,628 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '青岛啤酒（600600）股价分析报告 综合分析 投资价值 风险评估 行业前景'
+2026-07-19 12:36:28,629 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:36:37,727 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒（600600）股价分析报告 综合分析 投资价值 风险评估 行业前景' → ['青岛啤酒 600600 股价走势 投资价值 风险评估 财务分析 估值', '啤酒行业 市场前景 竞争格局 产业链 发展趋势 2025', '青岛啤酒 机构研报 评级 目标价 基本面分析']
+2026-07-19 12:36:37,978 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 4 篇, 融合后 3 篇
+2026-07-19 12:36:37,979 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:36:38,203 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:36:38,204 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:36:38,498 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:36:38,498 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:36:38,498 - agent - INFO - rag_service.py:51 - [RAG] 检索到 8 篇相关文档
+2026-07-19 12:36:38,498 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 3 组, 1480 字符
+2026-07-19 12:36:38,499 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:36:58,767 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 5 个来源
+2026-07-19 12:36:58,767 - agent - INFO - middleware.py:31 - [ToolMonitor] generate_report 调用成功, 结果预览: content='青岛啤酒2025年上半年业绩表现稳健，量价稳定、结构持续优化。2025年H1公司实现销量473.2万千升，同比增长2.3%，高于行业增速（同期啤酒规模以上企业产量同比下降0.3%）；其中Q2销量247.1万千升，同比增长1.02%，营业收入100.46亿元，同比增长1.28%，归母净利润21.94亿元，同比增长7.32%，符合市场预期【来源：青岛啤酒.pdf】。\n\n从估值角度看，公司预测市盈率处于18.96至21.82倍区间，净资产收益率（加权）为12.80%，12个月内股价波动区间为53.20元至86.18元【来源：青岛啤酒.pdf】。东海证券研究所于2025年9月1日
+2026-07-19 12:36:58,769 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=14, 最后消息类型=ToolMessage
+2026-07-19 12:36:58,770 - agent - INFO - middleware.py:148 - [PromptSwitch] 切换到研究报告提示词
+2026-07-19 12:36:58,772 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:42:37,784 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:42:38,154 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:43:38,677 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:43:42,725 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 4317244cead1 (新对话)
+2026-07-19 12:43:42,822 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:43:42,827 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:43:47,914 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: industry_overview
+2026-07-19 12:43:47,915 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'industry': '有色金属'}
+2026-07-19 12:43:47,916 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '有色金属 产业链 竞争格局 政策 发展趋势 行业分析'
+2026-07-19 12:43:47,916 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:43:49,071 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '有色金属 产业链 竞争格局 政策 发展趋势 行业分析' → ['有色金属行业产业链结构与上下游协同分析', '有色金属行业竞争格局及龙头企业市场份额（2025年）', '有色金属行业政策导向与发展前景（含“双碳”与资源安全战略）']
+2026-07-19 12:43:49,313 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:43:49,314 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:43:49,685 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:43:49,686 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:43:49,936 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:43:49,936 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:43:49,937 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:43:49,937 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 571 字符
+2026-07-19 12:43:49,938 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:43:54,892 - agent - WARNING - middleware.py:67 - [QualityGuard] industry_overview 未检索到有效内容, query={'industry': '有色金属'}
+2026-07-19 12:43:54,893 - agent - INFO - middleware.py:31 - [ToolMonitor] industry_overview 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。所提供的参考资料仅限于紫金矿业（601899）的公司点评报告，内容聚焦于该公司的黄金、铜、碳酸锂产量情况及成本控制表现，不涉及有色金属行业的产业链结构、竞争格局、政策动向或发展趋势等宏观行业分析信息。' name='industry_overview' tool_call_id='call_d354cc269a6b409780f54e'
+2026-07-19 12:43:54,896 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=3, 最后消息类型=ToolMessage
+2026-07-19 12:43:54,900 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:44:00,413 - agent - WARNING - middleware.py:171 - [ResponseGuard] 模型输出为空
+2026-07-19 12:44:00,415 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:44:00,416 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:44:00,416 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '黄金 2025年 价格展望'}
+2026-07-19 12:44:00,416 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '有色金属行业 2025年展望 供需格局'}
+2026-07-19 12:44:00,416 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:44:00,417 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '黄金 2025年 价格展望'
+2026-07-19 12:44:00,418 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '有色金属行业 2025年展望 供需格局'
+2026-07-19 12:44:00,418 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '铜价 2025年 走势预测'}
+2026-07-19 12:44:00,419 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:44:00,419 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:44:00,420 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '铜价 2025年 走势预测'
+2026-07-19 12:44:00,424 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:44:01,467 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '黄金 2025年 价格展望' → ['黄金价格 2025年展望', '黄金市场供需分析 2025年', '黄金投资属性与宏观经济影响 2025']
+2026-07-19 12:44:01,470 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '铜价 2025年 走势预测' → ['铜价 2025年价格走势预测', '铜行业供需格局 2025年展望', '全球铜矿产能扩张与价格影响分析']
+2026-07-19 12:44:01,682 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '有色金属行业 2025年展望 供需格局' → ['有色金属行业 2025年供需格局分析', '有色金属行业 2025年供给端趋势（矿山产能、冶炼开工率）', '有色金属行业 2025年需求端驱动（新能源、基建、出口）']
+2026-07-19 12:44:01,861 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:01,862 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:01,864 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:01,865 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:01,989 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:01,990 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,174 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:02,175 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,187 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:02,187 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,225 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:02,225 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,517 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:44:02,517 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,518 - agent - INFO - rag_service.py:51 - [RAG] 检索到 6 篇相关文档
+2026-07-19 12:44:02,518 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 3 组, 877 字符
+2026-07-19 12:44:02,518 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:02,519 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:44:02,519 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,521 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:44:02,521 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 575 字符
+2026-07-19 12:44:02,522 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:44:02,555 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:44:02,555 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:44:02,555 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:44:02,555 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 532 字符
+2026-07-19 12:44:02,556 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:44:06,094 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '黄金 2025年 价格展望'}
+2026-07-19 12:44:06,096 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。' name='rag_summarize' tool_call_id='call_ffb87668d8164c92ab570db9'
+2026-07-19 12:44:08,056 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '铜价 2025年 走势预测'}
+2026-07-19 12:44:08,056 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。' name='rag_summarize' tool_call_id='call_11c319a2b3e84d31826895ef'
+2026-07-19 12:44:09,856 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '有色金属行业 2025年展望 供需格局'}
+2026-07-19 12:44:09,857 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。' name='rag_summarize' tool_call_id='call_7e1744fefbd041778fbdcda6'
+2026-07-19 12:44:09,860 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=7, 最后消息类型=ToolMessage
+2026-07-19 12:44:09,864 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:44:09,993 - agent - ERROR - react_agent.py:213 - [Agent] 执行异常: NotFoundError: Error code: 404 - {'error': {'message': 'The model `qwen-3.7plus` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}, 'request_id': '320d4bb7-f856-9662-8752-44029ae43a44'}
+Traceback (most recent call last):
+  File "/Users/youki/Downloads/python/financinal-ai-agent/agent/react_agent.py", line 179, in execute_stream
+    for msg, metadata in self.agent.stream(
+                         ~~~~~~~~~~~~~~~~~^
+            input_dict,
+            ^^^^^^^^^^^
+    ...<2 lines>...
+            config=config,
+            ^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/pregel/main.py", line 2967, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/pregel/_runner.py", line 344, in tick
+    _panic_or_proceed(
+    ~~~~~~~~~~~~~~~~~^
+        futures.done.union(f for f, t in futures.items() if t is not None),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        handled_futures=handled_futures,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/pregel/_runner.py", line 687, in _panic_or_proceed
+    raise exc
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/pregel/_executor.py", line 80, in done
+    task.result()
+    ~~~~~~~~~~~^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/pregel/_retry.py", line 617, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 684, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 426, in invoke
+    ret = self.func(*args, **kwargs)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain/agents/factory.py", line 1450, in model_node
+    result = wrap_model_call_handler(request, _execute_model_sync)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain/agents/factory.py", line 281, in normalized_single
+    return _to_composed_result(single_handler(request, handler))
+                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain/agents/middleware/types.py", line 1783, in wrapped
+    return handler(request)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain/agents/factory.py", line 1419, in _execute_model_sync
+    output = model_.invoke(messages)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 476, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 1849, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 1656, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 1953, in _generate_with_cache
+    for chunk in self._stream(messages, stop=stop, **kwargs):
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/Downloads/python/financinal-ai-agent/model/router.py", line 176, in _stream
+    for chunk in model.stream(messages, stop=stop):
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/runnables/base.py", line 6179, in stream
+    yield from self.bound.stream(
+    ...<3 lines>...
+    )
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 778, in stream
+    for chunk in self._stream(input_messages, stop=stop, **kwargs):
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_openai/chat_models/base.py", line 1683, in _stream
+    _handle_openai_api_error(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/langchain_openai/chat_models/base.py", line 1656, in _stream
+    response = self.client.create(**payload)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/openai/_utils/_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 1281, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<53 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/openai/_base_client.py", line 1332, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youki/miniconda/envs/agent/lib/python3.13/site-packages/openai/_base_client.py", line 1105, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `qwen-3.7plus` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}, 'request_id': '320d4bb7-f856-9662-8752-44029ae43a44'}
+During task with name 'model' and id '7bcf08ab-ba09-a3b6-3b94-7ca68ed9ec3d'
+2026-07-19 12:50:16,112 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:50:16,601 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 12:50:24,329 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: 69933bbb5290 (新对话)
+2026-07-19 12:50:24,423 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 12:50:24,430 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:50:29,700 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: stock_brief
+2026-07-19 12:50:29,701 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'stock_code': '紫金矿业'}
+2026-07-19 12:50:29,702 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业 主营业务 财务数据 近期动态 公司概况'
+2026-07-19 12:50:29,703 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:50:31,200 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业 主营业务 财务数据 近期动态 公司概况' → ['紫金矿业 公司概况 主营业务', '紫金矿业 财务数据 2025年', '紫金矿业 近期动态 有色金属行业 产业链']
+2026-07-19 12:50:31,539 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:50:31,540 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:31,784 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 12:50:31,784 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:32,082 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:50:32,082 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:32,082 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:50:32,082 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 748 字符
+2026-07-19 12:50:32,083 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:50:50,290 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 4 个来源
+2026-07-19 12:50:50,291 - agent - INFO - middleware.py:31 - [ToolMonitor] stock_brief 调用成功, 结果预览: content='紫金矿业（601899）为有色金属行业上市公司，中邮证券给予"买入"评级并维持。【来源：紫金矿业(601899).pdf】\n\n**主营业务**：公司核心业务涵盖矿产金、矿产铜及碳酸锂等有色金属资源的采选与冶炼。2026年Q1，矿产金产量23.5吨（同比+23%），矿产铜产量26万吨，其中巨龙铜矿二期自2026年1月下旬投产后一季度贡献矿产铜6万吨。【来源：紫金矿业(601899).pdf】\n\n**财务数据**：2026年Q1实现营业收入985亿元，同比增长25%；归母净利润201亿元，同比增长98%；经营活动产生的现金流量净额278亿元，同比增长122%，季度业绩创历
+2026-07-19 12:50:50,293 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=3, 最后消息类型=ToolMessage
+2026-07-19 12:50:50,295 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:50:53,324 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: industry_overview
+2026-07-19 12:50:53,324 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'industry': '有色金属'}
+2026-07-19 12:50:53,325 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '有色金属 产业链 竞争格局 政策 发展趋势 行业分析'
+2026-07-19 12:50:53,326 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:50:54,608 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '有色金属 产业链 竞争格局 政策 发展趋势 行业分析' → ['有色金属行业产业链结构与上下游协同分析', '有色金属行业竞争格局及龙头企业市场份额（2025年）', '有色金属行业政策导向与发展路径（“十五五”规划、双碳目标影响）']
+2026-07-19 12:50:54,823 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:50:54,824 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:55,207 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:50:55,207 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:55,441 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:50:55,441 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:50:55,441 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:50:55,441 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 571 字符
+2026-07-19 12:50:55,442 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:51:13,113 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 2 个来源
+2026-07-19 12:51:13,249 - agent - WARNING - middleware.py:67 - [QualityGuard] industry_overview 未检索到有效内容, query={'industry': '有色金属'}
+2026-07-19 12:51:13,250 - agent - INFO - middleware.py:31 - [ToolMonitor] industry_overview 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。\n\n目前检索到的参考资料仅涉及紫金矿业（601899）的单一个股经营数据，具体包括：2026年一季度矿产金产量23.5吨（同比+23%），增量来自加纳阿基姆金矿和哈萨克斯坦瑞果多金矿；矿产铜产量26万吨，巨龙铜矿二期自2026年1月下旬投产后产能持续爬坡【来源：紫金矿业(601899).pdf】。成本方面，26Q1金精矿单位销售成本193.08元/g、铜精矿成本23,780元/吨、碳酸锂成本39,123元/吨，环比均有所下降【来源：紫金矿业(601899).pdf】。\n\n上述内容属于公司层面的产量与成本数据，并未涵盖有色金
+2026-07-19 12:51:13,256 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=5, 最后消息类型=ToolMessage
+2026-07-19 12:51:13,259 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:51:16,822 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:51:16,823 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '紫金矿业 资源储量与成本优势'}
+2026-07-19 12:51:16,824 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业 资源储量与成本优势'
+2026-07-19 12:51:16,824 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:51:18,066 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业 资源储量与成本优势' → ['紫金矿业 矿产资源储量 2025年', '紫金矿业 现金成本优势 同行业对比', '有色金属行业 铜金矿开采 成本结构']
+2026-07-19 12:51:18,499 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:51:18,499 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:18,741 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:51:18,742 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:18,951 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:51:18,952 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:18,952 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 12:51:18,952 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 571 字符
+2026-07-19 12:51:18,953 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:51:26,711 - agent - INFO - middleware.py:111 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 12:51:26,713 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '紫金矿业 资源储量与成本优势'}
+2026-07-19 12:51:26,714 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='公司矿产品单位销售成本在2026年一季度环比持续改善，成本控制能力突出。具体来看，金精矿单位销售成本为193.08元/克，较2025年四季度的204.76元/克明显下降；铜精矿单位销售成本为23780元/吨，较2025年四季度的25049元/吨有所下降；碳酸锂单吨成本为39123元，较2025年四季度的45496元降幅显著【来源：紫金矿业(601899).pdf】。当前知识库中暂未检索到与您问题中"资源储量"直接相关的具体数据资料。' name='rag_summarize' tool_call_id='call_d5ac575665e849ab96eb35'
+2026-07-19 12:51:26,716 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=7, 最后消息类型=ToolMessage
+2026-07-19 12:51:26,721 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:51:31,299 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:51:31,299 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '紫金矿业 铜金储量 全球排名'}
+2026-07-19 12:51:31,300 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业 铜金储量 全球排名'
+2026-07-19 12:51:31,301 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:51:32,450 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业 铜金储量 全球排名' → ['紫金矿业 铜金属储量 全球排名 2025', '紫金矿业 黄金储量 全球排名 2025', '紫金矿业 有色金属矿业 行业地位 储量规模']
+2026-07-19 12:51:32,782 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:51:32,782 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:33,066 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 12:51:33,067 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:33,288 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:51:33,288 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:33,289 - agent - INFO - rag_service.py:51 - [RAG] 检索到 3 篇相关文档
+2026-07-19 12:51:33,289 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 12:51:33,289 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:51:40,327 - agent - WARNING - middleware.py:67 - [QualityGuard] rag_summarize 未检索到有效内容, query={'query': '紫金矿业 铜金储量 全球排名'}
+2026-07-19 12:51:40,328 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='当前知识库中暂未检索到与您问题直接相关的资料。' name='rag_summarize' tool_call_id='call_c9b78835bd114c73a8e47f'
+2026-07-19 12:51:40,330 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=9, 最后消息类型=ToolMessage
+2026-07-19 12:51:40,333 - agent - INFO - router.py:68 - [ModelRouter] → 标准模型 (qwen-plus) — 简单问答 (理由: 默认)
+2026-07-19 12:51:45,316 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 12:51:45,317 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '铜价 长期驱动因素 新能源'}
+2026-07-19 12:51:45,318 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '铜价 长期驱动因素 新能源'
+2026-07-19 12:51:45,318 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 12:51:46,497 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '铜价 长期驱动因素 新能源' → ['铜价长期驱动因素', '新能源产业对铜需求影响', '铜产业链供需格局与价格趋势']
+2026-07-19 12:51:46,729 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:51:46,729 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:47,025 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:51:47,025 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:47,265 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:51:47,265 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:51:47,265 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:51:47,265 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 3 组, 561 字符
+2026-07-19 12:51:47,266 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:51:54,886 - agent - WARNING - middleware.py:62 - [QualityGuard] rag_summarize 检索结果为空或过短, query={'query': '铜价 长期驱动因素 新能源'}
+2026-07-19 12:51:54,887 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='' name='rag_summarize' tool_call_id='call_39b272e99be7403c96c01b'
+2026-07-19 12:51:54,889 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=11, 最后消息类型=ToolMessage
+2026-07-19 12:51:54,892 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:52:07,272 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: generate_report
+2026-07-19 12:52:07,273 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'topic': '紫金矿业（601899）投资价值分析'}
+2026-07-19 12:52:07,274 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业（601899）投资价值分析 综合分析 投资价值 风险评估 行业前景'
+2026-07-19 12:52:07,276 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:52:15,419 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业（601899）投资价值分析 综合分析 投资价值 风险评估 行业前景' → ['紫金矿业 601899 2025年 投资价值 估值分析 财务数据', '紫金矿业 601899 经营风险 风险评估 2025年', '有色金属行业 黄金行业 2025年 行业前景 产业链分析']
+2026-07-19 12:52:15,755 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 12:52:15,756 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:52:16,071 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 12:52:16,071 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:52:16,284 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 12:52:16,284 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 12:52:16,285 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 12:52:16,285 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 748 字符
+2026-07-19 12:52:16,287 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-plus) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 12:52:21,027 - agent - INFO - middleware.py:31 - [ToolMonitor] generate_report 调用成功, 结果预览: content='' name='generate_report' tool_call_id='call_685d296fb1184538bc48e81e'
+2026-07-19 12:52:21,032 - agent - INFO - middleware.py:137 - [BeforeModel] 即将调用模型, 消息数=13, 最后消息类型=ToolMessage
+2026-07-19 12:52:21,037 - agent - INFO - middleware.py:148 - [PromptSwitch] 切换到研究报告提示词
+2026-07-19 12:52:21,040 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)

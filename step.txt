@@ -1,0 +1,44 @@
+
+1. 对话持久化（最优先）
+方案一：SQLite + LangGraph Checkpointer（推荐）
+
+
+2. 多轮对话记忆 & 上下文窗口管理
+当前项目是单轮——每次查询独立，不记住之前聊了什么。扩展方向：
+
+
+用户: "紫金矿业怎么样"
+AI:   [回答...]
+用户: "那铜价呢"            ← 当前系统不理解"那"指代什么
+实现：
+
+短期记忆：将最近 3 轮对话摘要注入 system_prompt，让 Agent 理解上下文
+长期记忆：将用户历史关注行业/股票做画像，下次主动推荐相关研报
+滑动窗口 + 摘要压缩：用 LLM 把旧消息压缩成一段摘要，保持 context 窗口不过载
+
+
+3. RAG 效果量化评估（RAGAS）
+当前靠人工抽检判断回答质量。可以引入 RAGAS 框架做自动化评估：
+
+
+4. Agent 能力扩展
+当前 Agent 只有检索能力，可以扩展：
+
+工具	说明	实现成本
+stock_quote_realtime	接入 AKShare/tushare 获取实时行情	低（API 调用）
+financial_calculator	PE/PB/ROE 等指标自动计算	低（纯 Python）
+news_summary	接入新闻 API，检索近期相关新闻	中（需外部源）
+comparison_analysis	多家公司横向对比，生成对比表格	中（多次检索 + 汇总）
+chart_generator	自动生成趋势图/K 线图 mermaid/echarts	中（前端图表）
+scheduled_report	定时生成日报/周报推送到邮箱	高（调度 + 推送）
+
+
+5. 多模态 PDF 解析
+当前 PyPDFLoader 只提取文本。很多研报的核心信息在表格和图表里。扩展：
+
+
+PDF → Unstructured.io 解析
+   ├── 文本 → 分片 → 向量化
+   ├── 表格 → 结构化提取 → 存入 SQLite
+   └── 图表 → OCR/多模态模型描述 → 向量化
+用户问"紫金矿业 Q1 营收多少"，不再靠碰运气匹配文本，而是直接从结构化表格里精准取数。
