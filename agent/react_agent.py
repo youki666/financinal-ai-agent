@@ -96,6 +96,17 @@ class ReactAgent:
         )
         self.conn.commit()
 
+    def delete_all_threads(self):
+        """清空所有对话线程和检查点"""
+        self.conn.execute("DELETE FROM threads")
+        for table in ("checkpoints", "writes"):
+            try:
+                self.conn.execute(f"DELETE FROM {table}")
+            except sqlite3.OperationalError:
+                pass
+        self.conn.commit()
+        logger.info("[Thread] 清空全部历史对话")
+
     def touch_thread(self, thread_id: str):
         """更新线程的最后活跃时间"""
         self.conn.execute(

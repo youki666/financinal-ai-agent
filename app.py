@@ -477,12 +477,22 @@ with st.sidebar:
     # --- 对话线程管理 ---
     st.markdown("#### 对话记录")
 
-    # 新对话
-    if st.button("＋ 新对话", use_container_width=True, type="primary"):
-        st.session_state["thread_id"] = None
-        st.session_state["messages"] = []
-        clear_citations()
-        st.rerun()
+    # 新对话 + 清空
+    c_new, c_clear = st.columns([3, 1])
+    with c_new:
+        if st.button("＋ 新对话", use_container_width=True, type="primary"):
+            st.session_state["thread_id"] = None
+            st.session_state["messages"] = []
+            clear_citations()
+            st.rerun()
+    with c_clear:
+        if threads := st.session_state["agent"].list_threads():
+            if st.button("清空", use_container_width=True, help="删除全部历史对话"):
+                st.session_state["agent"].delete_all_threads()
+                st.session_state["thread_id"] = None
+                st.session_state["messages"] = []
+                st.session_state["sidebar_tick"] += 1
+                st.rerun()
 
     # 获取线程列表
     threads = st.session_state["agent"].list_threads()
