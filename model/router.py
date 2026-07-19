@@ -127,7 +127,11 @@ class RoutableChatModel(BaseChatModel):
             kwargs["api_key"] = api_key
         if config.base_url:
             kwargs["base_url"] = config.base_url
-        return init_chat_model(**kwargs)
+        return init_chat_model(
+            **kwargs,
+            timeout=60,      # HTTP 连接超时
+            max_retries=1,   # 仅重试 1 次，避免长时间卡住
+        )
 
     def bind_tools(
             self,

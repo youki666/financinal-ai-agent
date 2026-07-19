@@ -529,6 +529,40 @@ with st.sidebar:
             use_container_width=True,
         )
 
+    # 调度器控制面板
+    st.divider()
+    st.markdown("#### 定时报告")
+
+    if "scheduler" not in st.session_state:
+        from agent.scheduler import ReportScheduler
+        from rag.rag_service import RagSummarizeService
+        st.session_state["scheduler"] = ReportScheduler(RagSummarizeService())
+        st.session_state["scheduler"].load_config()
+        st.session_state["scheduler"].start()
+
+    sched = st.session_state["scheduler"]
+    status = sched.get_status()
+
+    if status["running"]:
+        st.success(f"运行中 · {status['job_count']} 个任务")
+    else:
+        st.warning("调度器未运行")
+
+    for job in status["jobs"]:
+        with st.container():
+            st.markdown(f"**{job['name']}**")
+            st.caption(f"下次执行: {job['next_run']}")
+            if st.button("▶ 立即执行", key=f"sched_run_{job['name']}", use_container_width=True):
+                with st.spinner(f"执行中: {job['name']}..."):
+                    sched.run_now(job["name"])
+                st.success(f"{job['name']} 已完成")
+                st.rerun()
+
+    if status["email_available"]:
+        st.caption("邮件已配置")
+    else:
+        st.caption("邮件未配置")
+
 
 # ============================================================
 # 主内容区
@@ -606,7 +640,7 @@ if st.session_state["_run_active"]:
         st.markdown('<div class="stop-btn">', unsafe_allow_html=True)
         if st.button("■ 停止", key="stop_run", use_container_width=True):
             full = re.sub(
-                r'\n?> 正在检索资料\.\.\.\n\n?', '',
+                r'\n?> 正在.{2,20}\.\.\.\n\n?', '',
                 "".join(st.session_state["_run_chunks"]),
             ).strip()
             if full:
@@ -622,9 +656,9 @@ if st.session_state["_run_active"]:
         st.markdown('</div>', unsafe_allow_html=True)
     with status_col:
         st.markdown('<div class="status-align">', unsafe_allow_html=True)
-        tool_count = "".join(st.session_state["_run_chunks"]).count("> 正在检索资料...")
+        tool_count = len(re.findall(r'> 正在.{2,20}\.\.\.', "".join(st.session_state["_run_chunks"])))
         if tool_count > 0:
-            st.caption(f"已检索 {tool_count} 次，模型思考中...")
+            st.caption(f"已调用 {tool_count} 个工具，模型思考中...")
         else:
             st.caption("模型思考中...")
         st.markdown('</div>', unsafe_allow_html=True)
@@ -638,7 +672,7 @@ if st.session_state["_run_active"]:
     thread = st.session_state.get("_run_thread")
     if thread and not thread.is_alive():
         full = re.sub(
-            r'\n?> 正在检索资料\.\.\.\n\n?', '',
+            r'\n?> 正在.{2,20}\.\.\.\n\n?', '',
             "".join(st.session_state["_run_chunks"]),
         ).strip()
         if full:

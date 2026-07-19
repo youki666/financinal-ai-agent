@@ -10,6 +10,8 @@ from utils.prompt_loader import load_system_prompts
 from utils.path_tool import get_abs_path
 from utils.logger_handler import logger
 from agent.tools.agent_tools import rag_summarize, stock_brief, industry_overview, generate_report
+from agent.tools.stock_tools import stock_quote_realtime, stock_history
+from agent.tools.news_tools import financial_news, flash_news
 from agent.tools.middleware import (
     monitor_tool,
     retrieval_quality_guard,
@@ -34,7 +36,8 @@ class ReactAgent:
         self.agent = create_agent(
             model=chat_model,
             system_prompt=load_system_prompts(),
-            tools=[rag_summarize, stock_brief, industry_overview, generate_report],
+            tools=[rag_summarize, stock_brief, industry_overview, generate_report,
+                   stock_quote_realtime, stock_history, financial_news, flash_news],
             middleware=[
                 monitor_tool,
                 retrieval_quality_guard,
@@ -163,9 +166,22 @@ class ReactAgent:
         }
         config = {"configurable": {"thread_id": thread_id}}
 
+        # 工具名 → 用户可见的描述
+        _tool_labels = {
+            "rag_summarize": "正在检索研究报告...",
+            "stock_brief": "正在查询股票概况...",
+            "industry_overview": "正在分析行业数据...",
+            "generate_report": "正在生成研究报告...",
+            "stock_quote_realtime": "正在获取实时行情...",
+            "stock_history": "正在查询历史走势...",
+            "financial_news": "正在检索最新财经新闻...",
+            "flash_news": "正在获取市场实时快讯...",
+        }
+
+        def _tool_label(tool_name: str) -> str:
+            return _tool_labels.get(tool_name, f"正在执行 {tool_name}...")
+
         try:
-            # stream_mode="messages" 逐 token 实时输出
-            has_tool_started = False  # 首轮思考阶段（含工具名）不展示
             for msg, metadata in self.agent.stream(
                     input_dict,
                     stream_mode="messages",
@@ -174,15 +190,12 @@ class ReactAgent:
             ):
                 msg_type = type(msg).__name__
 
-                # # 工具执行完成
-                # if msg_type == "ToolMessage":
-                #     has_tool_started = True
-                #     yield "\n> 正在检索资料...\n\n"
-                #     continue
-                #
-                # # 首轮思考阶段（调用工具前的自言自语）不展示，避免暴露工具名
-                # if not has_tool_started:
-                #     continue
+                # 工具执行完成 → 显示用户友好的操作提示
+                if msg_type == "ToolMessage":
+                    tool_name = getattr(msg, "name", "") or ""
+                    label = _tool_label(tool_name)
+                    yield f"\n> {label}\n\n"
+                    continue
 
                 # 模型逐 token 输出
                 if msg_type == "AIMessageChunk":

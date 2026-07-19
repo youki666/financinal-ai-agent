@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "faithfulness": 0.6709709272209272,
+    "answer_relevancy": 0.7421083295397105,
+    "context_recall": 0.5
+  },
+  "details": [
+    {
+      "question": "紫金矿业的主营业务是什么？",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6178864361050883,
+      "context_recall": 1.0
+    },
+    {
+      "question": "紫金矿业在海外有哪些矿产布局？",
+      "faithfulness": 0.9090909090909091,
+      "answer_relevancy": 0.7175270884121678,
+      "context_recall": 1.0
+    },
+    {
+      "question": "贵州茅台的核心竞争优势有哪些？",
+      "faithfulness": 0.6923076923076923,
+      "answer_relevancy": 0.7385301050149415,
+      "context_recall": 1.0
+    },
+    {
+      "question": "贵州茅台的营收结构如何？",
+      "faithfulness": 0.6363636363636364,
+      "answer_relevancy": 0.5364288286957407,
+      "context_recall": 1.0
+    },
+    {
+      "question": "阳光电源在光伏产业链中处于什么位置？",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevancy": 0.7747488216953755,
+      "context_recall": 1.0
+    },
+    {
+      "question": "阳光电源的核心产品有哪些？",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6670618497851027,
+      "context_recall": 1.0
+    },
+    {
+      "question": "青岛啤酒的市场份额和竞争格局如何？",
+      "faithfulness": 0.6,
+      "answer_relevancy": 0.7384540263413101,
+      "context_recall": 0.0
+    },
+    {
+      "question": "万华化学在MDI领域的全球地位如何？",
+      "faithfulness": 0.5555555555555556,
+      "answer_relevancy": 0.9566283662482876,
+      "context_recall": 0.0
+    },
+    {
+      "question": "万华化学的下游应用领域有哪些？",
+      "faithfulness": 0.2,
+      "answer_relevancy": 0.7584189435909371,
+      "context_recall": 0.0
+    },
+    {
+      "question": "兆易创新的主要产品线是什么？",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.6465306020962859,
+      "context_recall": 0.0
+    },
+    {
+      "question": "博源化工的天然碱业务有什么优势？",
+      "faithfulness": 0.875,
+      "answer_relevancy": 0.7701318835674988,
+      "context_recall": 0.0
+    },
+    {
+      "question": "当前有色金属行业的整体发展趋势如何？",
+      "faithfulness": 0.75,
+      "answer_relevancy": 0.98295300292379,
+      "context_recall": 0.0
+    }
+  ]
+}
