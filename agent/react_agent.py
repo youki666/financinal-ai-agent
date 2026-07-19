@@ -96,17 +96,6 @@ class ReactAgent:
         )
         self.conn.commit()
 
-    def delete_all_threads(self):
-        """清空所有对话线程和检查点"""
-        self.conn.execute("DELETE FROM threads")
-        for table in ("checkpoints", "writes"):
-            try:
-                self.conn.execute(f"DELETE FROM {table}")
-            except sqlite3.OperationalError:
-                pass  # 表尚不存在（SqliteSaver 惰性创建）
-        self.conn.commit()
-        logger.info("[Thread] 清空全部历史对话")
-
     def touch_thread(self, thread_id: str):
         """更新线程的最后活跃时间"""
         self.conn.execute(
@@ -114,17 +103,6 @@ class ReactAgent:
             (datetime.now().isoformat(), thread_id),
         )
         self.conn.commit()
-
-    def delete_thread(self, thread_id: str):
-        """删除线程及其所有检查点"""
-        self.conn.execute("DELETE FROM threads WHERE thread_id = ?", (thread_id,))
-        for table in ("checkpoints", "writes"):
-            try:
-                self.conn.execute(f"DELETE FROM {table} WHERE thread_id = ?", (thread_id,))
-            except sqlite3.OperationalError:
-                pass
-        self.conn.commit()
-        logger.info(f"[Thread] 删除对话: {thread_id}")
 
     def load_messages(self, thread_id: str) -> list[dict]:
         """加载指定线程的历史消息（供前端渲染用）"""
@@ -185,15 +163,15 @@ class ReactAgent:
             ):
                 msg_type = type(msg).__name__
 
-                # 工具执行完成
-                if msg_type == "ToolMessage":
-                    has_tool_started = True
-                    yield "\n> 正在检索资料...\n\n"
-                    continue
-
-                # 首轮思考阶段（调用工具前的自言自语）不展示，避免暴露工具名
-                if not has_tool_started:
-                    continue
+                # # 工具执行完成
+                # if msg_type == "ToolMessage":
+                #     has_tool_started = True
+                #     yield "\n> 正在检索资料...\n\n"
+                #     continue
+                #
+                # # 首轮思考阶段（调用工具前的自言自语）不展示，避免暴露工具名
+                # if not has_tool_started:
+                #     continue
 
                 # 模型逐 token 输出
                 if msg_type == "AIMessageChunk":

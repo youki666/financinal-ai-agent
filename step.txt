@@ -23,7 +23,6 @@ AI:   [回答...]
 
 4. Agent 能力扩展
 当前 Agent 只有检索能力，可以扩展：
-
 工具	说明	实现成本
 stock_quote_realtime	接入 AKShare/tushare 获取实时行情	低（API 调用）
 financial_calculator	PE/PB/ROE 等指标自动计算	低（纯 Python）

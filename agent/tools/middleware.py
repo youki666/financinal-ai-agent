@@ -96,11 +96,14 @@ def citation_tracker(
         elif isinstance(result, str):
             content = result
 
-        # 提取来源标记
+        # 提取来源标记（匹配多种格式：参考资料：[文件名]、来源：[文件名]）
         import re
         sources = re.findall(r'【来源[:：]([^】]+)】', content)
         if not sources:
             sources = re.findall(r'来源[:：]([^】\n]+)', content)
+        if not sources:
+            # 新格式：> 参考资料：xxx.pdf
+            sources = re.findall(r'参考资料[:：]\s*(.+?)(?:\n|$)', content)
 
         thread_id = getattr(request.runtime, "thread_id", "default")
         for src in sources:

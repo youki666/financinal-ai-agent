@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ClaudeCodeEditorTabs">
-    <option name="activeSessionId" value="71c9d92b-493b-4901-b6b8-3767ddd65e11" />
+    <option name="activeSessionId" value="230d213a-ef48-49ef-8912-eff36b3ba196" />
     <option name="openSessionIds">
       <list>
         <option value="71c9d92b-493b-4901-b6b8-3767ddd65e11" />
+        <option value="230d213a-ef48-49ef-8912-eff36b3ba196" />
       </list>
     </option>
     <option name="sessionPaths">
       <map>
+        <entry key="230d213a-ef48-49ef-8912-eff36b3ba196" value="/sessions/e482413f-b933-4098-b2ea-de56450b46d5" />
         <entry key="71c9d92b-493b-4901-b6b8-3767ddd65e11" value="/sessions/62f7f25b-da6f-41c9-8974-49f9604a5d8f" />
       </map>
     </option>
     <option name="sessionTitles">
       <map>
+        <entry key="230d213a-ef48-49ef-8912-eff36b3ba196" value="把历史对话的删除功能去掉" />
         <entry key="71c9d92b-493b-4901-b6b8-3767ddd65e11" value="uv run python -m rag.rag_service 之后为什么不输出紫金矿业相关内容而" />
       </map>
     </option>

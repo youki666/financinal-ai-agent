@@ -69,7 +69,7 @@ class ContextAssembler:
 
             if source_text.strip():
                 counter += 1
-                context_parts.append(f"【参考资料{counter}】来源：{source}\n{source_text}")
+                context_parts.append(f"--- 文档{counter}：{source} ---\n{source_text}")
 
         context = "\n".join(context_parts)
         logger.info(f"[ContextAssembler] 组装完成: {len(documents)} 文档 → {counter} 组, {total_chars} 字符")

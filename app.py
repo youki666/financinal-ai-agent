@@ -276,6 +276,21 @@ st.markdown("""
         50%      { box-shadow: 0 0 0 6px rgba(217,48,74,0); }
     }
 
+    /* ===== 运行状态居中 ===== */
+    .run-status {
+        text-align: center;
+        margin-top: 4px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+    }
+
+    /* ===== 状态列垂直居中 ===== */
+    .status-align {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
     /* ===== 示例查询按钮 ===== */
     .example-query .stButton > button {
         font-size: 0.8rem;
@@ -462,22 +477,12 @@ with st.sidebar:
     # --- 对话线程管理 ---
     st.markdown("#### 对话记录")
 
-    # 新对话 + 清空历史
-    c_new, c_clear = st.columns([3, 1])
-    with c_new:
-        if st.button("＋ 新对话", use_container_width=True, type="primary"):
-            st.session_state["thread_id"] = None
-            st.session_state["messages"] = []
-            clear_citations()
-            st.rerun()
-    with c_clear:
-        if threads := st.session_state["agent"].list_threads():
-            if st.button("清空", use_container_width=True, help="删除全部历史对话"):
-                st.session_state["agent"].delete_all_threads()
-                st.session_state["thread_id"] = None
-                st.session_state["messages"] = []
-                st.session_state["sidebar_tick"] += 1
-                st.rerun()
+    # 新对话
+    if st.button("＋ 新对话", use_container_width=True, type="primary"):
+        st.session_state["thread_id"] = None
+        st.session_state["messages"] = []
+        clear_citations()
+        st.rerun()
 
     # 获取线程列表
     threads = st.session_state["agent"].list_threads()
@@ -489,28 +494,17 @@ with st.sidebar:
             is_active = st.session_state["thread_id"] == tid
             title = t["title"]
 
-            c_main, c_del = st.columns([5, 1])
-            with c_main:
-                label = f"● {title}" if is_active else title
-                if st.button(
-                        label,
-                        use_container_width=True,
-                        key=f"thr_{tid}_{st.session_state['sidebar_tick']}",
-                        help=f"创建: {t['created_at'][:16]}\n更新: {t['updated_at'][:16]}",
-                ):
-                    # 切换到这个对话
-                    st.session_state["thread_id"] = tid
-                    st.session_state["messages"] = st.session_state["agent"].load_messages(tid)
-                    clear_citations()
-                    st.rerun()
-            with c_del:
-                if st.button("✕", key=f"delth_{tid}_{st.session_state['sidebar_tick']}", help="删除此对话"):
-                    st.session_state["agent"].delete_thread(tid)
-                    if st.session_state["thread_id"] == tid:
-                        st.session_state["thread_id"] = None
-                        st.session_state["messages"] = []
-                    st.session_state["sidebar_tick"] += 1
-                    st.rerun()
+            label = f"● {title}" if is_active else title
+            if st.button(
+                    label,
+                    use_container_width=True,
+                    key=f"thr_{tid}_{st.session_state['sidebar_tick']}",
+                    help=f"创建: {t['created_at'][:16]}\n更新: {t['updated_at'][:16]}",
+            ):
+                st.session_state["thread_id"] = tid
+                st.session_state["messages"] = st.session_state["agent"].load_messages(tid)
+                clear_citations()
+                st.rerun()
     else:
         st.caption("暂无历史对话")
 
@@ -601,7 +595,6 @@ if st.session_state["_run_active"]:
     with stop_col:
         st.markdown('<div class="stop-btn">', unsafe_allow_html=True)
         if st.button("■ 停止", key="stop_run", use_container_width=True):
-            # 保存已有部分结果
             full = re.sub(
                 r'\n?> 正在检索资料\.\.\.\n\n?', '',
                 "".join(st.session_state["_run_chunks"]),
@@ -618,12 +611,13 @@ if st.session_state["_run_active"]:
             st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
     with status_col:
-        # 统计已执行的工具调用次数
+        st.markdown('<div class="status-align">', unsafe_allow_html=True)
         tool_count = "".join(st.session_state["_run_chunks"]).count("> 正在检索资料...")
         if tool_count > 0:
             st.caption(f"已检索 {tool_count} 次，模型思考中...")
         else:
             st.caption("模型思考中...")
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # 实时展示已生成的内容
     current_text = "".join(st.session_state["_run_chunks"])

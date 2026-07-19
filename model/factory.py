@@ -23,7 +23,7 @@ model_configs: dict[str, LLMConfig] = {
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,
-        description="标准模型 (qwen-plus) — 简单问答",
+        description="快速模型 (qwen-turbo) — 简单问答",
     ),
     "standard": LLMConfig(
         provider="openai",
@@ -35,11 +35,11 @@ model_configs: dict[str, LLMConfig] = {
     ),
     "powerful": LLMConfig(
         provider="openai",
-        model_name="deepseek-v4-pro",
+        model_name="qwen-max",
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,
-        description="强力模型 (qwen-plus) — 研报生成/复杂分析",
+        description="强力模型 (qwen-max) — 研报生成/复杂分析",
     ),
 }
 
