@@ -6,7 +6,7 @@ import yaml
 from utils.path_tool import  get_abs_path
 
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 def load_rag_config(config_path:str=get_abs_path('config/rag.yaml'),encoding:str='utf-8'):

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from model.router import LLMConfig, ModelRouter, RoutableChatModel
 from utils.config_handler import rag_conf
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 def _get_api_key() -> str:
