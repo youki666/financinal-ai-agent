@@ -42,7 +42,7 @@ model_configs: dict[str, LLMConfig] = {
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,
-        description="快速模型 (qwen-turbo) — 简单问答",
+        description="快速模型 (qwen-plus) — 简单问答",
     ),
     "standard": LLMConfig(
         provider="openai",

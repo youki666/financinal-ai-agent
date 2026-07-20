@@ -502,7 +502,7 @@ with st.sidebar:
         for t in threads:
             tid = t["thread_id"]
             is_active = st.session_state["thread_id"] == tid
-            title = t["title"]
+            title = t["title"][:16]+'...'
 
             label = f"● {title}" if is_active else title
             if st.button(

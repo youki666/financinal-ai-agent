@@ -12,6 +12,7 @@ from utils.logger_handler import logger
 from agent.tools.agent_tools import rag_summarize, stock_brief, industry_overview, generate_report
 from agent.tools.stock_tools import stock_quote_realtime, stock_history
 from agent.tools.news_tools import financial_news, flash_news
+from agent.tools.search_tools import web_search
 from agent.tools.middleware import (
     monitor_tool,
     retrieval_quality_guard,
@@ -37,7 +38,8 @@ class ReactAgent:
             model=chat_model,
             system_prompt=load_system_prompts(),
             tools=[rag_summarize, stock_brief, industry_overview, generate_report,
-                   stock_quote_realtime, stock_history, financial_news, flash_news],
+                   stock_quote_realtime, stock_history, financial_news, flash_news,
+                   web_search],
             middleware=[
                 monitor_tool,
                 retrieval_quality_guard,
@@ -176,6 +178,7 @@ class ReactAgent:
             "stock_history": "正在查询历史走势...",
             "financial_news": "正在检索最新财经新闻...",
             "flash_news": "正在获取市场实时快讯...",
+            "web_search": "正在联网搜索最新信息...",
         }
 
         def _tool_label(tool_name: str) -> str:

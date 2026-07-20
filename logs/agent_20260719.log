@@ -1590,3 +1590,1711 @@ During task with name 'tools' and id 'fe9b1627-3ba3-7368-6a4a-b2cffc3aeff5'
 2026-07-19 19:32:05,275 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=25, 最后消息类型=ToolMessage
 2026-07-19 19:32:05,277 - agent - INFO - router.py:68 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
 2026-07-19 19:50:51,753 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 20:19:10,994 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 20:19:11,527 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: a62037ad68f8 (新对话)
+2026-07-19 20:19:11,675 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 20:19:11,679 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:12,919 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: stock_brief
+2026-07-19 20:19:12,919 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'stock_code': '紫金矿业'}
+2026-07-19 20:19:12,920 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业 主营业务 财务数据 近期动态 公司概况'
+2026-07-19 20:19:12,921 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:14,249 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业 主营业务 财务数据 近期动态 公司概况' → ['紫金矿业 公司概况 主营业务', '紫金矿业 财务数据 2025年', '紫金矿业 近期动态 有色金属行业 产业链']
+2026-07-19 20:19:14,749 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 20:19:14,749 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:15,034 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 20:19:15,034 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:15,545 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 20:19:15,545 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:15,545 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 20:19:15,546 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 748 字符
+2026-07-19 20:19:15,546 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:19:20,691 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:19:20,691 - agent - INFO - middleware.py:31 - [ToolMonitor] stock_brief 调用成功, 结果预览: content='紫金矿业的主营业务包括黄金和铜等有色金属的开采与销售。根据2026年第一季度财报，公司实现营业收入985亿元，同比增长25%，归母净利润201亿元，同比增长98%。经营活动产生的现金流量净额为278亿元，同比增长122%。产量方面，矿产金达到23.5吨，同比增加23%，这得益于加纳阿基姆金矿以及哈萨克斯坦瑞果多金矿开始逐步贡献增量；矿产铜26万吨，巨龙铜矿二期自2026年初投产以来产能持续提升。此外，碳酸锂业务也开始成为公司的新增长点。\n\n> 参考资料：[紫金矿业(601899).pdf]' name='stock_brief' tool_call_id='call_39
+2026-07-19 20:19:20,693 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=3, 最后消息类型=ToolMessage
+2026-07-19 20:19:20,699 - agent - INFO - router.py:68 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 20:19:22,076 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: industry_overview
+2026-07-19 20:19:22,076 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'industry': '有色金属'}
+2026-07-19 20:19:22,077 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '有色金属 产业链 竞争格局 政策 发展趋势 行业分析'
+2026-07-19 20:19:22,078 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:23,162 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '有色金属 产业链 竞争格局 政策 发展趋势 行业分析' → ['有色金属行业产业链结构与上下游协同分析', '有色金属行业竞争格局及龙头企业市场份额（2025年）', '有色金属行业政策导向与发展前景（含双碳、资源安全、新材料支持政策）']
+2026-07-19 20:19:23,570 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:23,570 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:23,912 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:23,913 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:24,355 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:24,356 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:24,356 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 20:19:24,356 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 700 字符
+2026-07-19 20:19:24,357 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:19:32,979 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:19:32,979 - agent - INFO - middleware.py:31 - [ToolMonitor] industry_overview 调用成功, 结果预览: content='有色金属行业的分析显示，以紫金矿业为例，其在黄金、铜以及碳酸锂等矿产资源的产量上呈现增长态势。黄金板块由于新并购矿山开始贡献增量，预计未来几年内将持续释放增长潜力；铜板块虽然受到卡莫阿-卡库拉铜矿减产的影响，但巨龙铜矿二期产能提升有望弥补这一缺口；碳酸锂则被视为公司新的核心增长点之一。成本方面，紫金矿业对主要产品的单位销售成本控制良好，特别是26Q1期间，金精矿、铜精矿及碳酸锂的成本均较上季度有所下降。长期来看，该公司制定了到2028年的生产目标，计划大幅提高矿产金、矿产铜和当量碳酸锂的年产量，旨在扩大市场份额并推动业绩增长。\n\n> 参考资料：[紫金矿业(601899).
+2026-07-19 20:19:32,981 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=5, 最后消息类型=ToolMessage
+2026-07-19 20:19:32,984 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:34,983 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 20:19:34,983 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '铜价和金价2025-2027年走势预测及供需驱动因素'}
+2026-07-19 20:19:34,985 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '铜价和金价2025-2027年走势预测及供需驱动因素'
+2026-07-19 20:19:34,986 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:36,403 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '铜价和金价2025-2027年走势预测及供需驱动因素' → ['铜价 2025-2027年价格预测 供需平衡分析', '金价 2025-2027年价格预测 宏观驱动因素', '有色金属行业 铜金价格联动机制 产业链供需格局']
+2026-07-19 20:19:36,710 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:36,710 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:37,330 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:37,330 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:37,828 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:37,828 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:37,829 - agent - INFO - rag_service.py:51 - [RAG] 检索到 5 篇相关文档
+2026-07-19 20:19:37,829 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 622 字符
+2026-07-19 20:19:37,831 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:19:42,616 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:19:42,617 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='根据参考资料，预计2025-2027年间铜价和金价将保持稳健上行趋势。对于黄金而言，紫金矿业旗下的新并购项目如加纳阿基姆金矿及哈萨克斯坦瑞果多金矿将逐步贡献增量，推动产量增长。而对于铜来说，尽管卡莫阿-卡库拉铜矿有所减产，但巨龙铜矿二期自2026年初开始产能爬坡，为整体供应带来积极影响。供需驱动因素主要包括新增矿山投产带来的供给增加以及市场需求的变化。此外，还应注意金铜价格存在超预期下跌的风险。\n> 参考资料：[紫金矿业(601899).pdf]' name='rag_summarize' tool_call_id='call_6aa13a8addef4992b4b78b'
+2026-07-19 20:19:42,623 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=7, 最后消息类型=ToolMessage
+2026-07-19 20:19:42,644 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:44,325 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 20:19:44,325 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '紫金矿业资源储量、成本优势及海外项目风险分析'}
+2026-07-19 20:19:44,326 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '紫金矿业资源储量、成本优势及海外项目风险分析'
+2026-07-19 20:19:44,327 - agent - INFO - router.py:63 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:19:45,329 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业资源储量、成本优势及海外项目风险分析' → ['紫金矿业资源储量及品位分析', '紫金矿业现金成本与行业对比（2025年）', '紫金矿业海外矿产项目政治与运营风险']
+2026-07-19 20:19:45,626 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:45,626 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:46,091 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:46,091 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:46,697 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:19:46,697 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:19:46,697 - agent - INFO - rag_service.py:51 - [RAG] 检索到 4 篇相关文档
+2026-07-19 20:19:46,697 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 20:19:46,698 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:19:52,760 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:19:52,760 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='紫金矿业在2026年第一季度实现了较高的利润增长，其中矿产金产量达到23.5吨，同比增长23%，主要得益于新并购的加纳阿基姆金矿及哈萨克斯坦瑞果多金矿开始贡献增量。关于资源储量的具体数据未提供，但可以推测随着新增矿山的投产，公司资源储量有所增加。\n\n成本优势方面，虽然没有直接提及具体成本数据，但从经营活动产生的现金流量净额大幅增长122%至278亿元来看，表明公司在成本控制上表现良好，具备一定的成本优势。\n\n对于海外项目风险分析，报告中提到铜板块因卡莫阿-卡库拉铜矿减产对总产量有一定影响，但其他矿山按计划推进，且巨龙铜矿二期自年初投产后产能持续提升，显示出公司在应对海
+2026-07-19 20:19:52,762 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=9, 最后消息类型=ToolMessage
+2026-07-19 20:19:52,764 - agent - INFO - router.py:52 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:30:52,373 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 20:30:52,502 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 20:30:57,811 - agent - INFO - react_agent.py:108 - [Thread] 清空全部历史对话
+2026-07-19 20:31:09,046 - agent - INFO - react_agent.py:74 - [Thread] 创建对话: bc70fc03ad6d (新对话)
+2026-07-19 20:31:09,191 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 20:31:09,195 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:31:10,798 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: stock_brief
+2026-07-19 20:31:10,798 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'stock_code': '贵州茅台'}
+2026-07-19 20:31:10,799 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '贵州茅台 主营业务 财务数据 近期动态 公司概况'
+2026-07-19 20:31:10,800 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:31:11,847 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台 主营业务 财务数据 近期动态 公司概况' → ['贵州茅台 公司概况 主营业务', '贵州茅台 财务数据 2025年', '贵州茅台 近期动态 酿酒行业 产业链']
+2026-07-19 20:31:12,273 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 20:31:12,274 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:12,585 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 20:31:12,586 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:12,944 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 20:31:12,944 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:12,944 - agent - INFO - rag_service.py:51 - [RAG] 检索到 7 篇相关文档
+2026-07-19 20:31:12,945 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 2 组, 1222 字符
+2026-07-19 20:31:12,946 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:31:19,945 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:31:19,945 - agent - INFO - middleware.py:31 - [ToolMonitor] stock_brief 调用成功, 结果预览: content='贵州茅台的主营业务包括生产和销售茅台酒及其系列酒。公司2025年年报显示其实现营收1688.38亿元，同比下降1.21%；净利润为823.2亿元。进入2026年后，单季度业绩已经恢复增长。公司计划在2024至2026年间每年度分配的现金红利总额不低于当年实现归属于上市公司股东净利润的75%，并分两次（年度和中期）实施分红。此外，公司还通过回购和注销股份来维护股价稳定，以保护投资者利益。2026年初，i茅台平台上线了飞天茅台500ml产品，并调整了该产品的销售合同价与自营体系零售价格。近期，公司表示其渠道库存保持在良性健康水平，春节期间茅台1935酒和茅台王子酒市场动销有所加快
+2026-07-19 20:31:19,947 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=3, 最后消息类型=ToolMessage
+2026-07-19 20:31:19,948 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:31:21,297 - agent - INFO - middleware.py:24 - [ToolMonitor] 执行工具: rag_summarize
+2026-07-19 20:31:21,297 - agent - INFO - middleware.py:25 - [ToolMonitor] 入参: {'query': '贵州茅台 近期股价走势 技术面 市场情绪'}
+2026-07-19 20:31:21,298 - agent - INFO - rag_service.py:48 - [RAG] 开始处理: '贵州茅台 近期股价走势 技术面 市场情绪'
+2026-07-19 20:31:21,298 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:31:22,733 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台 近期股价走势 技术面 市场情绪' → ['贵州茅台 股价走势 技术分析 2025年', '贵州茅台 市场情绪 情绪指标 资金流向', '白酒行业 产业链结构 政策动向 2025年']
+2026-07-19 20:31:23,035 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 20:31:23,035 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:23,409 - agent - INFO - vector_store.py:128 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 20:31:23,409 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:23,752 - agent - INFO - vector_store.py:123 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 20:31:23,752 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 20:31:23,752 - agent - INFO - rag_service.py:51 - [RAG] 检索到 8 篇相关文档
+2026-07-19 20:31:23,752 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 2 组, 1336 字符
+2026-07-19 20:31:23,753 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 20:31:25,925 - agent - INFO - middleware.py:114 - [CitationTracker] 追踪到 1 个来源
+2026-07-19 20:31:25,925 - agent - INFO - middleware.py:31 - [ToolMonitor] rag_summarize 调用成功, 结果预览: content='贵州茅台近期股价走势显示，2025年公司营收首次出现下降，但2026年一季度已恢复增长。从技术面来看，飞天茅台500ml的合同价和自营体系零售价在2026年初有所上调，这可能对市场情绪产生一定积极影响。然而，白酒行业整体仍处于探底阶段，市场竞争激烈，需关注消费信心及商务消费情况对高端白酒销量的影响。\n\n> 参考资料：[贵州茅台.pdf]' name='rag_summarize' tool_call_id='call_da917e9f4eca4a5fa9e594'
+2026-07-19 20:31:25,927 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=5, 最后消息类型=ToolMessage
+2026-07-19 20:31:25,929 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 20:32:12,354 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 21:52:44,225 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 21:53:20,075 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 21:53:20,075 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 21:53:20,084 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:22,684 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务构成', '紫金矿业 有色金属采矿业 产业链定位', '紫金矿业 黄金铜矿开采 主营收入来源']
+2026-07-19 21:53:23,152 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:23,152 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:23,483 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:23,484 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:23,746 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:23,746 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:23,746 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:53:23,746 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 21:53:23,748 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:26,676 - agent - INFO - eval_runner.py:88 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=135
+2026-07-19 21:53:26,676 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 21:53:26,677 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:27,870 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 境外矿山项目清单 2025年', '紫金矿业 有色金属产业链 海外资源并购']
+2026-07-19 21:53:28,202 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:28,202 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:28,502 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:28,503 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:28,891 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:53:28,891 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:28,891 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 3 篇相关文档
+2026-07-19 21:53:28,891 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 21:53:28,892 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:31,110 - agent - INFO - eval_runner.py:88 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=3 answer_len=107
+2026-07-19 21:53:31,110 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 21:53:31,110 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:32,235 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势', '贵州茅台 白酒行业 竞争壁垒', '贵州茅台 品牌溢价 供应链控制力']
+2026-07-19 21:53:32,615 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:32,615 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:32,953 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:32,954 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:33,243 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:33,243 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:33,244 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:53:33,244 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 21:53:33,245 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:36,946 - agent - INFO - eval_runner.py:88 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=5 answer_len=200
+2026-07-19 21:53:36,947 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 21:53:36,948 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:38,169 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成 2025年', '贵州茅台 主营业务收入分产品结构', '白酒行业 贵州茅台 产业链营收分布']
+2026-07-19 21:53:38,467 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:38,467 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:38,762 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:38,763 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:39,076 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:39,076 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:39,077 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:53:39,077 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 21:53:39,077 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:44,074 - agent - INFO - eval_runner.py:88 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=260
+2026-07-19 21:53:44,075 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 21:53:44,075 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:45,343 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 主营业务构成 光伏设备制造', '阳光电源 行业地位 市场份额 光伏逆变器']
+2026-07-19 21:53:45,676 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:53:45,676 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:46,027 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:53:46,027 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:46,305 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:53:46,305 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:46,306 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 7 篇相关文档
+2026-07-19 21:53:46,306 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 1 组, 948 字符
+2026-07-19 21:53:46,306 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:49,682 - agent - INFO - eval_runner.py:88 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=7 answer_len=150
+2026-07-19 21:53:49,682 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 21:53:49,683 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:50,572 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 产业链位置']
+2026-07-19 21:53:50,942 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:53:50,942 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:51,276 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:53:51,276 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:51,549 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:53:51,549 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:51,549 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 21:53:51,549 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 21:53:51,550 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:53:54,939 - agent - INFO - eval_runner.py:88 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=178
+2026-07-19 21:53:54,939 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 21:53:54,940 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:53:55,997 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 21:53:56,285 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:56,286 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:56,553 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:56,553 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:56,800 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:53:56,800 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:53:56,800 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:53:56,800 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 1000 字符
+2026-07-19 21:53:56,801 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:00,866 - agent - INFO - eval_runner.py:88 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=6 answer_len=224
+2026-07-19 21:54:00,866 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 21:54:00,867 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:02,112 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 市场份额 全球排名', '万华化学 MDI 产能规模 2025年', '万华化学 聚氨酯产业链 上游原料与下游应用布局']
+2026-07-19 21:54:02,541 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:02,541 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:02,894 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:02,895 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:03,241 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:03,242 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:03,244 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:54:03,245 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 899 字符
+2026-07-19 21:54:03,248 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:06,451 - agent - INFO - eval_runner.py:88 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=5 answer_len=158
+2026-07-19 21:54:06,451 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 21:54:06,452 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:07,364 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游细分行业', '万华化学 主要终端应用市场']
+2026-07-19 21:54:07,825 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:07,825 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:08,115 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:08,115 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:08,441 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:54:08,441 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:08,441 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:54:08,442 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 21:54:08,442 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:10,700 - agent - INFO - eval_runner.py:88 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=109
+2026-07-19 21:54:10,700 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 21:54:10,701 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:11,826 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品结构', '兆易创新 半导体行业 产业链定位']
+2026-07-19 21:54:12,115 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:54:12,116 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 21:54:12,116 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 21:54:12,498 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:54:12,499 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:12,836 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:54:12,836 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:12,836 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:54:12,836 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 624 字符
+2026-07-19 21:54:12,837 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:14,697 - agent - INFO - eval_runner.py:88 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=4 answer_len=112
+2026-07-19 21:54:14,697 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 21:54:14,697 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:16,010 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务竞争优势', '博源化工 天然碱 产业链地位 上游资源禀赋', '博源化工 天然碱 行业壁垒 成本结构优势']
+2026-07-19 21:54:16,270 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:54:16,271 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:16,609 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:54:16,609 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:16,860 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:54:16,860 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:16,860 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:54:16,860 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 21:54:16,861 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:18,796 - agent - INFO - eval_runner.py:88 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=126
+2026-07-19 21:54:18,796 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 21:54:18,796 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:19,938 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年景气度分析', '有色金属行业2025年价格走势与供需格局', '有色金属产业链上游资源端及中游冶炼环节盈利趋势']
+2026-07-19 21:54:20,251 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:54:20,251 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:20,493 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:54:20,493 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:20,832 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:54:20,832 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:54:20,832 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:54:20,832 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 2 组, 461 字符
+2026-07-19 21:54:20,833 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:25,908 - agent - INFO - eval_runner.py:88 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=4 answer_len=217
+2026-07-19 21:54:27,017 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,017 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:27,017 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,017 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,018 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:27,018 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,019 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:27,023 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,027 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:27,029 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:54:27,036 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:27,039 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:29,519 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:54:29,522 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:29,556 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:29,625 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:30,054 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:30,559 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:31,678 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:31,679 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:31,749 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:32,657 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:34,774 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:54:35,184 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:56:55,202 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 21:56:55,204 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 21:56:55,214 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:56:57,391 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务构成', '紫金矿业 有色金属采矿业 产业链定位', '紫金矿业 2025年 主营业务收入结构']
+2026-07-19 21:56:57,709 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:56:57,710 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:56:57,992 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:56:57,992 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:56:58,309 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:56:58,309 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:56:58,309 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:56:58,310 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 21:56:58,311 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:01,832 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=184
+2026-07-19 21:57:01,833 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 21:57:01,833 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:02,908 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 海外矿山项目分布 2025年', '紫金矿业 黄金铜矿海外产能 有色金属产业链']
+2026-07-19 21:57:03,221 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:57:03,221 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:03,547 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:57:03,548 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:03,885 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:57:03,885 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:03,885 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:57:03,886 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 673 字符
+2026-07-19 21:57:03,886 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:05,972 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=5 answer_len=79
+2026-07-19 21:57:05,972 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 21:57:05,972 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:07,008 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势 2025年', '贵州茅台 白酒行业 护城河分析', '贵州茅台 产业链上游 控制力 源头优势']
+2026-07-19 21:57:07,357 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:07,357 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:07,644 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:07,644 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:08,086 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:08,087 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:08,087 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:57:08,088 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 1003 字符
+2026-07-19 21:57:08,089 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:11,324 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=6 answer_len=252
+2026-07-19 21:57:11,325 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 21:57:11,325 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:12,271 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成', '贵州茅台 分产品收入结构', '贵州茅台 酒类行业 上游原材料成本占比']
+2026-07-19 21:57:12,603 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:12,604 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:12,890 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:12,891 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:13,271 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:13,271 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:13,272 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:57:13,272 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 918 字符
+2026-07-19 21:57:13,273 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:16,120 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=203
+2026-07-19 21:57:16,120 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 21:57:16,121 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:17,582 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 主营业务构成 光伏上游中游下游分布', '阳光电源 行业分类 申万光伏设备行业地位']
+2026-07-19 21:57:17,852 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:57:17,853 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:18,150 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:57:18,151 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:18,530 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:57:18,530 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:18,531 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:57:18,531 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 611 字符
+2026-07-19 21:57:18,532 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:21,644 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=5 answer_len=127
+2026-07-19 21:57:21,645 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 21:57:21,645 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:22,591 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 解决方案']
+2026-07-19 21:57:22,874 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:57:22,874 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:23,139 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:23,140 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:23,380 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:23,380 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:23,380 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 21:57:23,380 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 21:57:23,381 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:26,720 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=195
+2026-07-19 21:57:26,721 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 21:57:26,721 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:27,636 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 21:57:27,997 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:27,998 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:28,340 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:28,340 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:28,620 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:28,621 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:28,621 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:57:28,621 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 1000 字符
+2026-07-19 21:57:28,623 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:32,198 - agent - INFO - eval_runner.py:87 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=6 answer_len=187
+2026-07-19 21:57:32,199 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 21:57:32,199 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:33,353 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能排名 全球化工行业', '万华化学 MDI 产业链地位 上游原料下游应用']
+2026-07-19 21:57:33,644 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:33,644 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:33,955 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:33,956 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:34,297 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:34,298 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:34,298 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:57:34,298 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 854 字符
+2026-07-19 21:57:34,299 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:37,111 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=6 answer_len=134
+2026-07-19 21:57:37,111 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 21:57:37,112 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:38,134 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游行业分布', '万华化学 主要终端应用市场 2025']
+2026-07-19 21:57:38,472 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:38,472 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:38,717 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:57:38,717 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:39,043 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:39,043 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:39,043 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:57:39,043 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 21:57:39,044 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:40,612 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=97
+2026-07-19 21:57:40,612 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 21:57:40,613 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:41,583 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品分类', '兆易创新 半导体行业 产业链定位']
+2026-07-19 21:57:41,831 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:41,831 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 21:57:41,832 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 21:57:42,189 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:42,189 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:42,542 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:57:42,542 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:42,543 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:57:42,543 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 805 字符
+2026-07-19 21:57:42,544 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:44,543 - agent - INFO - eval_runner.py:87 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=5 answer_len=104
+2026-07-19 21:57:44,543 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 21:57:44,543 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:45,769 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务优势', '博源化工 纯碱行业 天然碱资源禀赋', '博源化工 天然碱 产业链成本结构']
+2026-07-19 21:57:46,043 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:57:46,043 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:46,409 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:57:46,409 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:46,873 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:57:46,873 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:46,873 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:57:46,873 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 21:57:46,874 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:48,763 - agent - INFO - eval_runner.py:87 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=136
+2026-07-19 21:57:48,763 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 21:57:48,764 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:50,048 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年发展趋势', '有色金属行业2025年供需格局分析', '有色金属行业2025年价格走势与成本结构']
+2026-07-19 21:57:50,548 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:57:50,548 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:50,899 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:57:50,899 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:51,163 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:57:51,164 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:57:51,164 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:57:51,164 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 656 字符
+2026-07-19 21:57:51,165 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:55,233 - agent - INFO - eval_runner.py:87 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=4 answer_len=181
+2026-07-19 21:57:56,332 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,332 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,332 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,333 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:56,333 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:56,333 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,333 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:56,337 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,342 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,345 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 21:57:56,348 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:56,352 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:58,293 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:59,137 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:59,140 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:57:59,431 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:57:59,754 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:00,278 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:00,356 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:00,803 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:01,907 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:01,909 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:03,640 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:03,860 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:58:56,595 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 21:58:56,596 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 21:58:56,605 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:58:58,540 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务构成', '紫金矿业 有色金属矿产开采 业务范围', '紫金矿业 黄金铜矿 产业链位置']
+2026-07-19 21:58:58,922 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:58:58,922 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:58:59,325 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:58:59,325 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:58:59,578 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:58:59,578 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:58:59,578 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:58:59,578 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 21:58:59,580 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:04,491 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=204
+2026-07-19 21:59:04,492 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 21:59:04,492 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:05,622 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 境外矿山项目清单 2025年', '紫金矿业 有色金属产业链 海外资源并购']
+2026-07-19 21:59:06,113 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:59:06,114 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:06,561 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:59:06,561 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:07,044 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 21:59:07,044 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:07,044 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 3 篇相关文档
+2026-07-19 21:59:07,044 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 21:59:07,045 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:09,519 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=3 answer_len=124
+2026-07-19 21:59:09,520 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 21:59:09,520 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:10,666 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势 2025年', '贵州茅台 白酒行业 护城河分析', '贵州茅台 酿酒产业链 上游议价能力']
+2026-07-19 21:59:10,979 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:10,980 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:11,362 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:11,363 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:11,822 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:11,823 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:11,823 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:59:11,823 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 1003 字符
+2026-07-19 21:59:11,824 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:15,970 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=6 answer_len=209
+2026-07-19 21:59:15,970 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 21:59:15,971 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:17,349 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成 2025年', '贵州茅台 酒类业务收入占比 食品饮料行业', '贵州茅台 主营业务分产品结构 白酒产业链']
+2026-07-19 21:59:17,659 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:17,660 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:18,149 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:18,150 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:18,450 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:18,450 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:18,450 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:59:18,451 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 890 字符
+2026-07-19 21:59:18,452 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:20,686 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=154
+2026-07-19 21:59:20,687 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 21:59:20,688 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:22,322 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 主营业务构成 光伏逆变器', '阳光电源 行业地位 市场份额 2025']
+2026-07-19 21:59:22,635 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:59:22,635 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:22,918 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:22,918 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:23,326 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:23,327 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:23,327 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:59:23,331 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 691 字符
+2026-07-19 21:59:23,332 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:26,513 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=5 answer_len=137
+2026-07-19 21:59:26,513 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 21:59:26,513 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:27,417 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 产业链位置']
+2026-07-19 21:59:27,663 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 21:59:27,663 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:27,916 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:27,917 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:28,267 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:28,267 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:28,268 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 21:59:28,268 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 21:59:28,269 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:30,708 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=199
+2026-07-19 21:59:30,708 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 21:59:30,709 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:31,612 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 21:59:31,919 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:31,920 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:32,286 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:32,286 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:32,639 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:32,639 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:32,640 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:59:32,641 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 1000 字符
+2026-07-19 21:59:32,642 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:38,957 - agent - INFO - eval_runner.py:87 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=6 answer_len=245
+2026-07-19 21:59:38,957 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 21:59:38,958 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:40,307 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能规模 全球排名', '万华化学 化工行业 聚氨酯产业链 MDI 供应地位']
+2026-07-19 21:59:40,699 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:40,699 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:41,192 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:41,193 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:41,516 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:41,516 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:41,516 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 21:59:41,517 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 976 字符
+2026-07-19 21:59:41,518 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:44,479 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=6 answer_len=138
+2026-07-19 21:59:44,479 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 21:59:44,479 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:45,317 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游细分行业', '万华化学 主要终端应用市场']
+2026-07-19 21:59:45,695 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:45,696 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:45,992 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:45,993 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:46,395 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 21:59:46,396 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:46,396 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:59:46,396 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 21:59:46,397 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:48,288 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=97
+2026-07-19 21:59:48,288 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 21:59:48,288 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:49,202 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品分类', '兆易创新 半导体行业 产业链定位']
+2026-07-19 21:59:49,516 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:49,516 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 21:59:49,516 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 21:59:49,791 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:49,791 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:50,124 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 21:59:50,125 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:50,125 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 21:59:50,125 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 805 字符
+2026-07-19 21:59:50,126 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:51,435 - agent - INFO - eval_runner.py:87 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=5 answer_len=74
+2026-07-19 21:59:51,436 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 21:59:51,441 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:52,481 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务优势', '博源化工 纯碱产业链 上游资源禀赋', '博源化工 天然碱产能规模 成本结构']
+2026-07-19 21:59:52,733 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:59:52,733 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:53,044 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:59:53,045 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:53,315 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 21:59:53,315 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:53,315 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:59:53,315 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 21:59:53,316 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:55,495 - agent - INFO - eval_runner.py:87 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=126
+2026-07-19 21:59:55,496 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 21:59:55,496 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 21:59:56,397 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年发展趋势', '有色金属行业2025年供需格局分析', '有色金属行业2025年价格走势与库存变化']
+2026-07-19 21:59:56,712 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:59:56,713 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:56,986 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:59:56,987 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:57,259 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 21:59:57,259 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 21:59:57,259 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 21:59:57,260 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 532 字符
+2026-07-19 21:59:57,260 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 21:59:59,822 - agent - INFO - eval_runner.py:87 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=4 answer_len=176
+2026-07-19 22:00:00,990 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:00,991 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:00,992 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:00,992 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:00,992 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:00,996 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:00,998 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:00,999 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:01,001 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:01,005 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:01,005 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:02,202 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:02,206 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:02,213 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:02,252 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:02,317 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:03,212 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:03,268 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:03,337 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:03,349 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:03,540 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:05,639 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:05,641 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:05,641 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:05,644 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:05,653 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:05,654 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,079 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:07,082 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,087 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:07,087 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,087 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,087 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,088 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,088 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,088 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:07,088 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:07,089 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:07,092 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:07,161 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:08,103 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:08,267 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:08,285 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:08,312 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:08,315 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:08,339 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:08,817 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:09,528 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:09,530 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:09,782 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:00:10,311 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:10,590 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:10,619 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:10,718 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:11,479 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:11,479 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:11,479 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:12,057 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:12,400 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:12,500 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:13,050 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:13,175 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:13,454 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:14,155 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:14,204 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:00:15,035 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:00:16,876 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:24,037 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 22:16:24,040 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 22:16:24,052 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:26,908 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务', '紫金矿业 有色金属矿产开采 业务构成', '紫金矿业 黄金铜矿 产业链上游']
+2026-07-19 22:16:27,250 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:27,250 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:27,501 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:27,502 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:27,845 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:27,845 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:27,846 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:16:27,846 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 22:16:27,847 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:31,309 - agent - INFO - eval_runner.py:91 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=153
+2026-07-19 22:16:31,309 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 22:16:31,310 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:32,415 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 海外矿山项目分布 2025年', '紫金矿业 有色金属产业链 海外资源并购']
+2026-07-19 22:16:32,695 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:32,695 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:33,191 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:33,191 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:33,457 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:16:33,458 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:33,458 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 3 篇相关文档
+2026-07-19 22:16:33,458 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 22:16:33,460 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:36,602 - agent - INFO - eval_runner.py:91 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=3 answer_len=150
+2026-07-19 22:16:36,603 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 22:16:36,603 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:37,558 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势', '贵州茅台 白酒行业 竞争壁垒', '贵州茅台 品牌溢价 供应链控制力']
+2026-07-19 22:16:37,828 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:37,829 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:38,145 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:38,146 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:38,402 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:38,402 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:38,402 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:16:38,402 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 22:16:38,403 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:42,868 - agent - INFO - eval_runner.py:91 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=5 answer_len=226
+2026-07-19 22:16:42,869 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 22:16:42,869 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:43,898 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成 2025年', '贵州茅台 主营业务收入分产品结构', '白酒行业 贵州茅台 产业链营收分布']
+2026-07-19 22:16:44,142 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:44,142 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:44,524 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:44,525 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:44,742 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:16:44,742 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:44,742 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:16:44,742 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 22:16:44,743 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:49,501 - agent - INFO - eval_runner.py:91 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=219
+2026-07-19 22:16:49,501 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 22:16:49,502 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:50,516 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 光伏行业 上游中游下游分布', '阳光电源 主营业务构成 2025年']
+2026-07-19 22:16:50,833 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:16:50,833 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:51,186 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:16:51,186 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:51,414 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:16:51,414 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:51,414 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:16:51,414 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 505 字符
+2026-07-19 22:16:51,415 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:16:53,911 - agent - INFO - eval_runner.py:91 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=4 answer_len=112
+2026-07-19 22:16:53,912 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 22:16:53,912 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:16:54,949 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 解决方案']
+2026-07-19 22:16:55,165 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:16:55,166 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:55,438 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:16:55,438 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:55,772 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:16:55,772 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:16:55,772 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 22:16:55,773 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 22:16:55,774 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:00,085 - agent - INFO - eval_runner.py:91 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=211
+2026-07-19 22:17:00,085 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 22:17:00,086 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:01,186 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 22:17:01,419 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:01,419 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:01,669 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:01,670 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:01,950 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:01,951 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:01,951 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:17:01,951 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 694 字符
+2026-07-19 22:17:01,952 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:05,444 - agent - INFO - eval_runner.py:91 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=4 answer_len=282
+2026-07-19 22:17:05,444 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 22:17:05,445 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:06,909 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能规模 全球排名', '万华化学 化工行业 聚氨酯产业链 MDI供应地位']
+2026-07-19 22:17:07,156 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:07,157 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:07,477 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:07,478 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:07,696 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:07,697 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:07,697 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:17:07,697 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:17:07,698 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:10,682 - agent - INFO - eval_runner.py:91 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=4 answer_len=161
+2026-07-19 22:17:10,682 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 22:17:10,683 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:11,488 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游细分行业', '万华化学 主要终端应用市场']
+2026-07-19 22:17:11,824 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:11,824 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:12,039 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:12,040 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:12,366 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:17:12,367 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:12,367 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:17:12,367 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:17:12,368 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:14,642 - agent - INFO - eval_runner.py:91 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=103
+2026-07-19 22:17:14,642 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 22:17:14,642 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:15,715 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品结构', '兆易创新 半导体行业 产业链定位']
+2026-07-19 22:17:16,037 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:17:16,038 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 22:17:16,038 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 22:17:16,351 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:17:16,352 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:16,560 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:17:16,561 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:16,561 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:17:16,561 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 624 字符
+2026-07-19 22:17:16,562 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:17,785 - agent - INFO - eval_runner.py:91 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=4 answer_len=60
+2026-07-19 22:17:17,785 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 22:17:17,785 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:18,834 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务优势', '博源化工 纯碱行业 天然碱资源禀赋', '博源化工 天然碱 产业链成本结构']
+2026-07-19 22:17:19,106 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:17:19,107 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:19,362 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:17:19,363 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:19,646 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:17:19,646 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:19,646 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:17:19,646 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 22:17:19,647 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:21,589 - agent - INFO - eval_runner.py:91 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=140
+2026-07-19 22:17:21,589 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 22:17:21,590 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:22,816 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年发展趋势', '有色金属价格走势2025年', '有色金属产业链景气度分析2025']
+2026-07-19 22:17:23,042 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:17:23,043 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:23,370 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:17:23,370 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:23,689 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:17:23,690 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:17:23,690 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:17:23,690 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 701 字符
+2026-07-19 22:17:23,691 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:27,881 - agent - INFO - eval_runner.py:91 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=5 answer_len=210
+2026-07-19 22:17:28,993 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:28,994 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:28,994 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:28,994 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:28,994 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:28,995 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:28,995 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:28,995 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:28,995 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:28,995 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:28,996 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:28,998 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:29,001 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:29,006 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:29,011 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:29,013 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:30,108 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:30,124 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:30,143 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:30,171 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:30,222 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:30,229 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:30,232 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:30,261 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:30,263 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:17:31,159 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:51,813 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:51,813 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:51,813 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:17:51,813 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:17:51,814 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:25,012 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:25,012 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:25,013 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:25,015 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:25,016 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:25,016 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:25,016 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:25,016 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:25,016 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:27,071 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:27,071 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:35,515 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:35,515 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:35,516 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:35,516 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:35,516 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:35,516 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:18:35,519 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:35,522 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:35,529 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:35,531 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:40,262 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:41,306 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:41,307 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:41,307 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:18:41,309 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:18:41,309 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:19:04,182 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:04,182 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:04,182 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:04,182 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:04,183 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:17,239 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:17,239 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:19:17,239 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:17,240 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:17,240 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:17,240 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:19:22,434 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:19:42,867 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:19:42,868 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:26,440 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 22:26:26,441 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 22:26:26,452 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:28,342 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务', '紫金矿业 有色金属矿产开采 业务构成', '紫金矿业 黄金铜矿 产业链上游']
+2026-07-19 22:26:28,656 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:28,657 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:28,956 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:28,957 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:29,188 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:29,189 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:29,189 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:26:29,189 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 22:26:29,190 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:33,143 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=185
+2026-07-19 22:26:33,143 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 22:26:33,143 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:34,228 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 海外矿山项目分布 2025年', '紫金矿业 有色金属产业链 海外资源开发']
+2026-07-19 22:26:34,467 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:34,468 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:34,808 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:34,808 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:35,038 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:26:35,039 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:35,039 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 3 篇相关文档
+2026-07-19 22:26:35,039 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 22:26:35,040 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:39,126 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=3 answer_len=104
+2026-07-19 22:26:39,126 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 22:26:39,127 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:40,100 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势', '贵州茅台 白酒行业 竞争壁垒', '贵州茅台 品牌溢价 供应链控制力']
+2026-07-19 22:26:40,357 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:40,358 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:40,706 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:40,706 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:41,013 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:41,014 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:41,014 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:26:41,014 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 22:26:41,015 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:47,623 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=5 answer_len=294
+2026-07-19 22:26:47,624 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 22:26:47,624 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:48,688 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成', '贵州茅台 酒类业务收入占比', '贵州茅台 高端白酒行业产业链营收分布']
+2026-07-19 22:26:48,947 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:48,948 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:49,266 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:49,266 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:49,564 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:26:49,564 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:49,564 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:26:49,565 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 918 字符
+2026-07-19 22:26:49,565 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:53,678 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=192
+2026-07-19 22:26:53,678 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 22:26:53,679 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:54,654 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 光伏行业 上游中游下游分布', '阳光电源 主营业务构成 2025年']
+2026-07-19 22:26:54,892 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:26:54,893 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:55,169 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:26:55,169 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:55,417 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:26:55,417 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:55,417 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:26:55,417 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 505 字符
+2026-07-19 22:26:55,418 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:26:57,394 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=4 answer_len=88
+2026-07-19 22:26:57,394 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 22:26:57,394 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:26:58,452 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 主营业务构成', '阳光电源 产业链上游 中游 下游 产品布局']
+2026-07-19 22:26:58,698 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:26:58,699 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:59,039 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:26:59,040 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:59,266 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:26:59,266 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:26:59,266 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 22:26:59,266 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 973 字符
+2026-07-19 22:26:59,267 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:01,973 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=6 answer_len=141
+2026-07-19 22:27:01,974 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 22:27:01,974 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:03,134 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 市场占有率对比']
+2026-07-19 22:27:03,354 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:03,355 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:03,565 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:03,565 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:03,824 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:03,825 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:03,825 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:27:03,825 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 694 字符
+2026-07-19 22:27:03,826 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:08,020 - agent - INFO - eval_runner.py:87 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=4 answer_len=213
+2026-07-19 22:27:08,020 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 22:27:08,021 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:09,320 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能规模 全球排名', '万华化学 化工行业 聚氨酯产业链 MDI 竞争格局']
+2026-07-19 22:27:09,720 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:09,720 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:10,376 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:10,377 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:10,758 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:10,759 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:10,759 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:27:10,759 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:27:10,760 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:13,152 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=4 answer_len=107
+2026-07-19 22:27:13,152 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 22:27:13,153 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:14,172 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游行业分布', '万华化学 主要终端应用市场 2025']
+2026-07-19 22:27:15,230 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:15,231 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:15,616 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:27:15,616 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:15,846 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:27:15,847 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:15,847 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:27:15,847 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:27:15,848 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:18,368 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=102
+2026-07-19 22:27:18,368 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 22:27:18,369 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:19,472 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品分类', '兆易创新 半导体行业 产业链定位']
+2026-07-19 22:27:19,816 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:27:19,816 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 22:27:19,816 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 22:27:20,472 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:27:20,473 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:20,724 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:27:20,725 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:20,725 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:27:20,725 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 805 字符
+2026-07-19 22:27:20,726 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:22,569 - agent - INFO - eval_runner.py:87 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=5 answer_len=103
+2026-07-19 22:27:22,569 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 22:27:22,570 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:23,778 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务优势', '博源化工 纯碱行业 天然碱资源禀赋', '博源化工 天然碱 产业链成本结构']
+2026-07-19 22:27:24,529 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:27:24,529 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:25,445 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:27:25,446 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:25,745 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:27:25,746 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:25,746 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:27:25,746 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 22:27:25,747 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:27,970 - agent - INFO - eval_runner.py:87 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=126
+2026-07-19 22:27:27,970 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 22:27:27,971 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:29,243 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年景气度分析', '有色金属行业2025年价格走势与供需格局', '有色金属产业链上游资源端及中游冶炼环节盈利趋势']
+2026-07-19 22:27:30,433 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:27:30,434 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:30,687 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:27:30,687 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:31,032 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:27:31,032 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:27:31,032 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:27:31,032 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 2 组, 461 字符
+2026-07-19 22:27:31,033 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:35,177 - agent - INFO - eval_runner.py:87 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=4 answer_len=218
+2026-07-19 22:27:36,293 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:36,296 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:36,296 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:36,296 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:36,296 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:36,297 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,298 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,300 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,301 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,301 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,305 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:36,307 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:27:41,243 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,479 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,481 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,481 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,481 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,481 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:27:55,482 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:27:55,482 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:28:05,205 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:28:05,205 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:28:05,206 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:28:05,217 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:01,165 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 22:32:01,167 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 22:32:01,418 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:03,110 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务', '紫金矿业 有色金属矿产开采 业务构成', '紫金矿业 黄金铜矿 产业链上游']
+2026-07-19 22:32:03,351 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:03,351 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:03,710 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:03,711 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:04,043 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:04,044 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:04,044 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:04,044 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 22:32:04,047 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:06,634 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=120
+2026-07-19 22:32:06,634 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 22:32:06,635 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:07,763 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 境外矿山项目清单 2025年', '紫金矿业 有色金属产业链 海外资源并购']
+2026-07-19 22:32:08,030 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:08,030 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:08,310 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:08,311 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:08,523 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:32:08,523 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:08,523 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 3 篇相关文档
+2026-07-19 22:32:08,523 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 3 文档 → 1 组, 403 字符
+2026-07-19 22:32:08,526 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:11,032 - agent - INFO - eval_runner.py:87 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=3 answer_len=111
+2026-07-19 22:32:11,033 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 22:32:11,034 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:12,100 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势 2025年', '贵州茅台 白酒行业 护城河分析', '贵州茅台 上游供应链控制力 品牌溢价能力']
+2026-07-19 22:32:12,397 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:12,397 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:12,629 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:12,629 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:12,899 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:12,899 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:12,899 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 22:32:12,899 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 1109 字符
+2026-07-19 22:32:12,901 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:17,596 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=6 answer_len=242
+2026-07-19 22:32:17,597 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 22:32:17,598 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:18,541 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成', '贵州茅台 分产品收入结构', '贵州茅台 酒类行业 上游原材料成本占比']
+2026-07-19 22:32:18,845 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:18,845 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:19,068 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:19,069 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:19,398 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:19,398 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:19,398 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:32:19,399 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 918 字符
+2026-07-19 22:32:19,401 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:23,902 - agent - INFO - eval_runner.py:87 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=199
+2026-07-19 22:32:23,902 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 22:32:23,903 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:24,989 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 光伏行业 上游中游下游分布', '阳光电源 主营业务构成 2025年']
+2026-07-19 22:32:25,262 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:32:25,262 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:25,513 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:32:25,513 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:25,759 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:32:25,760 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:25,760 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:25,760 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 505 字符
+2026-07-19 22:32:25,762 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:28,341 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=4 answer_len=81
+2026-07-19 22:32:28,341 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 22:32:28,342 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:29,369 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 解决方案']
+2026-07-19 22:32:29,663 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:32:29,663 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:29,913 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:32:29,914 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:30,233 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:32:30,234 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:30,234 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 22:32:30,234 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 22:32:30,236 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:34,018 - agent - INFO - eval_runner.py:87 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=204
+2026-07-19 22:32:34,018 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 22:32:34,019 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:35,078 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 22:32:35,319 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:35,319 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:35,635 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:35,635 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:35,953 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:35,953 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:35,953 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:35,953 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 694 字符
+2026-07-19 22:32:35,955 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:38,903 - agent - INFO - eval_runner.py:87 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=4 answer_len=147
+2026-07-19 22:32:38,903 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 22:32:38,904 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:40,008 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能规模 全球排名', '万华化学 化工行业 聚氨酯产业链 MDI供应地位']
+2026-07-19 22:32:40,342 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:40,342 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:40,671 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:40,672 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:40,915 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:40,915 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:40,916 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:40,916 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:32:40,918 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:43,299 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=4 answer_len=107
+2026-07-19 22:32:43,299 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 22:32:43,300 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:44,733 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游细分行业', '万华化学 终端应用市场分布']
+2026-07-19 22:32:45,051 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:45,051 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:45,262 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:45,262 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:45,561 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:32:45,561 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:45,561 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:45,561 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:32:45,563 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:47,377 - agent - INFO - eval_runner.py:87 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=89
+2026-07-19 22:32:47,377 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 22:32:47,378 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:48,462 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品分类', '兆易创新 半导体行业 产业链定位']
+2026-07-19 22:32:48,813 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:32:48,814 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 22:32:48,814 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 22:32:49,168 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:32:49,168 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:49,414 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:32:49,415 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:49,415 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:32:49,415 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 805 字符
+2026-07-19 22:32:49,417 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:32:51,229 - agent - INFO - eval_runner.py:87 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=5 answer_len=102
+2026-07-19 22:32:51,229 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 22:32:51,230 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:52,418 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务竞争优势', '博源化工 天然碱 产业链地位与资源禀赋', '博源化工 天然碱 2025年成本结构与规模效应']
+2026-07-19 22:32:52,735 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:32:52,735 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:52,989 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:32:52,989 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:53,261 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:32:53,261 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:53,262 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:32:53,262 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 22:32:53,264 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:55,105 - agent - INFO - eval_runner.py:87 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=140
+2026-07-19 22:32:55,105 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 22:32:55,106 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:32:56,146 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年景气度趋势', '有色金属行业2025年供需格局与价格走势', '有色金属产业链上游资源端产能扩张与库存变化']
+2026-07-19 22:32:56,488 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:32:56,488 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:56,705 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:32:56,706 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:56,970 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:32:56,971 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:32:56,971 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:32:56,971 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 676 字符
+2026-07-19 22:32:56,973 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:01,725 - agent - INFO - eval_runner.py:87 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=5 answer_len=229
+2026-07-19 22:33:02,852 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:02,854 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:33:02,855 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:33:02,855 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:02,856 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:33:02,857 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:33:02,858 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:02,858 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:02,862 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:02,864 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:33:02,867 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:02,870 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:06,731 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:17,886 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:33:17,886 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:17,887 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:17,887 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:17,887 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:26,031 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:27,347 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:27,347 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:27,347 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:27,356 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:33:29,395 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:40:26,440 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 22:40:26,443 - agent - INFO - eval_runner.py:95 - [Eval] 正在将 ragas prompt 翻译为中文（仅首次需要）...
+2026-07-19 22:40:26,637 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:40:34,435 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:40:37,338 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:40:39,193 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:40:47,276 - agent - INFO - eval_runner.py:103 - [Eval] 中文 prompt 翻译完成并已缓存
+2026-07-19 22:40:47,277 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业的主营业务是什么？'
+2026-07-19 22:40:47,278 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:40:48,871 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业的主营业务是什么？' → ['紫金矿业 主营业务构成', '紫金矿业 有色金属矿产开采 业务范围', '紫金矿业 黄金铜矿 产业链位置']
+2026-07-19 22:40:49,221 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:49,222 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:49,568 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:49,568 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:49,865 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:49,866 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:49,866 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:40:49,866 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 558 字符
+2026-07-19 22:40:49,869 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:40:53,071 - agent - INFO - eval_runner.py:156 - [Eval] Q: 紫金矿业的主营业务是什么？... contexts=4 answer_len=138
+2026-07-19 22:40:53,072 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '紫金矿业在海外有哪些矿产布局？'
+2026-07-19 22:40:53,074 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:40:54,418 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '紫金矿业在海外有哪些矿产布局？' → ['紫金矿业 海外矿产资产布局', '紫金矿业 海外矿山项目分布 2025年', '紫金矿业 有色金属产业链 海外资源开发']
+2026-07-19 22:40:54,749 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:54,749 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:55,109 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:55,109 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:55,373 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 2 篇, 融合后 3 篇
+2026-07-19 22:40:55,373 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:55,373 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:40:55,374 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 673 字符
+2026-07-19 22:40:55,375 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:40:57,803 - agent - INFO - eval_runner.py:156 - [Eval] Q: 紫金矿业在海外有哪些矿产布局？... contexts=5 answer_len=113
+2026-07-19 22:40:57,803 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的核心竞争优势有哪些？'
+2026-07-19 22:40:57,805 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:40:58,771 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的核心竞争优势有哪些？' → ['贵州茅台 核心竞争优势 2025年', '贵州茅台 白酒行业 护城河分析', '贵州茅台 酿酒产业链 上游议价能力']
+2026-07-19 22:40:59,066 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:40:59,066 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:59,364 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:40:59,364 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:59,696 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:40:59,696 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:40:59,696 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 22:40:59,696 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 1 组, 1003 字符
+2026-07-19 22:40:59,698 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:03,464 - agent - INFO - eval_runner.py:156 - [Eval] Q: 贵州茅台的核心竞争优势有哪些？... contexts=6 answer_len=185
+2026-07-19 22:41:03,464 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '贵州茅台的营收结构如何？'
+2026-07-19 22:41:03,465 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:04,683 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '贵州茅台的营收结构如何？' → ['贵州茅台 营业收入构成 2025年', '贵州茅台 主营业务收入分产品结构', '白酒行业 贵州茅台 产业链营收分布']
+2026-07-19 22:41:04,946 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:04,947 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:05,289 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:05,289 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:05,590 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:05,591 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:05,591 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:41:05,591 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 831 字符
+2026-07-19 22:41:05,593 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:10,392 - agent - INFO - eval_runner.py:156 - [Eval] Q: 贵州茅台的营收结构如何？... contexts=5 answer_len=237
+2026-07-19 22:41:10,393 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源在光伏产业链中处于什么位置？'
+2026-07-19 22:41:10,394 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:11,493 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源在光伏产业链中处于什么位置？' → ['阳光电源 光伏产业链 位置', '阳光电源 主营业务构成 光伏设备制造', '阳光电源 行业地位 市场份额 光伏逆变器']
+2026-07-19 22:41:11,885 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:41:11,885 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:12,289 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:41:12,289 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:12,621 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:12,621 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:12,621 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 7 篇相关文档
+2026-07-19 22:41:12,622 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 1 组, 948 字符
+2026-07-19 22:41:12,624 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:15,784 - agent - INFO - eval_runner.py:156 - [Eval] Q: 阳光电源在光伏产业链中处于什么位置？... contexts=7 answer_len=206
+2026-07-19 22:41:15,784 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '阳光电源的核心产品有哪些？'
+2026-07-19 22:41:15,785 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:16,729 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '阳光电源的核心产品有哪些？' → ['阳光电源 核心产品', '阳光电源 光伏逆变器 产品结构', '阳光电源 储能系统 解决方案']
+2026-07-19 22:41:17,014 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 5 篇, 融合后 3 篇
+2026-07-19 22:41:17,014 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:17,345 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:17,346 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:17,722 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:17,722 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:17,722 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 8 篇相关文档
+2026-07-19 22:41:17,722 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 8 文档 → 1 组, 1174 字符
+2026-07-19 22:41:17,724 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:23,100 - agent - INFO - eval_runner.py:156 - [Eval] Q: 阳光电源的核心产品有哪些？... contexts=8 answer_len=226
+2026-07-19 22:41:23,100 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '青岛啤酒的市场份额和竞争格局如何？'
+2026-07-19 22:41:23,101 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:24,198 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '青岛啤酒的市场份额和竞争格局如何？' → ['青岛啤酒 市场份额 2025年', '青岛啤酒 竞争格局 啤酒行业', '青岛啤酒 主要竞争对手 产业链地位']
+2026-07-19 22:41:24,480 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:24,480 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:24,747 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:24,747 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:25,159 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:25,159 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:25,160 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 6 篇相关文档
+2026-07-19 22:41:25,160 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 6 文档 → 2 组, 1000 字符
+2026-07-19 22:41:25,162 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:29,694 - agent - INFO - eval_runner.py:156 - [Eval] Q: 青岛啤酒的市场份额和竞争格局如何？... contexts=6 answer_len=231
+2026-07-19 22:41:29,694 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学在MDI领域的全球地位如何？'
+2026-07-19 22:41:29,695 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:30,970 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学在MDI领域的全球地位如何？' → ['万华化学 MDI 全球市场份额 2025年', '万华化学 MDI 产能规模 全球排名 2025年', '万华化学 MDI 行业集中度 CR3 产业链地位']
+2026-07-19 22:41:31,441 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:31,442 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:31,813 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:31,813 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:32,194 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:32,195 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:32,195 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:41:32,195 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 2 组, 796 字符
+2026-07-19 22:41:32,197 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:35,209 - agent - INFO - eval_runner.py:156 - [Eval] Q: 万华化学在MDI领域的全球地位如何？... contexts=5 answer_len=155
+2026-07-19 22:41:35,209 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '万华化学的下游应用领域有哪些？'
+2026-07-19 22:41:35,214 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:36,202 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '万华化学的下游应用领域有哪些？' → ['万华化学 下游应用领域', '万华化学 产业链下游细分行业', '万华化学 主要终端应用市场']
+2026-07-19 22:41:36,555 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:36,556 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:36,823 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:36,823 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:37,114 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 1 篇, 融合后 3 篇
+2026-07-19 22:41:37,114 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:37,114 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:41:37,114 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 714 字符
+2026-07-19 22:41:37,116 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:40,180 - agent - INFO - eval_runner.py:156 - [Eval] Q: 万华化学的下游应用领域有哪些？... contexts=4 answer_len=137
+2026-07-19 22:41:40,180 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '兆易创新的主要产品线是什么？'
+2026-07-19 22:41:40,181 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:41,055 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '兆易创新的主要产品线是什么？' → ['兆易创新 主要产品线', '兆易创新 存储芯片 产品分类', '兆易创新 半导体行业 产业链定位']
+2026-07-19 22:41:41,411 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:41,411 - agent - INFO - reranker.py:46 - [Reranker] 去重: 3 → 2
+2026-07-19 22:41:41,412 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-2
+2026-07-19 22:41:41,762 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:41,763 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:42,050 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 6 篇, 融合后 3 篇
+2026-07-19 22:41:42,050 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:42,050 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 5 篇相关文档
+2026-07-19 22:41:42,050 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 5 文档 → 1 组, 805 字符
+2026-07-19 22:41:42,052 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:43,701 - agent - INFO - eval_runner.py:156 - [Eval] Q: 兆易创新的主要产品线是什么？... contexts=5 answer_len=102
+2026-07-19 22:41:43,701 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '博源化工的天然碱业务有什么优势？'
+2026-07-19 22:41:43,702 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:44,888 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '博源化工的天然碱业务有什么优势？' → ['博源化工 天然碱 业务竞争优势', '博源化工 天然碱 产业链地位 上游资源禀赋', '博源化工 天然碱 行业壁垒 成本结构优势']
+2026-07-19 22:41:45,215 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:41:45,216 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:45,496 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:41:45,496 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:45,843 - agent - INFO - vector_store.py:126 - [HybridSearch] 向量检索 6 篇, BM25 检索 3 篇, 融合后 3 篇
+2026-07-19 22:41:45,844 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:45,844 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:41:45,844 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 1 组, 576 字符
+2026-07-19 22:41:45,846 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:46,545 - agent - INFO - eval_runner.py:156 - [Eval] Q: 博源化工的天然碱业务有什么优势？... contexts=4 answer_len=23
+2026-07-19 22:41:46,545 - agent - INFO - rag_service.py:52 - [RAG] [Eval] 开始处理: '当前有色金属行业的整体发展趋势如何？'
+2026-07-19 22:41:46,546 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:47,802 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '当前有色金属行业的整体发展趋势如何？' → ['有色金属行业2025年景气度分析', '有色金属行业2025年价格走势与供需格局', '有色金属产业链上游资源端及中游冶炼环节盈利趋势']
+2026-07-19 22:41:48,199 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:41:48,200 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:48,462 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:41:48,462 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:48,795 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 22:41:48,796 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 22:41:48,796 - agent - INFO - rag_service.py:55 - [RAG] [Eval] 检索到 4 篇相关文档
+2026-07-19 22:41:48,796 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 2 组, 461 字符
+2026-07-19 22:41:48,798 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:53,138 - agent - INFO - eval_runner.py:156 - [Eval] Q: 当前有色金属行业的整体发展趋势如何？... contexts=4 answer_len=244
+2026-07-19 22:41:54,303 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,303 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,303 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:54,303 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:54,303 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,304 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,304 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:54,307 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:54,310 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,311 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:54,313 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:54,316 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 22:41:55,434 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 22:41:55,790 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:57,337 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:57,548 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:57,592 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:57,710 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:57,794 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:58,865 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:41:59,777 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:42:00,162 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:42:00,204 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:42:01,914 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 22:46:15,667 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 22:46:15,808 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:08:14,452 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:08:14,549 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:08:14,557 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:11:07,100 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:11:07,291 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:11:07,740 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:11:07,746 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:11:07,756 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每日市场早报 | cron=0 18 * * 1-5 | channels=['email']
+2026-07-19 23:11:07,757 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每周行业研报 | cron=0 9 * * 5 | channels=['email', 'dingtalk']
+2026-07-19 23:11:07,757 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 快讯摘要推送 | cron=0 9,15 * * 1-5 | channels=['dingtalk']
+2026-07-19 23:11:07,758 - agent - INFO - scheduler.py:63 - [Scheduler] 调度器已启动，共 3 个任务
+2026-07-19 23:11:17,923 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:11:17,923 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:11:17)
+2026-07-19 23:11:17,923 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:11:17,924 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:11:19,177 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策要闻', '2025年全球主要市场股指与大宗商品价格走势', '2025年重点行业（金融、科技、能源）重大事件快讯']
+2026-07-19 23:11:19,557 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:11:19,557 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:11:19,935 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:11:19,935 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:11:20,298 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:11:20,298 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:11:20,298 - agent - INFO - rag_service.py:78 - [RAG] 检索到 9 篇相关文档
+2026-07-19 23:11:20,299 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 9 文档 → 2 组, 1471 字符
+2026-07-19 23:11:20,300 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:11:25,956 - agent - WARNING - scheduler.py:119 - [Scheduler] 快讯摘要推送 执行完成但未成功推送到任何渠道
+2026-07-19 23:12:11,560 - agent - ERROR - news_tools.py:78 - [FlashNews] 获取快讯失败: API Error: API request failed. Status code: 404 (Status code: None)
+2026-07-19 23:12:37,834 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:12:37,835 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:12:37)
+2026-07-19 23:12:37,835 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:12:37,835 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策要闻', '2025年全球主要市场股指与大宗商品价格走势', '2025年重点行业（金融、科技、能源）重大事件快讯']
+2026-07-19 23:12:38,130 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:12:38,130 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:12:38,499 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:12:38,500 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:12:38,847 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:12:38,848 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:12:38,848 - agent - INFO - rag_service.py:78 - [RAG] 检索到 9 篇相关文档
+2026-07-19 23:12:38,848 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 9 文档 → 2 组, 1471 字符
+2026-07-19 23:12:38,849 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:12:42,505 - agent - WARNING - scheduler.py:119 - [Scheduler] 快讯摘要推送 执行完成但未成功推送到任何渠道
+2026-07-19 23:14:38,548 - agent - INFO - react_agent.py:77 - [Thread] 创建对话: eb5d622838d8 (新对话)
+2026-07-19 23:14:38,743 - agent - INFO - middleware.py:140 - [BeforeModel] 即将调用模型, 消息数=1, 最后消息类型=HumanMessage
+2026-07-19 23:14:38,749 - agent - INFO - router.py:69 - [ModelRouter] → 快速模型 (qwen-turbo) — 简单问答 (理由: 默认)
+2026-07-19 23:27:22,738 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:27:23,074 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:27:23,395 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:27:23,399 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:27:23,405 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每日市场早报 | cron=0 9 * * 1-5 | channels=['email']
+2026-07-19 23:27:23,405 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每周行业研报 | cron=0 9 * * 5 | channels=['email', 'dingtalk']
+2026-07-19 23:27:23,405 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 快讯摘要推送 | cron=0 9,15 * * 1-5 | channels=['dingtalk']
+2026-07-19 23:27:23,406 - agent - INFO - scheduler.py:63 - [Scheduler] 调度器已启动，共 3 个任务
+2026-07-19 23:27:41,759 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:27:41,759 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:27:41)
+2026-07-19 23:27:41,760 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:27:41,937 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:27:45,410 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策与市场影响快讯', '2025年全球主要股指及大宗商品价格走势日度摘要', '2025年重点行业（金融、科技、能源）重大事件与监管动态']
+2026-07-19 23:27:45,778 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:27:45,778 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:27:46,107 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:27:46,107 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:27:46,407 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:27:46,408 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:27:46,408 - agent - INFO - rag_service.py:78 - [RAG] 检索到 7 篇相关文档
+2026-07-19 23:27:46,408 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 4 组, 1176 字符
+2026-07-19 23:27:46,411 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:27:55,144 - agent - WARNING - scheduler.py:119 - [Scheduler] 快讯摘要推送 执行完成但未成功推送到任何渠道
+2026-07-19 23:30:14,848 - agent - INFO - notifier.py:45 - [EmailNotifier] 邮件发送成功: Test Subject
+2026-07-19 23:31:38,251 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: ResearchAI 测试快讯推送
+2026-07-19 23:32:34,413 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:32:34,968 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:32:35,371 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:32:35,375 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:32:35,378 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每日市场早报 | cron=0 9 * * 1-5 | channels=['email']
+2026-07-19 23:32:35,378 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 每周行业研报 | cron=0 9 * * 5 | channels=['email']
+2026-07-19 23:32:35,392 - agent - INFO - scheduler.py:60 - [Scheduler] 已注册: 快讯摘要推送 | cron=0 9,15 * * 1-5 | channels=['email']
+2026-07-19 23:32:35,393 - agent - INFO - scheduler.py:63 - [Scheduler] 调度器已启动，共 3 个任务
+2026-07-19 23:32:42,157 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:32:42,157 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:32:42)
+2026-07-19 23:32:42,157 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:32:42,338 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:32:45,228 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策与市场影响快讯', '2025年全球主要股指及大宗商品价格走势日度摘要', '2025年重点行业（金融、科技、能源）重大事件与监管动态']
+2026-07-19 23:32:45,539 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:32:45,540 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:32:45,990 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:32:45,990 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:32:46,285 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:32:46,286 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:32:46,286 - agent - INFO - rag_service.py:78 - [RAG] 检索到 7 篇相关文档
+2026-07-19 23:32:46,286 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 4 组, 1176 字符
+2026-07-19 23:32:46,289 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:32:54,281 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 快讯摘要推送 — 2026-07-19 23:32:42
+2026-07-19 23:32:54,282 - agent - INFO - scheduler.py:119 - [Scheduler] 快讯摘要推送 推送成功: ['email']
+2026-07-19 23:33:49,067 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 每日市场早报
+2026-07-19 23:33:49,067 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 每日市场早报 (2026-07-19 23:33:49)
+2026-07-19 23:33:49,067 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日A股市场回顾与明日展望，分析主要指数走势、板块轮动、资金流向'
+2026-07-19 23:33:49,068 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:33:51,356 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日A股市场回顾与明日展望，分析主要指数走势、板块轮动、资金流向' → ['A股市场2025年10月25日主要指数日度走势分析（上证综指、深证成指、创业板指）', 'A股2025年10月25日行业板块轮动特征（申万一级行业：电子、医药生物、电力设备、非银金融）', 'A股2025年10月25日资金流向数据（北向资金净流入、两融余额变动、主力资金行业分布）']
+2026-07-19 23:33:51,600 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:33:51,600 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:33:52,005 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:33:52,005 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:33:52,348 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:33:52,348 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:33:52,348 - agent - INFO - rag_service.py:78 - [RAG] 检索到 9 篇相关文档
+2026-07-19 23:33:52,348 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 9 文档 → 5 组, 1088 字符
+2026-07-19 23:33:52,351 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:33:53,562 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 每日市场早报 — 2026-07-19 23:33:49
+2026-07-19 23:33:53,563 - agent - INFO - scheduler.py:119 - [Scheduler] 每日市场早报 推送成功: ['email']
+2026-07-19 23:34:40,852 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 每周行业研报
+2026-07-19 23:34:40,853 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 每周行业研报 (2026-07-19 23:34:40)
+2026-07-19 23:34:40,853 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '本周有色金属行业动态与投资机会分析'
+2026-07-19 23:34:40,855 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:34:42,123 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '本周有色金属行业动态与投资机会分析' → ['有色金属行业2025年周度市场动态', '有色金属价格走势与供需分析2025年', '有色金属产业链投资机会与细分板块估值比较']
+2026-07-19 23:34:42,378 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:34:42,379 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:34:42,680 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:34:42,680 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:34:42,968 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:34:42,968 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:34:42,969 - agent - INFO - rag_service.py:78 - [RAG] 检索到 4 篇相关文档
+2026-07-19 23:34:42,969 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 4 文档 → 2 组, 578 字符
+2026-07-19 23:34:42,971 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:34:47,488 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 每周行业研报 — 2026-07-19 23:34:40
+2026-07-19 23:34:47,488 - agent - INFO - scheduler.py:119 - [Scheduler] 每周行业研报 推送成功: ['email']
+2026-07-19 23:43:20,351 - agent - INFO - react_agent.py:111 - [Thread] 清空全部历史对话
+2026-07-19 23:43:25,556 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:43:25,557 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:43:25)
+2026-07-19 23:43:25,557 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:43:25,557 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策与市场影响快讯', '2025年全球主要股指及大宗商品价格走势日度摘要', '2025年重点行业（金融、科技、能源）重大事件与监管动态']
+2026-07-19 23:43:25,959 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:43:25,960 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:43:26,214 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:43:26,214 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:43:26,711 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:43:26,711 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:43:26,711 - agent - INFO - rag_service.py:78 - [RAG] 检索到 7 篇相关文档
+2026-07-19 23:43:26,712 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 4 组, 1176 字符
+2026-07-19 23:43:26,714 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:43:35,026 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 快讯摘要推送 — 2026-07-19 23:43:25
+2026-07-19 23:43:35,026 - agent - INFO - scheduler.py:119 - [Scheduler] 快讯摘要推送 推送成功: ['email']
+2026-07-19 23:46:02,319 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:46:02,324 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:46:05,342 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:46:23,000 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:46:23,003 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:46:23,003 - agent - INFO - scheduler.py:103 - [Scheduler] 开始执行: 快讯摘要推送 (news) (2026-07-19 23:46:23)
+2026-07-19 23:46:25,214 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:50:02,584 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:50:02,681 - agent - INFO - scheduler.py:75 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:50:02,682 - agent - INFO - scheduler.py:96 - [Scheduler] 开始执行: 快讯摘要推送 (2026-07-19 23:50:02)
+2026-07-19 23:50:02,682 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日重要财经新闻快讯摘要（5条核心新闻）'
+2026-07-19 23:50:02,682 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日重要财经新闻快讯摘要（5条核心新闻）' → ['2025年4月最新宏观经济政策与市场影响快讯', '2025年全球主要股指及大宗商品价格走势日度摘要', '2025年重点行业（金融、科技、能源）重大事件与监管动态']
+2026-07-19 23:50:03,030 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:50:03,031 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:50:03,371 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:50:03,371 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:50:04,014 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:50:04,015 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:50:04,015 - agent - INFO - rag_service.py:78 - [RAG] 检索到 7 篇相关文档
+2026-07-19 23:50:04,015 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 7 文档 → 4 组, 1176 字符
+2026-07-19 23:50:04,020 - agent - INFO - router.py:53 - [ModelRouter] → 强力模型 (qwen-max) — 研报生成/复杂分析 (理由: 研报/复杂分析)
+2026-07-19 23:50:09,474 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 快讯摘要推送 — 2026-07-19 23:50:02
+2026-07-19 23:50:09,474 - agent - INFO - scheduler.py:119 - [Scheduler] 快讯摘要推送 推送成功: ['email']
+2026-07-19 23:52:08,894 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:52:09,229 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:52:09,500 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:52:09,505 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:52:09,510 - agent - INFO - scheduler.py:61 - [Scheduler] 已注册: 每日市场早报 | cron=0 9 * * 1-5 | channels=['email']
+2026-07-19 23:52:09,511 - agent - INFO - scheduler.py:61 - [Scheduler] 已注册: 每周行业研报 | cron=0 9 * * 5 | channels=['email']
+2026-07-19 23:52:09,511 - agent - INFO - scheduler.py:61 - [Scheduler] 已注册: 快讯摘要推送 | cron=0 9,15 * * 1-5 | channels=['email']
+2026-07-19 23:52:09,512 - agent - INFO - scheduler.py:64 - [Scheduler] 调度器已启动，共 3 个任务
+2026-07-19 23:52:20,890 - agent - INFO - scheduler.py:76 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:52:20,890 - agent - INFO - scheduler.py:103 - [Scheduler] 开始执行: 快讯摘要推送 (news) (2026-07-19 23:52:20)
+2026-07-19 23:52:23,548 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:52:30,544 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 快讯摘要推送 — 2026-07-19 23:52:20
+2026-07-19 23:52:30,544 - agent - INFO - scheduler.py:129 - [Scheduler] 快讯摘要推送 推送成功: ['email']
+2026-07-19 23:54:43,700 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:54:43,835 - agent - INFO - scheduler.py:76 - [Scheduler] 手动触发: 快讯摘要推送
+2026-07-19 23:54:43,836 - agent - INFO - scheduler.py:103 - [Scheduler] 开始执行: 快讯摘要推送 (news) (2026-07-19 23:54:43)
+2026-07-19 23:54:44,864 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:54:52,331 - agent - INFO - notifier.py:51 - [EmailNotifier] 邮件发送成功: [ResearchAI] 快讯摘要推送 — 2026-07-19 23:54:43
+2026-07-19 23:54:52,331 - agent - INFO - scheduler.py:129 - [Scheduler] 快讯摘要推送 推送成功: ['email']
+2026-07-19 23:59:16,963 - agent - INFO - vector_store.py:34 - [BM25] 索引构建完成，共 1030 篇文档
+2026-07-19 23:59:16,969 - agent - INFO - scheduler.py:34 - [Scheduler] 加载了 3 个定时任务
+2026-07-19 23:59:16,969 - agent - INFO - scheduler.py:103 - [Scheduler] ┌─ 开始执行: 快讯摘要推送
+2026-07-19 23:59:16,969 - agent - INFO - scheduler.py:104 - [Scheduler] │  type=news  topic=今日重要财经新闻...
+2026-07-19 23:59:16,982 - agent - INFO - scheduler.py:150 - [Scheduler] │  [flash_news] 获取实时快讯 (limit=15)
+2026-07-19 23:59:18,937 - agent - INFO - scheduler.py:153 - [Scheduler] │  [flash_news] 返回 31 行
+2026-07-19 23:59:18,937 - agent - INFO - scheduler.py:161 - [Scheduler] │  [financial_news] 检索新闻 (query=今日重要财经新闻..., days=1)
+2026-07-19 23:59:19,586 - agent - INFO - scheduler.py:163 - [Scheduler] │  [financial_news] 返回 240 字符
+2026-07-19 23:59:19,587 - agent - INFO - scheduler.py:181 - [Scheduler] │  [LLM] 生成新闻摘要 (927 字符输入)
+2026-07-19 23:59:19,591 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:59:28,557 - agent - INFO - scheduler.py:183 - [Scheduler] │  [LLM] 摘要完成 (477 字符)
+2026-07-19 23:59:28,558 - agent - INFO - scheduler.py:103 - [Scheduler] ┌─ 开始执行: 每日市场早报
+2026-07-19 23:59:28,558 - agent - INFO - scheduler.py:104 - [Scheduler] │  type=rag  topic=今日A股市场回顾...
+2026-07-19 23:59:28,558 - agent - INFO - scheduler.py:109 - [Scheduler] │  [RAG] 调用 rag_summarize → 今日A股市场回顾...
+2026-07-19 23:59:28,558 - agent - INFO - rag_service.py:75 - [RAG] 开始处理: '今日A股市场回顾'
+2026-07-19 23:59:28,560 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:59:30,192 - agent - INFO - query_rewriter.py:41 - [QueryRewriter] '今日A股市场回顾' → ['A股市场2025年4月2日行情回顾', 'A股主要指数（上证综指、深证成指、创业板指）单日涨跌幅及成交额', 'A股申万一级行业板块2025年4月2日涨跌排名与资金流向']
+2026-07-19 23:59:30,483 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:59:30,484 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:59:30,890 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:59:30,891 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:59:31,417 - agent - INFO - vector_store.py:121 - [HybridSearch] BM25 无结果，回退到纯向量检索
+2026-07-19 23:59:31,418 - agent - INFO - reranker.py:75 - [Reranker] 重排序完成，返回 top-3
+2026-07-19 23:59:31,418 - agent - INFO - rag_service.py:78 - [RAG] 检索到 9 篇相关文档
+2026-07-19 23:59:31,418 - agent - INFO - context_assembler.py:75 - [ContextAssembler] 组装完成: 9 文档 → 4 组, 1315 字符
+2026-07-19 23:59:31,420 - agent - INFO - router.py:64 - [ModelRouter] → 标准模型 (qwen-plus) — 个股/行业分析 (理由: 分析类查询)
+2026-07-19 23:59:32,061 - agent - INFO - scheduler.py:112 - [Scheduler] │  [RAG] 报告生成完成 (23 字符)
