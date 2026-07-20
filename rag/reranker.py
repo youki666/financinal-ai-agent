@@ -33,7 +33,7 @@ class LLMReranker:
         return kept
 
     def rerank(self, query: str, documents: list[Document], top_k: int | None = None) -> list[Document]:
-        """重排序主入口：去重 + 按启发式规则排序"""
+        """重排序主入口：去重 + 按启发式规则排序 + min_score 过滤"""
         if not documents:
             return []
 
@@ -69,9 +69,19 @@ class LLMReranker:
 
             return s
 
-        scored = sorted(deduped, key=score, reverse=True)
+        scored = [(score(doc), doc) for doc in deduped]
 
-        result = scored[:top_k]
+        # 过滤低分文档（得分 ≤ 0 说明与查询无关）
+        filtered = [(s, doc) for s, doc in scored if s > self.min_score]
+        if len(filtered) < len(scored):
+            logger.info(f"[Reranker] min_score 过滤 ({self.min_score}): {len(scored)} → {len(filtered)}")
+
+        # 如果全被过滤，保留最高分的那一篇（至少让 LLM 有东西判断）
+        if not filtered:
+            filtered = scored[:1]
+
+        filtered.sort(key=lambda x: x[0], reverse=True)
+        result = [doc for _, doc in filtered[:top_k]]
         logger.info(f"[Reranker] 重排序完成，返回 top-{len(result)}")
         return result
 
