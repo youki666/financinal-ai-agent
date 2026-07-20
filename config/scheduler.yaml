@@ -1,0 +1,18 @@
+jobs:
+  - name: "每日市场早报"
+    type: rag
+    topic: "今日A股市场回顾与明日展望，分析主要指数走势、板块轮动、资金流向"
+    cron: "0 9 * * 1-5"
+    channels: [email]
+
+  - name: "每周行业研报"
+    type: rag
+    topic: "本周有色金属行业动态与投资机会分析"
+    cron: "0 9 * * 5"
+    channels: [email]
+
+  - name: "快讯摘要推送"
+    type: news
+    topic: "今日重要财经新闻"
+    cron: "0 9,15 * * 1-5"
+    channels: [email]
