@@ -10,6 +10,7 @@ from agent.react_agent import ReactAgent
 from agent.tools.middleware import get_citations, clear_citations
 from rag.vector_store import VectorStoreService
 from utils.config_handler import chroma_conf
+from utils.logger_handler import logger
 from utils.path_tool import get_abs_path
 
 # ============================================================
@@ -329,7 +330,11 @@ st.markdown("""
 # 初始化 Session State
 # ============================================================
 if "agent" not in st.session_state:
-    st.session_state["agent"] = ReactAgent()
+    try:
+        st.session_state["agent"] = ReactAgent()
+    except Exception as _agent_err:
+        st.error(f"Agent 初始化失败，请检查配置（API Key、数据库路径等）: {str(_agent_err)[:200]}")
+        st.stop()
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
@@ -341,8 +346,9 @@ if "thread_id" not in st.session_state:
 if "vector_store" not in st.session_state:
     try:
         st.session_state["vector_store"] = VectorStoreService()
-    except Exception:
+    except Exception as _vs_err:
         st.session_state["vector_store"] = None
+        # 注意：向量库未就绪时知识库统计显示为 0，不影响 Agent 的联网搜索等功能
 
 # 侧边栏刷新计数器（删除/切换线程后触发刷新）
 if "sidebar_tick" not in st.session_state:
@@ -362,21 +368,24 @@ if "_run_thread" not in st.session_state:
 # ============================================================
 def get_kb_stats() -> dict:
     try:
-        if st.session_state["vector_store"]:
+        if st.session_state.get("vector_store"):
             return st.session_state["vector_store"].get_collection_stats()
-    except Exception:
-        pass
+    except Exception as _stat_err:
+        logger.warning(f"获取知识库统计失败: {_stat_err}")
     return {"total_chunks": 0, "collection_name": "N/A", "chunk_size": 0}
 
 
 def get_loaded_files() -> list[str]:
-    data_path = get_abs_path(chroma_conf.get("data_path", "data"))
-    files = []
-    if os.path.isdir(data_path):
-        for f in sorted(os.listdir(data_path)):
-            if f.endswith((".pdf", ".txt")):
-                files.append(f)
-    return files
+    try:
+        data_path = get_abs_path(chroma_conf.get("data_path", "data"))
+        files = []
+        if os.path.isdir(data_path):
+            for f in sorted(os.listdir(data_path)):
+                if f.endswith((".pdf", ".txt")):
+                    files.append(f)
+        return files
+    except Exception:
+        return []
 
 
 def export_chat_history() -> str:
@@ -534,34 +543,43 @@ with st.sidebar:
     st.markdown("#### 定时报告")
 
     if "scheduler" not in st.session_state:
-        from agent.scheduler import ReportScheduler
-        from rag.rag_service import RagSummarizeService
-        st.session_state["scheduler"] = ReportScheduler(RagSummarizeService())
-        st.session_state["scheduler"].load_config()
-        st.session_state["scheduler"].start()
+        try:
+            from agent.scheduler import ReportScheduler
+            from rag.rag_service import RagSummarizeService
+            st.session_state["scheduler"] = ReportScheduler(RagSummarizeService())
+            st.session_state["scheduler"].load_config()
+            st.session_state["scheduler"].start()
+        except Exception as _sched_err:
+            st.session_state["scheduler"] = None
+            st.warning("定时调度器初始化失败，请检查配置（scheduler.yaml 及 API Key）")
 
     sched = st.session_state["scheduler"]
-    status = sched.get_status()
-
-    if status["running"]:
-        st.success(f"运行中 · {status['job_count']} 个任务")
+    if sched is None:
+        st.caption("调度器未就绪")
     else:
-        st.warning("调度器未运行")
+        status = sched.get_status()
 
-    for job in status["jobs"]:
-        with st.container():
-            st.markdown(f"**{job['name']}**")
-            st.caption(f"下次执行: {job['next_run']}")
-            if st.button("▶ 立即执行", key=f"sched_run_{job['name']}", use_container_width=True):
-                with st.spinner(f"执行中: {job['name']}..."):
-                    sched.run_now(job["name"])
-                st.success(f"{job['name']} 已完成")
-                st.rerun()
+        if status["running"]:
+            st.success(f"运行中 · {status['job_count']} 个任务")
+        else:
+            st.warning("调度器未运行")
 
-    if status["email_available"]:
-        st.caption("邮件已配置")
-    else:
-        st.caption("邮件未配置")
+        for job in status["jobs"]:
+            with st.container():
+                st.markdown(f"**{job['name']}**")
+                st.caption(f"下次执行: {job['next_run']}")
+                if st.button("▶ 立即执行", key=f"sched_run_{job['name']}", use_container_width=True):
+                    with st.spinner(f"执行中: {job['name']}..."):
+                        try:
+                            sched.run_now(job["name"])
+                        except Exception as _run_err:
+                            st.error(f"执行失败: {str(_run_err)[:100]}")
+                    st.rerun()
+
+        if status["email_available"]:
+            st.caption("邮件已配置")
+        else:
+            st.caption("邮件未配置")
 
 
 # ============================================================

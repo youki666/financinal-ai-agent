@@ -222,7 +222,29 @@ class ReactAgent:
         except Exception as e:
             err = str(e) or type(e).__name__
             logger.error(f"[Agent] 执行异常: {type(e).__name__}: {err}", exc_info=True)
-            yield f"分析过程中出现错误（{err}）。请稍后重试或尝试其他查询。"
+
+            # 识别常见 API 错误，给出可操作的提示
+            low = err.lower()
+            if "quota" in low and ("exhaust" in low or "free" in low):
+                yield (
+                    "模型 API 免费额度已用尽，请前往 [阿里云百炼控制台]"
+                    "(https://bailian.console.aliyun.com/) 充值或关闭「仅使用免费额度」选项。\n\n"
+                    "临时替代方案：编辑 `.env` 文件，将模型切换为其他可用模型。"
+                )
+            elif "403" in err or "forbidden" in low:
+                yield (
+                    f"模型 API 访问被拒绝（403），请检查 API Key 是否有效"
+                    f"及对应模型是否已开通付费权限。\n\n"
+                    f"详细错误: {err[:200]}"
+                )
+            elif "401" in err or "unauthorized" in low or "authentication" in low:
+                yield (
+                    "模型 API 认证失败，请检查 `.env` 文件中 DASHSCOPE_API_KEY 是否正确配置。"
+                )
+            elif "timeout" in low or "timed out" in low:
+                yield "模型响应超时，请稍后重试。如持续出现此问题，可尝试切换为 qwen-turbo 等更轻量的模型。"
+            else:
+                yield f"分析过程中出现错误，请稍后重试。如需帮助，请检查运行日志。({type(e).__name__})"
 
     def close(self):
         self.conn.close()
