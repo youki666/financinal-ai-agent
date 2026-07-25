@@ -1,14 +1,18 @@
 import os
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from threading import Lock
+
 import numpy as np
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from langchain_community.vectorstores.utils import filter_complex_metadata
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from rank_bm25 import BM25Okapi
 from model.factory import get_embed_model
 
 from utils.config_handler import chroma_conf
-from utils.file_handler import txt_loader, pdf_loader, listdir_with_allowed_type, get_file_md5_hex
+from utils.file_handler import txt_loader, pdf_loader, listdir_with_allowed_type, get_file_md5_hex, pdf_loader2
 from utils.logger_handler import logger
 from utils.path_tool import get_abs_path
 
@@ -164,10 +168,42 @@ class VectorStoreService:
                 f.write(md5_for_check + "\n")
 
         def get_file_documents(read_path: str) -> list[Document]:
+            if read_path.endswith("pdf"):
+                # 2. 加载文档，获取元素列表
+                elements: list[Document] = pdf_loader2(read_path)
+                # 3. 分类处理不同类型的元素
+                texts = []
+                tables = []
+                images = []
+
+                for elem in elements:
+                    category = elem.metadata.get("category")
+
+                    if category == "Title" or category == "Paragraph":
+                        texts.append(elem.page_content)
+                    elif category == "Table":
+                        # 表格数据可以以多种形式获取
+                        table_text = elem.page_content  # 纯文本形式
+                        table_html = elem.metadata.get("text_as_html")  # HTML格式，结构更好[reference:2]
+                        tables.append({
+                            "text": table_text,
+                            "html": table_html,
+                            "metadata": elem.metadata
+                        })
+                    elif category == "Image":
+                        # 图片元素包含路径等信息
+                        images.append({
+                            "image_path": elem.metadata.get("image_path"),
+                            "page_number": elem.metadata.get("page_number"),
+                            "metadata": elem.metadata
+                        })
+
+                print(f"提取到 {len(texts)} 个文本块, {len(tables)} 个表格, {len(images)} 张图片")
+                return elements
             if read_path.endswith("txt"):
                 return txt_loader(read_path)
-            if read_path.endswith("pdf"):
-                return pdf_loader(read_path)
+            # if read_path.endswith("pdf"):
+            #     return pdf_loader(read_path)
             return []
 
         allowed_files_path: list[str] = listdir_with_allowed_type(
@@ -200,6 +236,10 @@ class VectorStoreService:
                     doc.metadata["source"] = file_name
 
                 split_document: list[Document] = self.spliter.split_documents(documents)
+                # 过滤掉 UnstructuredPDFLoader 产出的复杂 metadata（如 coordinates）
+                split_document = filter_complex_metadata(split_document)
+                logger.warning(split_document)
+                logger.info("==========split_document==============")
                 if not split_document:
                     logger.warning(f"[加载知识库] {path} 分片后没有有效文本内容，跳过")
                     continue
@@ -215,6 +255,149 @@ class VectorStoreService:
         if new_docs_loaded:
             self._rebuild_bm25_index()
 
+    def load_document2(self, max_workers: int = 4):
+        """并行加载文档：ProcessPoolExecutor 并行解析 PDF → 分片 → 过滤 metadata → 批量入库（MD5去重）"""
+        from utils.parallel_pdf_loader import process_single_pdf
+
+        md5_store_path = get_abs_path(chroma_conf["md5_hex_store"])
+        md5_lock = Lock()
+
+        # ---- MD5 工具 + 一致性校验 ----
+        existing_md5: set[str] = set()
+        if os.path.exists(md5_store_path):
+            with open(md5_store_path, "r", encoding="utf-8") as f:
+                existing_md5 = {line.strip() for line in f if line.strip()}
+
+        # 从 ChromaDB 收集已入库的 source 文件名
+        col_data = self.vectors.get()
+        col_count = len(col_data["ids"]) if col_data and col_data.get("ids") else 0
+        loaded_sources: set[str] = set()
+        if col_data and col_data.get("metadatas"):
+            for meta in col_data["metadatas"]:
+                src = (meta or {}).get("source", "")
+                if src:
+                    loaded_sources.add(src)
+
+        # 双向校验：ChromaDB 为空但 md5 有记录 → md5 失效
+        if col_count == 0 and existing_md5:
+            logger.warning("[load_document2] ChromaDB 为空，清空失效的 md5 记录")
+            existing_md5.clear()
+            open(md5_store_path, "w", encoding="utf-8").close()
+
+        # 反向校验：ChromaDB 有数据但 md5 缺失 → 从文件 MD5 补回
+        if col_count > 0 and loaded_sources:
+            restored = 0
+            for p in listdir_with_allowed_type(
+                get_abs_path(chroma_conf["data_path"]),
+                tuple(chroma_conf["allow_knowledge_file_type"]),
+            ):
+                if os.path.basename(p) in loaded_sources:
+                    md5 = get_file_md5_hex(p)
+                    if md5 and md5 not in existing_md5:
+                        existing_md5.add(md5)
+                        with open(md5_store_path, "a", encoding="utf-8") as f:
+                            f.write(md5 + "\n")
+                        restored += 1
+            if restored:
+                logger.info(f"[load_document2] 从 ChromaDB 恢复 {restored} 条 md5 记录")
+
+        def _save_md5(md5_hex: str):
+            with md5_lock:
+                with open(md5_store_path, "a", encoding="utf-8") as f:
+                    f.write(md5_hex + "\n")
+
+        def _load_txt(path: str) -> list[Document]:
+            return txt_loader(path)
+
+        # ---- 1. 收集新文件 ----
+        allowed_files = listdir_with_allowed_type(
+            get_abs_path(chroma_conf["data_path"]),
+            tuple(chroma_conf["allow_knowledge_file_type"]),
+        )
+        if not allowed_files:
+            logger.info("[load_document2] 没有允许的文件类型")
+            return
+
+        new_pdfs: list[str] = []
+        new_txts: list[str] = []
+        for path in allowed_files:
+            md5_hex = get_file_md5_hex(path)
+            if not md5_hex or md5_hex in existing_md5:
+                if md5_hex:
+                    logger.info(f"[load_document2] {os.path.basename(path)} 已存在，跳过")
+                continue
+            if path.endswith(".pdf"):
+                new_pdfs.append(path)
+            elif path.endswith(".txt"):
+                new_txts.append(path)
+
+        if not new_pdfs and not new_txts:
+            logger.info("[load_document2] 没有新文件")
+            return
+
+        logger.info(
+            f"[load_document2] {len(new_pdfs)} 个新 PDF + {len(new_txts)} 个新 TXT，"
+            f"{max_workers} 进程并行处理"
+        )
+
+        # ---- 2. 并行加载 PDF（ProcessPoolExecutor，绕过 GIL） ----
+        all_documents: list[Document] = []
+
+        if new_txts:
+            for p in new_txts:
+                docs = _load_txt(p)
+                if docs:
+                    md5_hex = get_file_md5_hex(p)
+                    if md5_hex:
+                        _save_md5(md5_hex)
+                    all_documents.extend(docs)
+
+        if new_pdfs:
+            with ProcessPoolExecutor(max_workers=max_workers) as executor:
+                futures = {
+                    executor.submit(
+                        process_single_pdf, p,
+                        strategy="fast",
+                        languages=["chi_sim"],
+                        extract_images=False,
+                        ocr_mode="never",
+                    ): p
+                    for p in new_pdfs
+                }
+                for future in as_completed(futures):
+                    path = futures[future]
+                    try:
+                        docs = future.result()
+                        if docs:
+                            md5_hex = get_file_md5_hex(path)
+                            if md5_hex:
+                                _save_md5(md5_hex)
+                            all_documents.extend(docs)
+                    except Exception as e:
+                        logger.error(f"[load_document2] {path} 处理失败: {e}", exc_info=True)
+
+        if not all_documents:
+            logger.info("[load_document2] 没有有效内容")
+            return
+
+        # ---- 3. 注入来源 + 分片 + 过滤 metadata ----
+        for doc in all_documents:
+            doc.metadata["source"] = doc.metadata.get("filename", "") or doc.metadata.get("source", "")
+
+        split_docs = self.spliter.split_documents(all_documents)
+        split_docs = filter_complex_metadata(split_docs)
+        logger.info(f"[load_document2] split + filter: {len(all_documents)} → {len(split_docs)}")
+
+        # ---- 4. 分批入库（每批 500 条，避免 ChromaDB OOM） ----
+        batch_size = 500
+        total = len(split_docs)
+        for i in range(0, total, batch_size):
+            batch = split_docs[i:i + batch_size]
+            self.vectors.add_documents(batch)
+            logger.info(f"[load_document2] 入库进度: {min(i + batch_size, total)}/{total}")
+        self._rebuild_bm25_index()
+        logger.info(f"[load_document2] 完成，{total} 个分片已入库")
+
     def rebuild_index(self):
         """强制重建 BM25 索引（用于前端手动刷新）"""
         self._rebuild_bm25_index()
@@ -225,17 +408,19 @@ if __name__ == '__main__':
     vs = VectorStoreService()
 
     # 先加载文档
-    vs.load_document()
+    #vs.load_document()
 
-    # 测试混合检索
-    print("=" * 50)
-    print("混合检索测试：紫金矿业")
-    print("=" * 50)
-    results = vs.hybrid_search("紫金矿业", k=3)
-    for i, doc in enumerate(results):
-        print(f"[{i+1}] {doc.page_content[:200]}...")
-        print(f"    来源: {doc.metadata.get('source', 'unknown')}")
-        print("-" * 40)
+    vs.load_document2(max_workers=4)
 
-    print("\n知识库统计:")
-    print(vs.get_collection_stats())
+    # # 测试混合检索
+    # print("=" * 50)
+    # print("混合检索测试：紫金矿业")
+    # print("=" * 50)
+    # results = vs.hybrid_search("紫金矿业", k=3)
+    # for i, doc in enumerate(results):
+    #     print(f"[{i+1}] {doc.page_content[:200]}...")
+    #     print(f"    来源: {doc.metadata.get('source', 'unknown')}")
+    #     print("-" * 40)
+    #
+    # print("\n知识库统计:")
+    # print(vs.get_collection_stats())

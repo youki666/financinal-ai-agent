@@ -1,0 +1,2001 @@
+================================================================================
+        从0到1重新实现「金融AI研究助手」项目 — 完整开发步骤
+================================================================================
+关键依赖链：path_tool → config_handler → factory → vector_store → rag_service → agent_tools → react_agent → app.py
+
+
+
+项目概述：
+  基于 Streamlit 的金融研究分析平台，集成 ReAct Agent（LangGraph）、RAG 管道
+  （ChromaDB + BM25 混合检索）、动态模型路由、定时报告推送、RAGAS 评估框架。
+
+  目标领域：A股二级市场研报分析
+
+================================================================================
+第一阶段：项目骨架与配置系统（无外部依赖，纯Python标准库）
+================================================================================
+
+步骤 1.1：创建项目目录结构
+--------------------------------------------------------------------------------
+  操作：创建以下空目录和文件
+
+  目录结构：
+    financinal-ai-agent/
+    ├── config/                  # YAML 配置文件
+    │   ├── agent.yaml
+    │   ├── chroma.yaml
+    │   ├── rag.yaml
+    │   ├── scheduler.yaml
+    │   └── prompts.yml
+    ├── prompts/                 # LLM Prompt 模板 txt 文件
+    │   ├── main_prompt.txt
+    │   ├── rag_summarize.txt
+    │   ├── query_rewrite.txt
+    │   └── report_prompt.txt
+    ├── utils/                   # 通用工具模块
+    │   ├── path_tool.py
+    │   ├── config_handler.py
+    │   ├── logger_handler.py
+    │   ├── file_handler.py
+    │   └── prompt_loader.py
+    ├── model/                   # LLM 模型层
+    │   ├── factory.py
+    │   └── router.py
+    ├── rag/                     # RAG 检索增强生成管道
+    │   ├── vector_store.py
+    │   ├── query_rewriter.py
+    │   ├── reranker.py
+    │   ├── context_assembler.py
+    │   └── rag_service.py
+    ├── agent/                   # Agent 层
+    │   ├── react_agent.py
+    │   ├── scheduler.py
+    │   ├── notifier.py
+    │   └── tools/
+    │       ├── agent_tools.py
+    │       ├── news_tools.py
+    │       ├── search_tools.py
+    │       ├── stock_tools.py
+    │       └── middleware.py
+    ├── evaluation/              # 评估框架
+    │   ├── __init__.py
+    │   ├── test_dataset.py
+    │   └── eval_runner.py
+    ├── data/                    # 文档数据目录
+    ├── assets/                  # 生成的研报输出目录
+    ├── logs/                    # 日志目录
+    ├── .env.example             # 环境变量模板
+    ├── requirements.txt         # 依赖清单
+    └── app.py                   # 主入口
+
+  验证步骤：
+    ls -la 检查所有目录已创建
+    find . -type d 列出所有子目录
+
+--------------------------------------------------------------------------------
+
+步骤 1.2：编写 requirements.txt
+--------------------------------------------------------------------------------
+  文件：requirements.txt
+  内容说明：列出所有 Python 依赖包及版本号
+
+  需要声明的依赖：
+    streamlit==1.40.1              # Web UI框架
+    langchain==1.3.11              # LangChain核心
+    langgraph==1.2.8               # Agent框架（LangGraph状态图）
+    langgraph-checkpoint-sqlite==3.1.0  # SQLite对话检查点持久化
+    langchain-core==1.4.9          # LangChain核心抽象
+    langchain-community==0.4.2     # 社区集成（PyPDF, embeddings等）
+    langchain-chroma==0.2.6        # ChromaDB向量存储集成
+    langchain-text-splitters==1.1.2  # 文档分块
+    langchain-openai==1.3.5        # OpenAI兼容API（用于DashScope）
+    python-dotenv==1.0.1           # .env文件加载
+    PyYAML==6.0.2                  # YAML配置解析
+    numpy==2.5.1                   # 数值计算（BM25评分）
+    rank-bm25==0.2.2               # BM25关键词检索
+    dashscope==1.26.2              # 阿里云灵积（DashScope）SDK
+    chromadb==1.5.9                # 向量数据库
+    pypdf==5.1.0                   # PDF解析
+    pandas==2.3.3                  # 数据处理（RAGAS、AKShare）
+    akshare>=1.16.0                # A股金融市场数据
+    apscheduler>=3.10.0            # 定时任务管理
+    ragas>=0.2.3                   # RAG评估框架
+    requests                       # HTTP请求（NewsAPI、Webhook）
+
+  验证步骤：
+    pip install -r requirements.txt  # 确保所有包能正常安装
+    注意：可先注释掉 ragas 等复杂依赖，后续用到时再安装
+
+--------------------------------------------------------------------------------
+
+步骤 1.3：编写 .env.example 环境变量模板
+--------------------------------------------------------------------------------
+  文件：.env.example
+  内容说明：列出所有需要的环境变量及其说明
+
+  需要声明的变量：
+    DASHSCOPE_API_KEY=             # 阿里云灵积 API Key（必填，用于LLM + Embedding）
+    CHAT_MODEL_NAME=               # 模型名称覆盖（可选）
+    # LangSmith 可观测性（可选）
+    LANGSMITH_TRACING=false
+    LANGSMITH_ENDPOINT=
+    LANGSMITH_API_KEY=
+    LANGSMITH_PROJECT=
+    # 新闻API（可选）
+    NEWSAPI_KEY=
+    # 邮件推送（可选）
+    SMTP_HOST=
+    SMTP_PORT=
+    SMTP_USER=
+    SMTP_PASS=
+    # 钉钉/飞书 Webhook（可选）
+    DINGTALK_WEBHOOK_URL=
+    FEISHU_WEBHOOK_URL=
+    # Tavily 搜索（可选）
+    TAVILY_API_KEY=
+
+  验证步骤：
+    cp .env.example .env
+    手动编辑 .env 填入至少 DASHSCOPE_API_KEY
+
+--------------------------------------------------------------------------------
+
+步骤 1.4：编写 utils/path_tool.py（项目根路径工具）
+--------------------------------------------------------------------------------
+  依赖：无（纯标准库 os.path）
+
+  函数列表：
+    1. get_project_root() -> str
+       功能：从当前文件向上查找项目根目录（定位到包含 config/ 目录的路径）
+       实现：用 os.path.dirname(__file__) 从 utils/ 向上找一层
+
+    2. get_abs_path(relative_path: str) -> str
+       功能：将相对路径（相对于项目根）转为绝对路径
+       实现：os.path.join(get_project_root(), relative_path)
+
+  验证步骤：
+    python -c "from utils.path_tool import get_project_root, get_abs_path; \
+               print(get_project_root()); print(get_abs_path('config/rag.yaml'))"
+    确认输出路径正确，且指向实际存在的目录
+
+--------------------------------------------------------------------------------
+
+步骤 1.5：编写 config/ 下的 YAML 配置文件（4个 + 1个prompts映射）
+--------------------------------------------------------------------------------
+  依赖：无（纯静态配置文件）
+
+  文件1：config/rag.yaml — RAG 模型配置
+    字段：
+      chat_model_name: qwen3.7-plus           # RAG 回答生成用的模型
+      embedding_model_name: text-embedding-v4  # 向量嵌入模型名
+
+  文件2：config/chroma.yaml — 向量存储配置
+    字段：
+      collection_name: agent                   # ChromaDB 集合名称
+      persist_directory: chroma_db             # ChromaDB 持久化目录
+      k: 3                                     # 默认检索返回条数
+      data_path: data                          # 文档数据目录
+      md5_hex_store: md5.txt                   # MD5 去重记录文件
+      allow_knowledge_file_type: ["txt", "pdf"]  # 允许的文档类型
+      chunk_size: 200                          # 文档分块大小
+      chunk_overlap: 20                        # 分块重叠字符数
+
+  文件3：config/agent.yaml — Agent 配置
+    字段：
+      external_data_path: data/external/records.csv  # 外部数据路径（预留）
+
+  文件4：config/scheduler.yaml — 定时任务配置
+    字段：包含3个任务
+      任务1: name="每日市场早报", cron="0 9 * * 1-5", type="rag", channel=["email"]
+      任务2: name="每周行业研报", cron="0 9 * * 5", type="rag", channel=["email"]
+      任务3: name="快讯摘要推送", cron="0 9,15 * * 1-5", type="news", channel=["email"]
+
+  文件5：config/prompts.yml — Prompt 文件路径映射
+    字段：
+      main_prompt_path: prompts/main_prompt.txt
+      rag_summarize_prompt_path: prompts/rag_summarize.txt
+      report_prompt_path: prompts/report_prompt.txt
+      query_rewrite_prompt_path: prompts/query_rewrite.txt
+
+  验证步骤：
+    python -c "import yaml; \
+               for f in ['config/rag.yaml', 'config/chroma.yaml', \
+                         'config/agent.yaml', 'config/scheduler.yaml', \
+                         'config/prompts.yml']: \
+                   with open(f) as fh: print(fh.name, yaml.safe_load(fh))"
+    确认所有YAML文件解析无误
+
+--------------------------------------------------------------------------------
+
+步骤 1.6：编写 utils/config_handler.py（YAML 配置加载器）
+--------------------------------------------------------------------------------
+  依赖：path_tool, PyYAML
+
+  函数列表：
+    1. _load_yaml(filename: str) -> dict
+       功能：从 config/ 目录加载一个 YAML 文件，返回字典
+       实现：get_abs_path(f"config/{filename}") -> yaml.safe_load()
+
+  模块级单例变量（在 import 时即加载）：
+    rag_conf     = _load_yaml("rag.yaml")       # RAG 模型配置
+    chroma_conf  = _load_yaml("chroma.yaml")    # 向量存储配置
+    prompts_conf = _load_yaml("prompts.yml")    # Prompt 路径映射
+    agent_conf   = _load_yaml("agent.yaml")     # Agent 配置
+
+  ⚠️ 关键设计决策：
+    模块级变量在 import 时只执行一次，自然形成单例模式，后续所有 import
+    该模块的地方共享同一份配置，无需传参。
+
+  验证步骤：
+    python -c "from utils.config_handler import rag_conf, chroma_conf; \
+               print(rag_conf); print(chroma_conf)"
+    确认配置内容正确打印
+
+--------------------------------------------------------------------------------
+
+步骤 1.7：编写 utils/logger_handler.py（日志系统）
+--------------------------------------------------------------------------------
+  依赖：path_tool, logging 标准库
+
+  函数列表：
+    1. get_logger(name: str = "agent") -> logging.Logger
+       功能：创建并配置日志记录器
+       实现细节：
+         - 创建 logger 实例
+         - 添加 StreamHandler（输出到控制台，INFO 级别）
+         - 添加 TimedRotatingFileHandler（输出到 logs/agent_YYYYMMDD.log，
+           每天轮转，DEBUG 级别，备份保留7天）
+         - 设置日志格式：时间 - logger名 - 级别 - 文件名:行号 - 消息
+
+  模块级单例：
+    logger = get_logger()   # 默认名称的日志器，供全项目使用
+
+  验证步骤：
+    python -c "from utils.logger_handler import logger; \
+               logger.info('测试日志'); logger.warning('警告测试')"
+    ls logs/  确认日志文件已创建，内容格式正确
+
+--------------------------------------------------------------------------------
+
+步骤 1.8：编写 utils/file_handler.py（文件处理工具）
+--------------------------------------------------------------------------------
+  依赖：hashlib 标准库, path_tool, langchain_community (PyPDFLoader)
+
+  函数列表：
+    1. get_file_md5_hex(filepath: str) -> str
+       功能：计算文件的 MD5 哈希值（16进制字符串）
+       实现：分块读取（4096字节/块），hashlib.md5()
+       用途：知识库文档去重，记录已加载过的文件
+
+    2. listdir_with_allowed_type(path: str, allowed_types: list[str]) -> list[str]
+       功能：列出目录下指定扩展名的文件路径（仅文件，不含子目录）
+       实现：os.listdir() + os.path.isfile() + 后缀名白名单过滤
+
+    3. pdf_loader(filepath: str) -> list[Document]
+       功能：使用 LangChain PyPDFLoader 加载 PDF 文件
+       实现：PyPDFLoader(filepath).load()
+
+    4. txt_loader(filepath: str) -> list[Document]
+       功能：使用 LangChain TextLoader 加载 TXT 文件（UTF-8）
+       实现：TextLoader(filepath, encoding="utf-8").load()
+
+  验证步骤：
+    python -c "from utils.file_handler import get_file_md5_hex; \
+               print(get_file_md5_hex('step2.txt'))"
+    确认返回32位16进制字符串
+    python -c "from utils.file_handler import listdir_with_allowed_type; \
+               print(listdir_with_allowed_type('data', ['pdf', 'txt']))"
+    确认列出 data/ 目录下的 PDF 和 TXT 文件
+
+--------------------------------------------------------------------------------
+
+步骤 1.9：编写 Prompt 模板文件
+--------------------------------------------------------------------------------
+  依赖：无（纯文本文件）
+
+  文件1：prompts/main_prompt.txt — Agent 系统提示词
+    内容：定义 ReAct Agent 的角色（金融研究助手）、能力范围、工具使用规范、
+          回答格式要求（需要引用来源）、禁止生成投资建议的免责声明
+
+  文件2：prompts/rag_summarize.txt — RAG 回答生成提示词
+    内容：模板变量 {context} 和 {question}
+          指令：基于检索到的文档回答用户问题，要求准确、有来源引用、
+          不编造信息、不确定时明确说明
+
+  文件3：prompts/query_rewrite.txt — 查询改写提示词
+    内容：模板变量 {question}
+          指令：将口语化/不精确的金融问题改写为 1-3 个专业的检索查询，
+          包含：口语转专业术语、补充时间维度、拆分复合问题、补充行业维度
+
+  文件4：prompts/report_prompt.txt — 研报生成提示词
+    内容：模板变量 {context} 和 {topic}
+          指令：基于提供的资料生成结构化的金融研究报告（含：摘要、公司/行业
+          概况、核心观点、风险提示等章节），使用 Markdown 格式
+
+  验证步骤：
+    python -c "for f in ['main','rag_summarize','query_rewrite','report']: \
+               with open(f'prompts/{f}_prompt.txt') as fh: \
+               print(f'=== {f} ==='); print(fh.read()[:100]); print()"
+    确认所有 Prompt 文件可读取且内容合理
+
+--------------------------------------------------------------------------------
+
+步骤 1.10：编写 utils/prompt_loader.py（Prompt 文件加载器）
+--------------------------------------------------------------------------------
+  依赖：path_tool, config_handler (prompts_conf)
+
+  函数列表：
+    1. load_system_prompts() -> str
+       功能：加载 Agent 主系统提示词
+       实现：读取 prompts_conf["main_prompt_path"] 对应文件的全部内容
+
+    2. load_rag_prompts() -> str
+       功能：加载 RAG 回答生成提示词模板
+       实现：读取 prompts_conf["rag_summarize_prompt_path"]
+
+    3. load_query_rewrite_prompts() -> str
+       功能：加载查询改写提示词模板
+       实现：读取 prompts_conf["query_rewrite_prompt_path"]
+
+    4. load_report_prompts() -> str
+       功能：加载研报生成提示词模板
+       实现：读取 prompts_conf["report_prompt_path"]
+
+  验证步骤：
+    python -c "from utils.prompt_loader import load_system_prompts; \
+               print(load_system_prompts()[:200])"
+    确认能读取到 Prompt 内容
+
+================================================================================
+第一阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. python -c "from utils.path_tool import get_abs_path; print(get_abs_path('.'))"
+    2. python -c "from utils.config_handler import rag_conf; print(rag_conf)"
+    3. python -c "from utils.logger_handler import logger; logger.info('hello')"
+    4. python -c "from utils.file_handler import get_file_md5_hex; print(get_file_md5_hex('step2.txt'))"
+    5. python -c "from utils.prompt_loader import load_system_prompts; print(load_system_prompts()[:100])"
+  所有命令均无错误，输出正确。这表示项目的「地基」已经打好。
+================================================================================
+
+
+================================================================================
+第二阶段：模型层（LLM 工厂 + 动态路由）
+================================================================================
+
+步骤 2.1：编写 model/factory.py（模型工厂）
+--------------------------------------------------------------------------------
+  依赖：dashscope, langchain_openai, langchain_community.embeddings,
+        config_handler (rag_conf), path_tool
+
+  设定：
+    DashScope API 兼容 OpenAI 接口格式
+    端点：https://dashscope.aliyuncs.com/compatible-mode/v1
+    API Key：从环境变量 DASHSCOPE_API_KEY 读取
+
+  函数/变量列表：
+
+    1. 字典 MODEL_CONFIGS — 模型预设配置
+       包含三个配置项：
+         "fast":     model_name="qwen-plus",  temperature=0.0   # 快速简单回答
+         "standard": model_name="qwen-plus",  temperature=0.3   # 标准回答（路由默认）
+         "powerful": model_name="qwen-max",   temperature=0.5   # 复杂任务（研报生成）
+
+       每个配置项包含：provider="openai", api_key=从环境变量读取,
+                       base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+
+    2. get_embed_model() -> DashScopeEmbeddings
+       功能：获取向量嵌入模型单例（text-embedding-v4）
+       实现：使用模块级变量缓存，首次调用时创建，后续返回缓存实例
+       注意：DashScopeEmbeddings 需要传入 model 和 api_key 参数
+
+    3. 模块级变量 chat_model = RoutableChatModel(...)
+       功能：全项目共享的路由聊天模型实例
+       注意：这一步依赖步骤 2.2 的 RoutableChatModel，需在完成 2.2 后再初始化
+
+  验证步骤：
+    python -c "from model.factory import get_embed_model; \
+               emb = get_embed_model(); \
+               vec = emb.embed_query('测试文本'); \
+               print(f'向量维度: {len(vec)}')"
+    确认返回的向量维度 > 0（text-embedding-v4 通常是 1024 维）
+    注意：需要先设置 DASHSCOPE_API_KEY 环境变量
+
+--------------------------------------------------------------------------------
+
+步骤 2.2：编写 model/router.py（模型路由器）
+--------------------------------------------------------------------------------
+  依赖：langchain_core (BaseChatModel, AIMessage 等), model.factory (MODEL_CONFIGS)
+
+  类的设计说明：
+    核心思路：创建一个继承 langchain_core.BaseChatModel 的自定义类，对上层
+    （Agent / RAG 服务）表现为一个普通的聊天模型，但内部根据用户输入的关键词
+    动态选择底层实际调用的 LLM。
+
+  类列表：
+
+    1. LLMConfig @dataclass
+       属性：
+         provider: str           # 提供商标识（"openai"）
+         model_name: str         # 模型名称（"qwen-plus" / "qwen-max"）
+         temperature: float      # 生成温度
+         api_key: str            # API密钥
+         base_url: str           # API端点URL
+         description: str        # 描述信息
+
+    2. 函数 _detect_keywords(text: str) -> bool
+       功能：检测文本中是否包含特定关键词
+       实现：遍历关键词列表，判断是否在 text 中出现
+
+    3. 类 ModelRouter
+       职责：根据查询文本，决定使用哪个底层模型配置
+
+       方法：
+         __init__(self, configs: dict[str, LLMConfig])
+           功能：初始化路由器，接收模型配置字典
+
+         route(self, messages: list) -> LLMConfig
+           功能：分析消息内容，返回应使用的模型配置
+           实现规则：
+             - 提取所有 HumanMessage 的内容合并为文本
+             - 如果文本包含 "报告"/"研报"/"深度" -> 返回 "powerful" 配置
+             - 如果文本包含 "分析"/"投资"/"估值"/"行业"/"产业链"/
+               "行情"/"走势"/"财务"/"营收"/"利润"/"现金流"/"估值"/
+               "基本面"/"技术面"/"政策"/"宏观" -> 返回 "standard" 配置
+             - 默认返回 "fast" 配置
+
+    4. 类 RoutableChatModel(BaseChatModel)  ⭐ 核心类
+       职责：一个可路由的 LangChain 聊天模型，对上层透明
+
+       属性：
+         _router: ModelRouter          # 路由器实例
+         _model_cache: dict            # 已创建的底层模型缓存（按配置缓存）
+
+       方法：
+         _route(self, messages: list) -> BaseChatModel
+           功能：根据 messages 内容选择并返回实际的 LLM 实例
+           实现：
+             - 调用 self._router.route(messages) 获取配置
+             - 生成缓存 key = f"{config.provider}_{config.model_name}"
+             - 如果缓存中存在且温度一致则复用，否则创建新的 ChatOpenAI 实例
+             - 创建时传入 model, temperature, api_key, base_url 参数
+             - 检查是否有已绑定的 tools（self.tools），有则 .bind_tools()
+
+         _generate(self, messages, stop, run_manager, **kwargs) -> ChatResult
+           功能：同步生成（LangChain 框架要求实现）
+           实现：self._route(messages).invoke(messages) -> 包装为 ChatResult
+
+         _stream(self, messages, stop, run_manager, **kwargs) -> Iterator
+           功能：流式生成（LangChain 框架要求实现）
+           实现：self._route(messages).stream(messages)
+
+         bind_tools(self, tools, **kwargs) -> "RoutableChatModel"
+           功能：绑定工具列表（LangGraph Agent 会在调用时 bind_tools）
+           实现：保存 tools 到 self.tools，返回 self（支持链式调用）
+
+         _llm_type(self) -> str
+           功能：返回模型类型标识字符串（"routable_chat_model"）
+
+       关键注意事项：
+         - ai_model_id 务必覆盖为 "routable_chat_model"（如果 LangChain 1.x 要求）
+         - 必须正确实现 _generate 和 _stream，LangGraph Agent 会调用这两个方法
+         - bind_tools 是 LangGraph 调用工具的关键，需要保存并在 _route 时应用
+
+  验证步骤：
+    python -c "
+    from model.factory import chat_model
+    from langchain_core.messages import HumanMessage
+
+    # 测试普通问答（应路由到 fast 模型）
+    msg = [HumanMessage(content='你好，介绍一下你自己')]
+    for chunk in chat_model._stream(msg):
+        print(chunk, end='', flush=True)
+    print() "
+
+    # 测试金融分析问答（应路由到 standard 模型）
+    msg2 = [HumanMessage(content='分析一下紫金矿业的投资价值')]
+    for chunk in chat_model._stream(msg2):
+        print(chunk.content, end='', flush=True)
+    print()
+    "
+    确认：
+      - 两种查询均能返回合理响应
+      - 两种查询使用的模型温度/名称不同（可通过日志观察）
+
+    进阶验证（需要开启日志）：
+      检查日志输出确认 "报告生成" 类查询路由到 qwen-max
+      检查日志输出确认 "你好" 类查询路由到 qwen-plus (fast)
+
+  验证分析结果：
+    预期结果应该是：
+      - "你好" -> qwen-plus (fast, temperature=0.0)
+      - "分析紫金矿业" -> qwen-plus (standard, temperature=0.3)
+      - "生成一份紫金矿业的深度研报" -> qwen-max (powerful, temperature=0.5)
+
+  常见问题排查：
+    问题1：DashScope API 403 错误
+      -> 检查 DASHSCOPE_API_KEY 环境变量是否设置
+    问题2：stream 返回为空
+      -> 检查 _stream 方法的返回值是否是生成器迭代器
+    问题3：bind_tools 不生效
+      -> 检查是否有递归调用问题（ChatOpenAI 实例化时 infinite loop）
+    问题4：LangChain 1.x 兼容性
+      -> 检查 _llm_type 返回值和 model_name 是否冲突
+    问题5：OpenAI SDK 和 DashScope 兼容性
+      -> 检查 base_url 是否正确设置到 /compatible-mode/v1
+
+    解决关键问题：
+      1. 需要在 langchain-openai 1.3.5 版本中确认 ChatOpenAI 构造函数参数
+      2. DashScope 兼容模式可能需要特定 header，检查是否需要在 default_headers 中设置
+      3. 流式输出时的中文字符编码问题（使用 UTF-8）
+      4. temperature 参数的有效范围（0.0-2.0 在 OpenAI 规范中）
+
+================================================================================
+第二阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. 成功创建 chat_model 单例
+    2. chat_model._stream([HumanMessage(...)]) 返回流式输出
+    3. 不同关键词查询路由到不同配置的模型
+    4. 嵌入模型能正常运行并返回向量
+  这是项目的「引擎层」，后续 RAG 和 Agent 都依赖它。
+================================================================================
+
+
+================================================================================
+第三阶段：RAG 管道（检索增强生成）
+================================================================================
+
+步骤 3.1：编写 rag/vector_store.py（向量存储 + 混合检索）
+--------------------------------------------------------------------------------
+  依赖：langchain_chroma, langchain_text_splitters, rank_bm25, numpy,
+        model.factory (get_embed_model), config_handler (chroma_conf),
+        path_tool, file_handler, logger_handler
+
+  类和函数列表：
+
+    1. 类 BM25Retriever
+       职责：基于 BM25 算法的关键词检索器
+       属性：
+         _index: BM25Okapi     # rank_bm25 索引实例
+         _docs: list[str]      # 文档内容列表（用于返回结果）
+         _metadatas: list      # 文档元数据列表
+
+       方法：
+         __init__(self, docs: list[str], metadatas: list[dict])
+           功能：用文档列表构建 BM25 索引
+           实现：
+             - tokenize = lambda text: text.lower().split()  # 简单空格分词
+             - self._index = BM25Okapi([tokenize(d) for d in docs])
+             - 保存 docs 和 metadatas 用于结果返回
+
+         search(self, query: str, k: int = 5) -> list[tuple[float, str, dict]]
+           功能：BM25 关键词检索
+           返回：[(score, doc_content, metadata), ...]  按分数降序排列
+
+    2. 函数 rrf_fusion(vector_results, bm25_results, k=60, top_n=3)
+       功能：Reciprocal Rank Fusion（倒数排位融合）算法
+       参数：
+         vector_results: [(score, doc, meta), ...]   # 向量检索结果
+         bm25_results:  [(score, doc, meta), ...]   # BM25检索结果
+         k=60: 平滑参数（默认值）
+         top_n=3: 最终返回数量
+       实现：
+         - 为每篇文档分配来自两个检索源的排位（rank）
+         - RRF score = Σ 1/(k + rank + 1)  对每种检索源的排位求和
+         - 按 RRF score 降序排列，返回 top_n 篇去重文档
+
+    3. 类 VectorStoreService  ⭐ 核心类
+       职责：管理 ChromaDB 向量库 + BM25 索引的完整服务
+
+       属性：
+         _embed_model: DashScopeEmbeddings  # 嵌入模型
+         _collection: Chroma.Collection     # ChromaDB 集合（懒加载）
+         _bm25_retriever: BM25Retriever    # BM25 检索器
+         _text_splitter: RecursiveCharacterTextSplitter  # 文档分块器
+
+       方法：
+         __init__(self)
+           功能：初始化服务
+           实现：
+             - 获取嵌入模型
+             - 创建文本分块器（chunk_size=200, overlap=20）
+             - 调用 _init_collection() 懒初始化 ChromaDB
+             - 调用 _init_bm25() 初始化 BM25 索引
+
+         _init_collection(self) -> None
+           功能：初始化 ChromaDB 集合（获取或创建）
+           实现：
+             - persist_directory = get_abs_path(chroma_conf["persist_directory"])
+             - Chroma(collection_name, embedding_function, persist_directory)
+             - 集合不存在时自动创建
+
+         _init_bm25(self) -> None
+           功能：从 ChromaDB 构建 BM25 索引
+           实现：
+             - 从 ChromaDB 获取所有文档内容和元数据
+             - 创建 BM25Retriever 实例
+
+         hybrid_search(self, query: str, k: int = 3) -> list[Document]
+           功能：混合检索（向量 + BM25 -> RRF 融合）
+           实现：
+             - 向量检索：self._collection.similarity_search(query, k=2k)  # 取2倍候选
+             - BM25检索：self._bm25_retriever.search(query, k=2k)
+             - rrf_fusion() 融合两个结果集
+             - 去重、返回 top-k 个 LangChain Document 对象
+
+         get_collection_stats(self) -> dict
+           功能：获取知识库统计信息
+           返回：{"count": 分块数, "name": 集合名, "chunk_size": 分块大小}
+
+         load_document(self) -> int
+           功能：从 data/ 目录加载新文档到知识库（核心功能）
+           实现流程：
+             1. 从 data_path 下列出 .txt/.pdf 文件
+             2. 读取 md5.txt（已加载文件的 MD5 记录）
+             3. 逐个文件：
+                a. 计算 MD5，如果已存在则跳过
+                b. 根据后缀选用 pdf_loader 或 txt_loader 加载
+                c. 为每个 Document 注入 "source" metadata（文件名）
+                d. 用 text_splitter 分块
+                e. 添加到 ChromaDB 集合
+                f. 将 MD5 追加写入 md5.txt
+             4. 重建 BM25 索引
+             5. 返回新加载的文档数
+
+  验证步骤：
+    # 1. 初始化向量存储
+    python -c "
+    from rag.vector_store import VectorStoreService
+    vs = VectorStoreService()
+    print(vs.get_collection_stats())
+    "
+
+    # 2. 加载文档
+    python -c "
+    from rag.vector_store import VectorStoreService
+    vs = VectorStoreService()
+    count = vs.load_document()
+    print(f'新增 {count} 个文档')
+    print(vs.get_collection_stats())
+    "
+    确认：在 data/ 目录下放几个测试 PDF 文件，执行后 chroma_db/ 目录被创建
+
+    # 3. 测试混合检索
+    python -c "
+    from rag.vector_store import VectorStoreService
+    vs = VectorStoreService()
+    results = vs.hybrid_search('紫金矿业主营业务')
+    for i, doc in enumerate(results):
+        print(f'---结果{i+1}---')
+        print(doc.page_content[:200])
+        print(doc.metadata)
+        print()
+    "
+    确认：返回与查询相关的结果（内容相关、分数合理）
+
+  注意事项：
+    ChromaDB 在首次创建集合时会写入 chroma_db/ 目录，如果找不到文档是正常的
+    测试检索前需要先在 data/ 目录放入 PDF/TXT 文件
+
+--------------------------------------------------------------------------------
+
+步骤 3.2：编写 rag/query_rewriter.py（查询改写器）
+--------------------------------------------------------------------------------
+  依赖：model.factory (chat_model), prompt_loader (load_query_rewrite_prompts),
+        logger_handler
+
+  类列表：
+
+    1. 类 QueryRewriter
+       职责：将用户原始问题改写为 1-3 个专业检索查询
+
+       属性：
+         _model: BaseChatModel    # 用于改写的 LLM
+         _prompt: str             # 改写 Prompt 模板
+         _cache: dict[str, str]   # LRU 缓存（手动实现，最大128条）
+
+       方法：
+         __init__(self)
+           功能：初始化改写器
+           实现：
+             - self._model = chat_model
+             - self._prompt = load_query_rewrite_prompts()
+             - self._cache = {}
+
+         rewrite(self, query: str) -> list[str]
+           功能：将用户问题改写为多个专业检索查询
+           实现：
+             - 检查缓存，命中则直接返回
+             - 构造 prompt = self._prompt.format(question=query)
+             - 调用 self._model.invoke(prompt)
+             - 解析返回结果，提取出 1-3 个子查询（按换行分割）
+             - 缓存到 self._cache（如果超过128条，删除最早的）
+             - 异常时返回 [query]（原始查询兜底）
+
+  模块级单例：
+    query_rewriter = QueryRewriter()
+
+  验证步骤：
+    python -c "
+    from rag.query_rewriter import query_rewriter
+    queries = query_rewriter.rewrite('紫金矿业最近表现怎么样')
+    for i, q in enumerate(queries):
+        print(f'子查询{i+1}: {q}')
+    "
+    确认期望输出：
+      子查询1: 紫金矿业 2025年 股价走势
+      子查询2: 黄金铜矿 行业景气度
+      （实际输出取决于 LLM 改写结果）
+
+    # 测试缓存
+    第二次执行相同查询应该明显更快（直接命中缓存）
+
+    异常情况分析：
+      如果 LLM 调用失败，应返回原始查询 ["紫金矿业最近表现怎么样"]
+      缓存应在 128 个条目后自动淘汰最早的
+
+--------------------------------------------------------------------------------
+
+步骤 3.3：编写 rag/reranker.py（文档重排序器）
+--------------------------------------------------------------------------------
+  依赖：无（纯算法实现）
+
+  类列表：
+
+    1. 类 LLMReranker
+       职责：对检索结果进行去重和重排序
+
+       方法：
+         _deduplicate(self, docs: list[Document]) -> list[Document]
+           功能：基于 Jaccard 相似度去重
+           实现：
+             - 截取每篇文档的前200个字符
+             - 计算文档间的 Jaccard 相似度（字符级 2-gram）
+             - 相似度 > 0.7 的视为重复，保留先出现的
+
+         rerank(self, query: str, docs: list[Document], top_k: int = 3) -> list[Document]
+           功能：对文档进行启发式评分重排序
+           实现：
+             - 先调用 _deduplicate()
+             - 提取查询中的关键词（长度 >= 2 的中文词）
+             - 逐文档打分：
+               a. 标题/关键词匹配：元数据 source 或首行包含查询词 -> +2
+               b. 关键词出现频率：每个关键词在文档中出现一次 -> +0.5
+               c. 文档长度评分：100-500 字符 -> +1, <20 字符 -> -1
+               d. 阈值过滤：min_score = 0.3，低于此分则丢弃
+               e. 兜底保证：至少返回 1 个结果
+             - 按评分降序返回 top_k 个
+
+  模块级单例：
+    reranker = LLMReranker()
+
+  验证步骤：
+    python -c "
+    from rag.reranker import reranker
+    from langchain_core.documents import Document
+
+    docs = [
+        Document(page_content='紫金矿业是一家以黄金和铜为主的大型矿业公司...', metadata={'source': '紫金矿业.pdf'}),
+        Document(page_content='今天的天气很好适合出门游玩...', metadata={'source': '天气.txt'}),
+        Document(page_content='紫金矿业2024年营收突破3000亿元...', metadata={'source': '紫金矿业年报.pdf'}),
+    ]
+
+    results = reranker.rerank('紫金矿业营收情况', docs)
+    for i, doc in enumerate(results):
+        print(f'排名{i+1} (来源:{doc.metadata[\"source\"]}): {doc.page_content[:80]}')
+    "
+    确认期望输出：
+      - 紫金矿业年报 排名第1（与查询高度相关）
+      - 紫金矿业介绍 排名第2（相关但不够精确）
+      - 天气文档 被过滤掉
+
+    边界情况分析：
+      1. 所有文档都不相关时：至少返回 1 个（兜底策略）
+      2. 完全重复的文档：Jaccard dedup 会去除
+      3. 空查询词：所有文档得分为0 + 长度评分
+      4. 超短文档（<20字符）：-1 惩罚
+
+  常见问题：
+    问题：Jaccard 相似度在中文场景的准确性
+      -> 中文没有空格分词，2-gram 字符级比较可能不够准确
+      -> 优化方案：使用 jieba 分词后再计算 Jaccard
+      -> 当前实现简单直接，后续可优化
+
+--------------------------------------------------------------------------------
+
+步骤 3.4：编写 rag/context_assembler.py（上下文组装器）
+--------------------------------------------------------------------------------
+  依赖：无（纯文本处理）
+
+  类列表：
+
+    1. 类 ContextAssembler
+       职责：将检索到的文档按来源分组，在 token 预算内组装为 LLM 上下文
+
+       方法：
+         _group_by_source(self, docs: list[Document]) -> dict[str, list[str]]
+           功能：按文档 metadata["source"] 字段分组
+           返回：{"文件名1": ["分块1", "分块2"], "文件名2": ["分块3"]}
+
+         _sort_groups(self, groups: dict, query: str) -> list[tuple[str, list[str]]]
+           功能：按与查询的相关性排序分组
+           实现：统计每个分组中 query 关键词的出现次数，按出现次数降序排列
+
+         assemble(self, query: str, docs: list[Document], max_tokens: int = 3000) -> str
+           功能：组装上下文文本
+           实现：
+             - 调用 _group_by_source() 分组
+             - 调用 _sort_groups() 排序
+             - 遍历分组，逐个将内容添加到输出中
+             - 预算计算：1 token ≈ 2 个中文字符（粗略估计）
+             - max_tokens * 2 = 字符预算上限
+             - 超出预算时打印截断标记 "..."
+             - 输出格式：
+               --- 文档1：来源文件名 ---
+               内容...
+               --- 文档2：来源文件名 ---
+               内容...
+
+  模块级单例：
+    context_assembler = ContextAssembler()
+
+  验证步骤：
+    python -c "
+    from rag.context_assembler import context_assembler
+    from langchain_core.documents import Document
+
+    docs = [
+        Document(page_content='紫金矿业2024年黄金产量达到68吨...', metadata={'source': '紫金矿业.pdf'}),
+        Document(page_content='全球铜价在2024年上涨了15%...', metadata={'source': '行业报告.pdf'}),
+        Document(page_content='紫金矿业的铜矿储量位居全球前列...', metadata={'source': '紫金矿业.pdf'}),
+    ]
+
+    ctx = context_assembler.assemble('紫金矿业产能分析', docs)
+    print(ctx)
+    "
+    确认输出格式：
+      --- 文档1：紫金矿业.pdf ---
+      紫金矿业2024年黄金产量达到68吨...
+      紫金矿业的铜矿储量位居全球前列...
+      --- 文档2：行业报告.pdf ---
+      全球铜价在2024年上涨了15%...
+
+  边界情况分析：
+      - 空文档列表：返回空字符串或 "暂无相关文档"
+      - 超长文档：单篇文档超过预算时截断处理
+      - 单一来源文档：正确分组但只显示一个文档块
+
+--------------------------------------------------------------------------------
+
+步骤 3.5：编写 rag/rag_service.py（RAG 编排服务） ⭐ RAG 核心
+--------------------------------------------------------------------------------
+  依赖：rag.vector_store, rag.query_rewriter, rag.reranker, rag.context_assembler,
+        model.factory (chat_model), prompt_loader (load_rag_prompts),
+        config_handler (chroma_conf), logger_handler
+
+  类列表：
+
+    1. 类 RagSummarizeService  ⭐ 核心编排类
+       职责：协调整个 RAG 管道（改写 -> 检索 -> 去重重排 -> 过滤 -> 组装 -> 生成）
+
+       属性：
+         _vs: VectorStoreService    # 向量存储服务
+         _rewriter: QueryRewriter   # 查询改写器
+         _reranker: LLMReranker     # 重排序器
+         _assembler: ContextAssembler  # 上下文组装器
+         _model: BaseChatModel      # 回答生成模型
+         _prompt: str               # RAG 回答 Prompt 模板
+
+       方法：
+         __init__(self)
+           功能：初始化所有子组件
+           实现：
+             - self._vs = VectorStoreService()
+             - self._rewriter = query_rewriter
+             - self._reranker = reranker
+             - self._assembler = context_assembler
+             - self._model = chat_model
+             - self._prompt = load_rag_prompts()
+
+         _retrieve(self, query: str, k: int = 5) -> list[Document]
+           功能：单次检索（hybrid_search + rerank）
+           实现：
+             - vs.hybrid_search(query, k=k) -> 候选
+             - reranker.rerank(query, candidates, top_k=3) -> 最终3篇
+           返回：重排序后的 top-3 文档
+
+         retrieve_docs(self, query: str) -> list[Document]
+           功能：多查询融合检索
+           实现：
+             - rewriter.rewrite(query) -> [子查询1, 子查询2, ...]
+             - 并行（或串行）对每个子查询调用 _retrieve()
+             - 按内容前100字符去重
+             - 返回合并去重后的文档列表
+
+         _filter_irrelevant_docs(self, query: str, docs: list[Document]) -> list[Document]
+           功能：逐文档 n-gram 相关性过滤
+           实现：
+             - 从 query 提取 3-4 字符的 n-gram
+             - 对每篇文档检查是否至少有一个 n-gram 出现在文档内容中
+             - 丢弃不包含任何匹配 n-gram 的文档
+
+         _check_context_relevance(self, query: str, docs: list[Document]) -> bool
+           功能：全局上下文相关性检查
+           实现：
+             - 合并所有文档内容
+             - 检查至少一个 3-4 字符 n-gram 匹配
+             - 额外检查股票代码（6位数字）是否存在
+             - 返回 True/False
+
+         summarize(self, query: str) -> str
+           功能：完整 RAG 管道，生成最终回答 ⭐ 主方法
+           实现流程：
+             1. retrieve_docs(query)             # 多查询检索
+             2. _filter_irrelevant_docs(query)    # 逐文档过滤
+             3. 如果无文档：返回 "未找到相关信息"
+             4. _check_context_relevance(query)   # 全局相关性检查
+             5. 如果相关性检查失败：返回 "检索结果与问题不相关"
+             6. context = _assembler.assemble(query, docs)  # 组装上下文
+             7. prompt = self._prompt.format(context=context, question=query)
+             8. result = self._model.invoke(prompt)          # LLM 生成
+             9. 返回 result.content
+
+         summarize_with_context(self, query: str) -> dict
+           功能：同 summarize()，但额外返回检索到的上下文（用于评估）
+           返回：{"answer": str, "contexts": list[str]}
+
+  验证步骤：
+    # 完整 RAG 流程测试（需要有已加载的知识库）
+    python -c "
+    from rag.rag_service import RagSummarizeService
+    rag = RagSummarizeService()
+
+    # 测试1：知识库内的问题
+    answer = rag.summarize('紫金矿业的主营业务是什么')
+    print('=== 回答 ===')
+    print(answer)
+    print()
+
+    # 测试2：带上下文的调用（用于后续评估）
+    result = rag.summarize_with_context('紫金矿业的黄金产量')
+    print('=== 回答 ===')
+    print(result['answer'])
+    print('=== 上下文文档数 ===')
+    print(len(result['contexts']))
+    "
+
+    确认：
+      - 有相关知识库时，返回有引用来源的回答
+      - 无相关知识库时，返回 "未找到相关信息"
+      - summarize_with_context 返回正确的字典结构
+      - 日志中能看到检索 -> 过滤 -> 组装 -> 生成的完整流程
+
+  测试场景规划：
+    场景1：知识库内的问题
+      -> 预期：返回基于文档的回答，有来源引用
+    场景2：知识库外的问题（如 "今天天气怎么样"）
+      -> 预期：返回 "未找到相关信息" 或相关性警告
+    场景3：超长问题（> 500 字）
+      -> 预期：正常处理，n-gram 过滤正常工作
+    场景4：无知识库时
+      -> 预期：返回明确的无相关文档提示
+
+    处理指标：
+      - 检索延迟：应在 2-5 秒内完成
+      - 改写延迟：1-2 秒（有缓存时 < 0.1 秒）
+      - 回答生成：3-10 秒（取决于模型和问题复杂度）
+      - 整体端到端：5-15 秒
+
+================================================================================
+第三阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. 加载 PDF/TXT 文件到知识库
+    2. 输入一个金融相关问题，获得基于知识库的回答
+    3. 回答包含引用来源
+    4. 日志中清晰记录整个 RAG 流程
+  RAG 管道是整个项目的「知识引擎」，后续 Agent 层的知识工具都依赖它。
+================================================================================
+
+
+================================================================================
+第四阶段：Agent 工具层
+================================================================================
+
+步骤 4.1：编写 agent/tools/stock_tools.py（股票数据工具）
+--------------------------------------------------------------------------------
+  依赖：akshare, pandas, logger_handler
+
+  函数列表（均使用 @tool 装饰器）：
+
+    1. stock_quote_realtime(stock_code: str) -> str
+       功能：获取 A 股实时行情
+       实现：
+         - 调用 akshare.stock_zh_a_spot_em() 获取全 A 股行情
+         - 按股票代码或名称匹配（支持 6 位代码如"000683"、"600309"，以及中文名称）
+         - 提取字段：代码、名称、最新价、涨跌幅、涨跌额、成交量、换手率、
+           市盈率-动态、市净率
+         - 格式化为 Markdown 表格返回
+         - 异常处理：代码不存在时返回提示
+       返回：Markdown 格式的行情表格
+
+    2. stock_history(stock_code: str, period: str = "month") -> str
+       功能：获取 A 股历史 K 线数据
+       实现：
+         - 解析 period：day/week/month（判断需要多少条数据）
+         - 调用 akshare.stock_zh_a_hist(symbol, period, start_date, end_date, adjust)
+         - 提取字段：日期、开盘、收盘、最高、最低、成交量、涨跌幅
+         - 返回最近 10 个周期的数据，Markdown 表格格式
+       返回：Markdown 格式的历史行情表格
+
+  验证步骤：
+    python -c "
+    from agent.tools.stock_tools import stock_quote_realtime, stock_history
+    # 测试实时行情（按代码）
+    print(stock_quote_realtime.invoke({'stock_code': '600519'}))
+    # 测试实时行情（按名称）
+    print(stock_quote_realtime.invoke({'stock_code': '贵州茅台'}))
+    # 测试历史行情
+    print(stock_history.invoke({'stock_code': '600519', 'period': 'month'}))
+    "
+    确认：
+      - 返回当前交易日的行情数据
+      - 非交易日返回最近的交易日数据
+      - Markdown 表格格式正确
+
+    常见错误处理：
+      1. 网络不可用 -> AKShare 调用失败 -> 返回友好错误信息
+      2. 股票代码不存在 -> 提示 "未找到相关股票"
+      3. API 限流 -> 返回限流提示，建议稍后重试
+
+--------------------------------------------------------------------------------
+
+步骤 4.2：编写 agent/tools/news_tools.py（新闻工具）
+--------------------------------------------------------------------------------
+  依赖：requests, akshare, os (NEWSAPI_KEY 环境变量), logger_handler
+
+  函数列表（均使用 @tool 装饰器）：
+
+    1. financial_news(query: str, days: int = 7) -> str
+       功能：搜索金融新闻（NewsAPI）
+       实现：
+         - 从环境变量获取 NEWSAPI_KEY
+         - 计算日期范围：今天 - days 天
+         - requests.get("https://newsapi.org/v2/everything", params={
+             q=query, from_date, to_date=今天,
+             language="zh", sortBy="relevancy", pageSize=8, apiKey=...})
+         - 解析返回 JSON，提取 articles 列表
+         - 格式化为列表文本（标题、来源、日期、描述）
+         - 异常处理：API key 未配置时返回提示
+
+    2. flash_news(limit: int = 20) -> str
+       功能：获取 A 股市场快讯（东方财富来源）
+       实现：
+         - 调用 akshare.stock_news_em() 获取最新市场新闻
+         - 取前 limit 条
+         - 格式化为列表文本（标题、时间）
+         - 异常处理：网络错误时返回提示
+
+  验证步骤：
+    python -c "
+    from agent.tools.news_tools import financial_news, flash_news
+    # 测试金融新闻搜索（需要 NEWSAPI_KEY）
+    print(financial_news.invoke({'query': '黄金价格', 'days': 3}))
+    # 测试快讯（不需要额外 API Key）
+    print(flash_news.invoke({'limit': 5}))
+    "
+
+--------------------------------------------------------------------------------
+
+步骤 4.3：编写 agent/tools/search_tools.py（网络搜索工具）
+--------------------------------------------------------------------------------
+  依赖：tavily 库, os (TAVILY_API_KEY), logger_handler
+
+  函数列表（使用 @tool 装饰器）：
+
+    1. web_search(query: str) -> str
+       功能：使用 Tavily API 进行实时网络搜索
+       实现：
+         - 从环境变量获取 TAVILY_API_KEY
+         - 创建 TavilyClient(api_key=...)
+         - 调用 client.search(query, search_depth="basic", max_results=8)
+         - 提取：answer（综合摘要）+ results（各条结果的 url, title, content）
+         - 格式化为结构化文本返回
+         - 异常处理：API key 未配置时返回提示
+
+  验证步骤：
+    python -c "
+    from agent.tools.search_tools import web_search
+    print(web_search.invoke({'query': '2025年中国GDP增速'}))
+    "
+    确认：
+      - 返回包含标题、链接、摘要的搜索结果
+      - 无 TAVILY_API_KEY 时返回友好提示
+
+--------------------------------------------------------------------------------
+
+步骤 4.4：编写 agent/tools/agent_tools.py（Agent 核心知识工具）
+--------------------------------------------------------------------------------
+  依赖：rag.rag_service (RagSummarizeService), logger_handler
+
+  函数列表（均使用 @tool 装饰器）：
+
+  说明：这4个工具是 Agent 直接调用的知识检索工具，底层依赖 RAG 管道
+
+    1. rag_summarize(query: str) -> str
+       功能：从知识库检索并总结信息
+       实现：创建/获取 RagSummarizeService 实例，调用 .summarize(query)
+
+    2. stock_brief(stock_code: str) -> str
+       功能：获取股票概要信息（公司介绍、主营业务等）
+       实现：调用 rag_summarize(f"{stock_code} 公司概况 主营业务")
+
+    3. industry_overview(industry: str) -> str
+       功能：获取行业概况
+       实现：调用 rag_summarize(f"{industry} 行业概况 产业链 竞争格局")
+
+    4. generate_report(topic: str) -> str
+       功能：生成结构化研究报告
+       实现：调用 RagSummarizeService，但使用 report_prompt 模板
+            切换为 powerful（qwen-max）模型生成更高质量的报告
+
+  验证步骤：
+    python -c "
+    from agent.tools.agent_tools import rag_summarize, stock_brief, industry_overview
+    print(rag_summarize.invoke({'query': '紫金矿业的主营业务'}))
+    print(stock_brief.invoke({'stock_code': '600519'}))
+    print(industry_overview.invoke({'industry': '有色金属'}))
+    "
+    确认：
+      - 每个工具都能返回合理回答（依赖知识库中有相关文档）
+      - stock_brief 自动将代码转为公司名进行查询
+      - industry_overview 自动补充行业分析维度
+
+--------------------------------------------------------------------------------
+
+步骤 4.5：编写 agent/tools/middleware.py（Agent 中间件层）
+--------------------------------------------------------------------------------
+  依赖：langgraph (AgentMiddleware 相关类), logger_handler
+
+  类和函数列表：
+
+  说明：中间件运行在 Agent 的每个 ReAct 循环步骤前后，用于监控、质量控制和
+        上下文管理。LangGraph 的中间件通过特定函数签名（wrap_tool_call,
+        before_model, after_model, dynamic_prompt）注册。
+
+    1. 函数 monitor_tool(state, runtime)  — wrap_tool_call 钩子
+       功能：监控并记录每一次工具调用
+       实现：
+         - 记录工具名称、输入参数
+         - 工具执行完成后记录输出前200字符
+         - 通过 logger.info() 输出
+
+    2. 函数 retrieval_quality_guard(state, runtime)  — wrap_tool_call 钩子
+       功能：检索结果质量检查
+       实现：
+         - 检测 RAG 相关工具（rag_summarize, stock_brief, industry_overview）
+         - 检查返回结果是否为空、过短、或包含"未找到"/"not found"
+         - 质量问题 -> logger.warning() 触发警告
+
+    3. 函数 citation_tracker(state, runtime)  — wrap_tool_call 钩子
+       功能：追踪并累积来源引用
+       实现：
+         - 维护模块级字典 _citation_store: dict[str, list[str]]  (thread_id -> citations)
+         - 从 RAG 工具输出中用正则提取引用：r'来源[：:]\s*(.+?)(?:\n|$)'
+         - 按 thread_id 累积
+
+    4. 函数 log_before_model(state, runtime)  — before_model 钩子
+       功能：LLM 调用前记录状态
+       实现：
+         - 记录当前消息数量
+         - 记录最后一条消息的类型和内容前100字符
+         - logger.debug() 输出
+
+    5. 函数 report_prompt_switch(state, runtime)  — dynamic_prompt 钩子
+       功能：当上一步调用了 generate_report 工具时，切换为研报生成 Prompt
+       实现：
+         - 检查最近一次工具调用是否为 generate_report
+         - 是 -> 返回 load_report_prompts() 的内容作为系统提示词
+         - 否 -> 不干预（保留原有 Prompt）
+
+    6. 函数 response_quality_guard(state, runtime)  — after_model 钩子
+       功能：LLM 输出后质量检查
+       实现：
+         - 检测空输出 -> logger.warning()
+         - 检测可疑金融术语（"暴涨"、"保证收益"、"稳赚"等）-> logger.warning()
+         - 检测输出过短（< 20 字符且问题长度 > 20）-> logger.warning()
+
+    7. 函数 build_middleware() -> list
+       功能：构建并返回全部中间件列表
+       返回：按正确顺序排列的中间件列表
+
+  验证步骤：
+    这一步的验证需要配合步骤 5.1 的 ReactAgent 一起进行，单独测试中间件较困难。
+    暂时先完成代码编写，确保语法正确。
+
+    python -c "from agent.tools.middleware import build_middleware; \
+               mw = build_middleware(); \
+               print(f'中间件数量: {len(mw)}')"
+    确认：能成功导入模块且构建出中间件列表
+
+================================================================================
+第四阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. 独立调用每个工具函数并获取正确返回
+    2. stock_quote_realtime 能获取实时行情
+    3. flash_news 能获取市场快讯
+    4. web_search 能进行网络搜索
+    5. agent_tools 的4个工具能调用 RAG 管道
+    6. middleware 模块能构建中间件列表
+  工具层是 Agent 的「手和脚」，每个工具独立可测试。
+================================================================================
+
+
+================================================================================
+第五阶段：Agent 核心
+================================================================================
+
+步骤 5.1：编写 agent/react_agent.py（ReAct Agent 核心）⭐ Agent 核心
+--------------------------------------------------------------------------------
+  依赖：langgraph, langgraph-checkpoint-sqlite, langchain_core,
+        model.factory (chat_model), prompt_loader (load_system_prompts),
+        agent.tools (所有工具), agent.tools.middleware (build_middleware),
+        path_tool, logger_handler
+
+  类列表：
+
+    1. 类 ReactAgent
+       职责：基于 LangGraph 的 ReAct Agent，管理对话、持久化和流式执行
+
+       属性：
+         _model: RoutableChatModel   # 可路由的聊天模型
+         _system_prompt: str         # 系统提示词
+         _tools: list                # 可用工具列表
+         _agent: CompiledGraph       # 编译后的 LangGraph agent
+         _db_path: str               # SQLite 数据库路径
+
+       方法：
+         __init__(self)
+           功能：初始化 Agent 及所有依赖
+           实现：
+             - self._model = chat_model
+             - self._system_prompt = load_system_prompts()
+             - self._tools = [所有 agent_tools + news_tools + search_tools + stock_tools]
+             - self._db_path = get_abs_path("data/conversations.db")
+             - 确保 data/ 目录存在
+             - 构建 LangGraph agent：
+               a. create_react_agent(
+                    model=self._model,
+                    tools=self._tools,
+                    system_prompt=self._system_prompt,
+                    middleware=build_middleware()
+                  )
+               b. 使用 InMemorySaver() 作为检查点（或 SqliteSaver）
+             - 初始化数据库表（threads 表）
+
+         _ensure_db(self) -> None
+           功能：确保 SQLite 数据库和表存在
+           实现：
+             - 使用 sqlite3 连接 data/conversations.db
+             - 创建 threads 表（如果不存在）：
+               CREATE TABLE IF NOT EXISTS threads (
+                 thread_id TEXT PRIMARY KEY,
+                 title TEXT DEFAULT '新对话',
+                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+               )
+             - 启用 WAL 模式（PRAGMA journal_mode=WAL）
+             - 设置 busy_timeout=5000
+
+         create_thread(self) -> str
+           功能：创建新对话线程
+           实现：生成 UUID 作为 thread_id，插入 threads 表，返回 thread_id
+
+         list_threads(self) -> list[dict]
+           功能：列出所有对话线程（按更新时间降序）
+           返回：[{thread_id, title, created_at, updated_at}, ...]
+
+         delete_all_threads(self) -> None
+           功能：删除所有对话线程
+           实现：DROP TABLE threads 后重建
+
+         update_thread_title(self, thread_id: str, title: str) -> None
+           功能：更新对话标题
+           实现：UPDATE threads SET title=?, updated_at=CURRENT_TIMESTAMP
+
+         auto_title(self, thread_id: str, first_message: str) -> None
+           功能：根据首条用户消息自动生成标题
+           实现：截取前 20 个字符 + "..."
+
+         touch_thread(self, thread_id: str) -> None
+           功能：更新对话的最后活跃时间
+           实现：UPDATE threads SET updated_at=CURRENT_TIMESTAMP
+
+         load_messages(self, thread_id: str) -> list
+           功能：加载指定对话线程的历史消息
+           实现：
+             - 从 LangGraph checkpoint 中获取状态
+             - 从 state 提取 messages 并格式化
+             - 返回消息列表供 Streamlit 渲染
+
+         execute_stream(self, query: str, thread_id: str | None = None) -> Iterator
+           功能：流式执行 Agent 对话 ⭐ 主方法
+           参数：
+             query: 用户输入
+             thread_id: 对话线程ID（None 时自动创建）
+           实现：
+             - thread_id 为 None 时调用 create_thread()
+             - 配置 config = {"configurable": {"thread_id": thread_id}}
+             - 调用 self._agent.stream(
+                 {"messages": [HumanMessage(content=query)]},
+                 config=config,
+                 stream_mode="messages"
+               )
+             - 遍历流式输出：
+               a. 如果是 ToolMessage：yield {"type": "tool", "name": tool_name, "content": content}
+               b. 如果是 AIMessage（含 content）：yield {"type": "token", "content": token}
+               c. 如果是 AIMessage（含 tool_calls）：yield {"type": "tool_call", "name": ...}
+             - 异常处理：
+               a. 403/401 -> "API Key 无效或配额已用尽，请检查 DASHSCOPE_API_KEY"
+               b. Timeout -> "请求超时，请稍后重试"
+               c. 通用异常 -> 记录日志并返回友好错误消息
+             - finally：更新 thread 的 updated_at 时间戳
+
+  验证步骤：
+    # 1. 测试 Agent 初始化
+    python -c "
+    from agent.react_agent import ReactAgent
+    agent = ReactAgent()
+    print('Agent 初始化成功')
+    print(f'线程列表: {agent.list_threads()}')
+    "
+
+    # 2. 测试创建线程
+    python -c "
+    from agent.react_agent import ReactAgent
+    agent = ReactAgent()
+    tid = agent.create_thread()
+    print(f'新线程ID: {tid}')
+    agent.auto_title(tid, '紫金矿业的投资价值分析')
+    print(f'线程列表: {agent.list_threads()}')
+    "
+
+    # 3. 测试流式执行（需要完整的工具和模型环境）
+    python -c "
+    from agent.react_agent import ReactAgent
+    agent = ReactAgent()
+    tid = agent.create_thread()
+    for chunk in agent.execute_stream('紫金矿业的主营业务是什么', tid):
+        if chunk['type'] == 'token':
+            print(chunk['content'], end='', flush=True)
+        elif chunk['type'] == 'tool':
+            print(f'\n[工具调用: {chunk[\"name\"]}]')
+    print()
+    "
+
+    确认：
+      - Agent 能正确工具调用和产生回答
+      - 流式输出正常工作
+      - SQLite 数据库被正确创建和管理
+
+  常见问题排查：
+    1. LangGraph 版本不兼容：检查 langgraph==1.2.8 的 API
+    2. SqliteSaver 导入问题：from langgraph.checkpoint.sqlite import SqliteSaver
+    3. 流式模式配置：确认 stream_mode="messages" 是正确参数
+    4. 工具绑定：确认 bind_tools 在 RoutableChatModel 中正确实现
+
+  性能基线：
+    - Agent 初始化：< 1 秒
+    - 首次查询（含工具调用）：5-15 秒
+    - 后续查询（热缓存）：3-10 秒
+    - 流式首 token 延迟：< 2 秒
+
+--------------------------------------------------------------------------------
+
+步骤 5.2：编写 agent/notifier.py（消息推送模块）
+--------------------------------------------------------------------------------
+  依赖：smtplib, email.mime, requests, os (环境变量), logger_handler
+
+  类列表：
+
+    1. 类 EmailNotifier
+       职责：通过 SMTP 发送邮件
+
+       方法：
+         __init__(self)
+           功能：初始化邮件配置（从环境变量动态读取）
+           实现：读取 SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+
+         send(self, subject: str, body: str, to_addr: str = None) -> bool
+           功能：发送邮件
+           实现：
+             - 构造 MIMEMultipart 消息（text/plain + text/html）
+             - 建立 SMTP_SSL 连接
+             - 登录并发送
+             - 异常时记录日志，返回 False
+           返回：发送成功返回 True
+
+         _markdown_to_html(self, md_text: str) -> str
+           功能：简易 Markdown 转 HTML（无需额外依赖）
+           实现：
+             - # -> <h1>, ## -> <h2>, ### -> <h3>
+             - **text** -> <strong>, *text* -> <em>
+             - 换行 -> <br>
+             - 空行 -> <p>
+
+    2. 类 WebhookNotifier
+       职责：通过 Webhook 推送到钉钉/飞书
+
+       方法：
+         __init__(self)
+           功能：从环境变量读取 Webhook URL
+
+         send_dingtalk(self, title: str, content: str) -> bool
+           功能：发送钉钉消息（Markdown 格式）
+           实现：
+             - POST 到 DINGTALK_WEBHOOK_URL
+             - body = {"msgtype": "markdown", "markdown": {"title": title, "text": content}}
+
+         send_feishu(self, title: str, content: str) -> bool
+           功能：发送飞书消息（交互式卡片格式）
+           实现：
+             - POST 到 FEISHU_WEBHOOK_URL
+             - body = {"msg_type": "interactive", "card": {...}}
+
+  验证步骤：
+    python -c "
+    from agent.notifier import EmailNotifier, WebhookNotifier
+    # 测试邮件发送（需要配置 SMTP）
+    notifier = EmailNotifier()
+    notifier.send('测试标题', '测试邮件内容 **加粗**', 'your_email@163.com')
+    print('邮件发送完成')
+    "
+    确认：
+      - 配置正确时能收到邮件
+      - 未配置 SMTP 时给出友好提示
+
+    python -c "
+    from agent.notifier import WebhookNotifier
+    # 测试 Webhook（需要配置 URL）
+    wn = WebhookNotifier()
+    wn.send_dingtalk('测试标题', '## 测试消息\n这是一条测试')
+    print('Webhook 发送完成')
+    "
+
+--------------------------------------------------------------------------------
+
+步骤 5.3：编写 agent/scheduler.py（定时任务调度器）
+--------------------------------------------------------------------------------
+  依赖：apscheduler, agent.notifier, rag.rag_service, agent.tools.news_tools,
+        config_handler (需要加载 scheduler.yaml), logger_handler
+
+  类列表：
+
+    1. 类 ReportScheduler
+       职责：管理定时报告的生成和推送
+
+       属性：
+         _scheduler: BackgroundScheduler  # APScheduler 后台调度器
+         _jobs: list[dict]                # 已注册的任务配置
+         _rag_service: RagSummarizeService
+         _notifiers: dict                 # {"email": EmailNotifier, "dingtalk": WebhookNotifier, ...}
+
+       方法：
+         __init__(self)
+           功能：初始化调度器
+           实现：
+             - self._scheduler = BackgroundScheduler()
+             - self._rag_service = RagSummarizeService()（懒初始化）
+             - self._notifiers = {}
+
+         load_config(self, config_path: str = None) -> list[dict]
+           功能：从 scheduler.yaml 加载任务配置
+           返回：任务配置列表
+
+         start(self) -> None
+           功能：启动调度器，注册所有定时任务
+           实现：
+             - 遍历配置中的每个任务
+             - 根据 type 字段决定处理函数：
+               type == "rag" -> self._generate_rag_report(topic)
+               type == "news" -> self._generate_news_report(topic)
+             - 用 CronTrigger 设置触发时间
+             - self._scheduler.start()
+
+         _generate_rag_report(self, topic: str) -> str
+           功能：生成 RAG 报告
+           实现：rag_service.summarize(f"请生成关于{topic}的研究报告")
+
+         _generate_news_report(self, topic: str) -> str
+           功能：生成新闻摘要报告
+           实现：
+             - flash_news() 获取快讯
+             - financial_news() 获取相关新闻
+             - 用 LLM 总结为结构化报告
+
+         _generate_and_send(self, job: dict) -> None
+           功能：生成报告并通过所有配置的渠道推送
+           实现：
+             - 根据 job["type"] 调用对应的生成函数
+             - 遍历 job["channels"]：
+               "email" -> EmailNotifier.send()
+               "dingtalk" -> WebhookNotifier.send_dingtalk()
+               "feishu" -> WebhookNotifier.send_feishu()
+
+         run_now(self, job_name: str) -> str
+           功能：手动触发指定任务
+           实现：按名查找任务配置，调用 _generate_and_send()
+
+         get_status(self) -> dict
+           功能：获取调度器运行状态
+           返回：{"running": bool, "jobs": [{name, next_run_time, trigger}, ...]}
+
+  验证步骤：
+    python -c "
+    from agent.scheduler import ReportScheduler
+    s = ReportScheduler()
+    print(s.get_status())
+    # 手动触发一次（需要完整的 RAG + 通知环境）
+    # s.run_now('每日市场早报')
+    "
+    确认：
+      - 调度器初始化成功
+      - get_status() 返回正确的运行状态
+      - 手动触发 run_now 能生成并发送报告（需完整环境）
+
+================================================================================
+第五阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. ReactAgent 完整运行 ReAct 循环（思考 -> 调用工具 -> 观察 -> 回答）
+    2. 流式输出正常（用户能看到逐字输出）
+    3. 对话持久化（关闭重启后能恢复历史对话）
+    4. 邮件和 Webhook 推送正常工作（需配置文件）
+    5. 定时任务能在配置的时间自动触发
+  Agent 是整个项目的「大脑」，协调所有工具和模型完成用户请求。
+================================================================================
+
+
+================================================================================
+第六阶段：评估框架
+================================================================================
+
+步骤 6.1：编写 evaluation/test_dataset.py（测试数据集）
+--------------------------------------------------------------------------------
+  依赖：无（纯 Python 数据结构）
+
+  变量和函数列表：
+
+    1. SAMPLE_DATASET: list[dict]
+       功能：内置的 12 条金融领域 Q&A 测试集
+       每条包含：
+         - question: str     # 用户问题
+         - reference: str    # 参考答案（人工编写或从研报提取）
+       覆盖主题：
+         - 紫金矿业（3条）：主营业务、黄金产量、海外矿资产
+         - 贵州茅台（2条）：品牌价值、2024年营收
+         - 阳光电源（2条）：核心产品、海外市场
+         - 青岛啤酒（1条）：品牌历史
+         - 万华化学（1条）：产业链定位
+         - 兆易创新（1条）：主营业务
+         - 博源化工（1条）：公司概况
+         - 有色金属行业（1条）：2025年趋势
+
+    2. load_dataset(path: str = None) -> list[dict]
+       功能：加载测试数据集
+       实现：
+         - 如果 path 不为 None：从外部 JSON 文件加载
+         - 否则返回内置 SAMPLE_DATASET
+
+  验证步骤：
+    python -c "
+    from evaluation.test_dataset import load_dataset
+    ds = load_dataset()
+    print(f'测试集大小: {len(ds)}')
+    for i, item in enumerate(ds):
+        print(f'{i+1}. Q: {item[\"question\"][:50]}...')
+    "
+    确认：输出 12 条测试问题
+
+--------------------------------------------------------------------------------
+
+步骤 6.2：编写 evaluation/eval_runner.py（RAGAS 评估运行器）
+--------------------------------------------------------------------------------
+  依赖：ragas, pandas, rag.rag_service (RagSummarizeService),
+        evaluation.test_dataset (load_dataset), logger_handler
+
+  类和函数列表：
+
+    1. 函数 _ensure_ragas_importable() -> None
+       功能：修复 RAGas 在某些环境下的导入兼容性问题
+       实现：Monkey-patch langchain_community.chat_models.vertexai 模块（如果缺失）
+
+    2. 函数 _adapt_prompts_to_chinese() -> None
+       功能：将 RAGAs 内置 Prompt 的样例翻译为中文（提高中文场景评估准确度）
+       实现：使用 LLM 翻译 RAGAs 的 faithfulness/relevancy/recall 指标中的示例文本
+
+    3. 函数 run_evaluation(
+         dataset: list[dict] = None,
+         metrics: list[str] = None,
+         verbose: bool = False
+       ) -> EvalResult
+       功能：运行完整的 RAGAS 评估
+       实现：
+         - _ensure_ragas_importable()
+         - 加载数据集
+         - 创建 RagSummarizeService
+         - 遍历数据集：
+           a. 对每个问题调用 rag.summarize_with_context(question)
+           b. 收集 answer 和 contexts
+         - 构建 HuggingFace Dataset 对象
+         - 选择评估指标（默认：faithfulness, answer_relevancy, context_recall）
+         - 调用 ragas.evaluate() 执行评估
+         - 返回评估结果（逐条得分 + 聚合得分）
+
+    4. 类 EvalResult (可选，或用 dict)
+       属性：
+         per_question: list[dict]   # 每条问题的各指标得分
+         aggregate: dict            # 聚合得分（平均值）
+
+  验证步骤：
+    python -c "
+    from evaluation.eval_runner import run_evaluation
+    from evaluation.test_dataset import load_dataset
+    ds = load_dataset()[:2]  # 先只测试2条
+    result = run_evaluation(ds, verbose=True)
+    print(result)
+    "
+    确认：
+      - 评估运行成功，无导入错误
+      - 返回逐条和聚合的得分
+      - 得分在 0-1 之间
+
+  已知问题：
+    RAGAs 的依赖较重（datasets, langchain-google-vertexai），可能在初次安装时
+    遇到兼容性问题。如果暂时无法解决，可以先用简单的启发式评估代替：
+      - 关键词命中率
+      - 回答长度合理性
+      - 引用来源正确性
+
+--------------------------------------------------------------------------------
+
+步骤 6.3：编写 run_eval.py（评估 CLI 入口）
+--------------------------------------------------------------------------------
+  依赖：argparse, evaluation.eval_runner (run_evaluation), json
+
+  功能：
+    命令行工具，用于从终端运行 RAGAS 评估
+
+  支持的参数：
+    --dataset PATH      # 外部测试集路径（可选，默认用内置数据集）
+    --metrics LIST      # 评估指标列表（默认：faithfulness,answer_relevancy,context_recall）
+    --output PATH       # 结果输出 JSON 文件路径
+    --verbose           # 详细输出模式
+    --language zh       # 语言（准备中文 Prompt 适配）
+
+  实现流程：
+    1. 解析命令行参数
+    2. 验证指标名称（仅支持 ragas 内置指标）
+    3. 调用 run_evaluation()
+    4. 格式化打印结果（逐条 + 聚合）
+    5. 如果指定了 --output，将结果写入 JSON 文件
+
+  验证步骤：
+    python run_eval.py --metrics "faithfulness,answer_relevancy" --verbose
+    确认：
+      - 评估运行成功
+      - 终端输出清晰的评估结果
+      - 如果指定了 --output，文件被正确生成
+
+================================================================================
+第六阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. 加载内置的 12 条测试数据集
+    2. 运行 RAGAS 评估并获取逐条和聚合得分
+    3. 通过 CLI 命令行运行评估
+  评估框架确保每次修改 RAG 管道后都可以量化验证效果。
+================================================================================
+
+
+================================================================================
+第七阶段：Streamlit 前端（主应用入口）
+================================================================================
+
+步骤 7.1：编写 app.py（Streamlit 主应用）⭐ 最终入口
+--------------------------------------------------------------------------------
+  依赖：streamlit, agent.react_agent (ReactAgent), rag.vector_store,
+        agent.scheduler (ReportScheduler), logger_handler
+
+  文件和函数结构：
+
+  1. 页面配置函数 configure_ui()
+     功能：设置 Streamlit 页面配置和自定义 CSS 样式
+     实现：
+       - st.set_page_config(
+           page_title="金融AI研究助手",
+           page_icon="📈",
+           layout="wide",
+           initial_sidebar_state="expanded"
+         )
+       - st.markdown() 注入自定义 CSS：
+         金融风格配色（深蓝主色调 + 金色强调色）
+         卡片式聊天界面
+         自定义侧边栏样式
+         响应式设计
+
+  2. 会话状态初始化函数 init_session_state()
+     功能：初始化 Streamlit st.session_state 变量
+     实现：
+       - "agent": ReactAgent 实例（只初始化一次）
+       - "vs": VectorStoreService 实例（只初始化一次）
+       - "scheduler": ReportScheduler 实例（只初始化一次）
+       - "messages": list[dict]  # 当前对话的消息列表
+       - "thread_id": str        # 当前对话线程ID
+       - "running": bool         # 是否正在执行
+       - "stop": bool            # 停止信号
+
+  3. 侧边栏渲染函数 render_sidebar()
+     功能：渲染 Streamlit 侧边栏内容
+     实现：
+       a. 知识库状态区：
+          - vs.get_collection_stats() 显示统计信息
+          - "刷新知识库" 按钮 -> vs.load_document()
+          - 显示已加载的文档列表
+       b. 对话管理区：
+          - "新建对话" 按钮 -> agent.create_thread()
+          - "清空对话" 按钮 -> agent.delete_all_threads()
+          - 对话历史列表（可选切换）
+          - "导出对话" 按钮 -> 下载当前对话为 MD 文件
+       c. 定时任务状态区：
+          - 显示调度器运行状态
+          - 手动触发任务按钮
+       d. 示例查询区：
+          - 4个预置示例（紫金矿业、有色金属、贵州茅台、阳光电源）
+
+  4. 示例查询点击处理函数 on_example_click()
+     功能：点击示例查询后将问题填入输入框并触发搜索
+
+  5. 消息渲染函数 render_messages()
+     功能：渲染对话消息列表
+     实现：
+       - 遍历 st.session_state["messages"]
+       - 区分用户消息、助手消息、工具调用消息
+       - 使用 st.chat_message() 渲染
+       - 助手消息支持 Markdown + 引用块（来源标注）
+       - 错误消息用红色样式突出显示
+
+  6. 用户输入处理函数 handle_user_input()
+     功能：处理用户输入，启动 Agent 执行
+     实现：
+       - 获取 st.chat_input() 内容
+       - 添加用户消息到 messages
+       - 调用 _start_run(query)
+
+  7. Agent 执行函数 _start_run(query: str)
+     功能：启动 Agent 后台执行，轮询流式结果
+     实现：
+       - 设置 running = True
+       - 启动后台线程调用 agent.execute_stream()
+       - 主线程轮询（time.sleep(0.5) + st.rerun()）
+       - 每次轮询从队列中获取新 chunk
+       - 根据 chunk type 更新 messages：
+         type == "token" -> 追加到当前助手消息
+         type == "tool"  -> 插入工具调用消息（折叠展示）
+       - 完成后设置 running = False
+       - 更新对话标题（自动生成）
+
+  8. 停止处理函数 handle_stop()
+     功能：停止按钮回调
+     实现：设置 stop = True，终止后台执行
+
+  9. 主函数 main()
+     功能：组织整个 Streamlit 应用流程
+     实现：
+       configure_ui()
+       init_session_state()
+       render_sidebar()
+       render_messages()
+       handle_user_input()
+
+  10. 入口：if __name__ == "__main__": main()
+
+  ⚠️ 关键注意事项：
+    - Streamlit 的 rerun 机制意味着每次交互都会重新执行脚本
+      需要使用 st.session_state 保存需要持久化的状态
+    - 后台线程中的 agent 执行需要线程安全的数据共享（队列）
+    - 错误状态需要优雅处理（API 额度用尽、网络超时等）
+    - 停止按钮需要真正能终止 Agent 执行（不能仅设置标志位）
+
+  验证步骤：
+    streamlit run app.py
+
+    验证以下场景：
+      a. 页面加载：侧边栏显示正确，CSS 样式生效
+      b. 新建对话：点击按钮后创建新线程
+      c. 发送消息：输入问题后看到流式回答
+      d. 工具调用：观察 ReAct 循环中的工具调用展示
+      e. 引用来源：RAG 回答中包含来源引用
+      f. 切换对话：切换线程后消息正确加载
+      g. 知识库刷新：上传新 PDF 后能检索到
+      h. 错误处理：API 额度用尽后显示友好提示
+      i. 停止按钮：执行中点击停止能终止
+      j. 定时任务：调度器状态正确显示
+
+  常见 UI 问题排查：
+    1. Streamlit 重复渲染 -> 检查 @st.cache_resource 使用
+    2. 消息重复 -> 检查 messages 列表的去重逻辑
+    3. 流式输出卡顿 -> 检查 sleep 间隔和数据获取逻辑
+    4. CSS 不生效 -> 检查 CSS 注入位置和作用域
+    5. 侧边栏太宽 -> 检查 layout 配置和 CSS 限制
+
+================================================================================
+第七阶段验证总结：
+  执行完以上步骤后，你应该能够：
+    1. 在浏览器中打开完整的金融AI研究助手
+    2. 进行多轮对话，Agnet 调用工具和 RAG 管道
+    3. 查看知识库状态，刷新文档
+    4. 管理对话线程，导出聊天记录
+    5. 手动触发定时报告
+  这是项目的「最终交付物」，一个功能完整的金融AI研究分析平台。
+================================================================================
+
+
+================================================================================
+附录A：各阶段的依赖关系和推荐开发顺序
+================================================================================
+
+  说明：→ 表示 "依赖于"
+
+  阶段一（配置 + 工具层）
+    ├── path_tool.py          （无依赖，纯标准库）
+    ├── .env.example          （无依赖）
+    ├── config/*.yaml         （无依赖）
+    ├── config_handler.py     → path_tool
+    ├── logger_handler.py     → path_tool
+    ├── file_handler.py       → path_tool
+    ├── prompts/*.txt         （无依赖）
+    └── prompt_loader.py      → path_tool, config_handler
+
+  阶段二（模型层）
+    ├── factory.py            → config_handler
+    └── router.py             → factory
+
+  阶段三（RAG 管道）
+    ├── vector_store.py       → factory, config_handler, file_handler, logger_handler
+    ├── query_rewriter.py     → factory, prompt_loader, logger_handler
+    ├── reranker.py           （无依赖，纯算法）
+    ├── context_assembler.py  （无依赖，纯文本处理）
+    └── rag_service.py        → vector_store, query_rewriter, reranker,
+                                 context_assembler, factory, prompt_loader
+
+  阶段四（Agent 工具层）
+    ├── stock_tools.py        → logger_handler
+    ├── news_tools.py         → logger_handler
+    ├── search_tools.py       → logger_handler
+    ├── agent_tools.py        → rag_service, logger_handler
+    └── middleware.py         → logger_handler
+
+  阶段五（Agent 核心）
+    ├── notifier.py           → logger_handler
+    ├── react_agent.py        → factory, prompt_loader, agent_tools, middleware, path_tool
+    │                           news_tools, search_tools, stock_tools, logger_handler
+    └── scheduler.py          → notifier, rag_service, news_tools, logger_handler
+
+  阶段六（评估）
+    ├── test_dataset.py       （无依赖，纯数据）
+    ├── eval_runner.py        → rag_service, test_dataset, logger_handler
+    └── run_eval.py           → eval_runner
+
+  阶段七（前端）
+    └── app.py                → react_agent, vector_store, scheduler, logger_handler
+
+  推荐开发顺序：
+    1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 → 1.8 → 1.9 → 1.10
+    → 2.1 → 2.2
+    → 3.1 → 3.2 → 3.3 → 3.4 → 3.5
+    → 4.1 → 4.2 → 4.3 → 4.4 → 4.5
+    → 5.1 → 5.2 → 5.3
+    → 6.1 → 6.2 → 6.3
+    → 7.1
+
+  关键依赖链：
+    path_tool 是最底层的依赖（几乎所有模块都间接依赖它用于路径解析）
+    factory.py 是模型层入口（RAG 管道、Agent 都依赖 chart_model 和 get_embed_model）
+    vector_store.py 是 RAG 入口（rag_service 依赖它）
+    rag_service.py 是 Agent 工具入口（agent_tools 依赖它）
+    react_agent.py 是最终组装点（依赖所有工具和中间件）
+
+  每完成一个步骤后，都跑一次验证命令确认无误再继续下一步。
+  如果某个步骤的验证失败，先排查并修复再继续，避免错误累积。
+
+
+================================================================================
+附录B：开发过程中的常见问题和调试策略
+================================================================================
+
+  B.1 导入错误排查顺序
+      1. 确认 .env 文件存在且 DASHSCOPE_API_KEY 已设置
+      2. 确认 pip install -r requirements.txt 完整执行
+      3. 确认 Python 版本 >= 3.12
+      4. 检查 Python 路径（which python）
+      5. 确认当前工作目录是项目根目录
+
+  B.2 DashScope API 问题排查
+      1. 确认 API Key 有效（在阿里云灵积控制台检查）
+      2. 确认模型名称正确（qwen-plus / qwen-max）
+      3. 确认 base_url 后缀是 /compatible-mode/v1
+      4. 测试：curl 直接调用 API 验证连通性
+
+  B.3 ChromaDB 问题排查
+      1. 首次使用会自动创建 chroma_db/ 目录
+      2. 如果加载文档失败，检查 data/ 目录下是否有 PDF/TXT 文件
+      3. 如果检索无结果，检查 embedding 模型是否正常（步骤 2.1 验证）
+      4. ChromaDB 可能需要 sqlite3 >= 3.35.0
+
+  B.4 LangGraph Agent 问题排查
+      1. 检查工具函数是否正确用 @tool 装饰
+      2. 检查 create_react_agent 的 middleware 参数格式
+      3. 确认 LangGraph 版本 >= 1.2.8
+      4. 流式输出格式取决于 stream_mode 参数设置
+
+  B.5 AKShare 问题排查
+      1. AKShare 依赖于网络请求，可能因网络限制导致失败
+      2. 某些接口需要特定时间段才能获取数据（如实时行情需交易时段）
+      3. 检查 AKShare 版本 >= 1.16.0
+
+
+================================================================================
+附录C：每个阶段的开发检查清单
+================================================================================
+
+  阶段一完成标准：
+    □ 所有目录已创建
+    □ 所有 YAML 配置文件可正常解析
+    □ path_tool 能正确返回项目根路径
+    □ logger 能正常记录日志到文件和控制台
+    □ file_handler 能正常计算 MD5、列出文件
+    □ prompt_loader 能正常读取 Prompt 文件
+    □ python-dotenv 能加载 .env 文件
+    □ 所有 import 语句无错误
+
+  阶段二完成标准：
+    □ get_embed_model() 能返回有效的嵌入向量
+    □ chat_model 能进行基本问答
+    □ 模型路由能根据查询内容正确切换
+    □ 流式输出正常
+
+  阶段三完成标准：
+    □ 知识库能加载 PDF/TXT 文件
+    □ hybrid_search 能返回相关文档
+    □ query_rewriter 能改写口语化查询
+    □ reranker 能正确去重和排序
+    □ context_assembler 能按来源分组并限制 token 预算
+    □ RagSummarizeService.summarize() 能端到端生成基于文档的回答
+
+  阶段四完成标准：
+    □ stock_quote_realtime 能返回实时行情
+    □ stock_history 能返回历史K线数据
+    □ financial_news 能搜索金融新闻
+    □ flash_news 能获取市场快讯
+    □ web_search 能进行网络搜索
+    □ agent_tools 的4个工具能调用 RAG
+    □ middleware 中间件列表构建成功
+
+  阶段五完成标准：
+    □ ReactAgent 能创建对话线程
+    □ ReactAgent 能流式执行 ReAct 循环
+    □ SQLite 对话持久化正常
+    □ 邮件通知发送正常（如果配置了 SMTP）
+    □ 定时任务调度器能启动
+
+  阶段六完成标准：
+    □ 测试数据集能正确加载
+    □ RAGAS 评估能正常运行
+    □ 评估结果有实际参考价值
+
+  阶段七完成标准：
+    □ Streamlit 页面能正常打开
+    □ 侧边栏功能完整
+    □ 对话功能正常（发送/接收/工具调用展示）
+    □ 对话管理功能正常（新建/切换/导出）
+    □ 知识库管理功能正常（统计/刷新）
+    □ 定时任务状态显示正常
+
+================================================================================

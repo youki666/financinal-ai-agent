@@ -228,9 +228,11 @@ st.markdown("""
         color: var(--text-primary) !important;
     }
     [data-testid="stChatInput"] textarea:focus {
-        border-color: var(--border-normal) !important;
-        box-shadow: none !important;
-        outline: none !important;
+        # border-color: var(--bg-page) !important;
+        # box-shadow: none !important;
+        # outline: none !important;
+        background-color: #e6f7ff;  /* 替换为你喜欢的颜色 */
+        border-color: #1890ff;      /* 可选：同时修改边框颜色 */
     }
     [data-testid="stChatInput"] textarea::placeholder {
         color: var(--text-hint) !important;
@@ -528,15 +530,15 @@ with st.sidebar:
         st.caption("暂无历史对话")
 
     # 导出按钮（放在线程列表下方）
-    if st.session_state["messages"]:
-        txt = export_chat_history()
-        st.download_button(
-            "导出当前对话",
-            data=txt,
-            file_name=f"research_{st.session_state.get('thread_id', 'chat')}.txt",
-            mime="text/plain",
-            use_container_width=True,
-        )
+    # if st.session_state["messages"]:
+    #     txt = export_chat_history()
+    #     st.download_button(
+    #         "导出当前对话",
+    #         data=txt,
+    #         file_name=f"research_{st.session_state.get('thread_id', 'chat')}.txt",
+    #         mime="text/plain",
+    #         use_container_width=True,
+    #     )
 
     # 调度器控制面板
     st.divider()

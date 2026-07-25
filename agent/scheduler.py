@@ -109,6 +109,7 @@ class ReportScheduler:
             logger.info(f"[Scheduler] │  [RAG] 调用 rag_summarize → {topic[:50]}...")
             try:
                 report = self.rag.summarize(topic)
+                logger.warning(report)
                 logger.info(f"[Scheduler] │  [RAG] 报告生成完成 ({len(report)} 字符)")
             except Exception as e:
                 report = f"报告生成失败: {e}"
@@ -141,7 +142,7 @@ class ReportScheduler:
 
     def _build_news_report(self, topic: str) -> str:
         """获取实时新闻并生成摘要报告"""
-        from agent.tools.news_tools import flash_news, financial_news
+        from agent.tools.news_tools import flash_news,financial_news
 
         parts = []
 
@@ -151,19 +152,22 @@ class ReportScheduler:
             flash = flash_news.invoke({"limit": 15})
             lines = flash.count("\n") if flash else 0
             logger.info(f"[Scheduler] │  [flash_news] 返回 {lines} 行")
-            parts.append(flash)
+
         except Exception as e:
             logger.error(f"[Scheduler] │  [flash_news] 失败: {e}")
-            parts.append("快讯获取失败")
+        else:
+            parts.append(flash)
 
         # 2. 关键词新闻
         try:
             logger.info(f"[Scheduler] │  [financial_news] 检索新闻 (query={topic[:30]}..., days=1)")
             search = financial_news.invoke({"query": topic, "days": 1})
             logger.info(f"[Scheduler] │  [financial_news] 返回 {len(search)} 字符")
-            parts.append(search)
+
         except Exception as e:
             logger.error(f"[Scheduler] │  [financial_news] 失败: {e}")
+        else:
+            parts.append(search)  # 只在成功时添加
 
         raw_news = "\n\n".join(parts)
 
@@ -176,6 +180,7 @@ class ReportScheduler:
                 "你是金融新闻编辑。请将以下新闻内容整理成简洁的快讯摘要"
                 "（5条核心新闻，每条不超过100字），用邮件正文格式输出,标题加粗：\n\n"
                 "{news}"
+
             )
             chain = prompt | self.rag.chain.middle[0] | StrOutputParser()
             logger.info(f"[Scheduler] │  [LLM] 生成新闻摘要 ({min(len(raw_news), 4000)} 字符输入)")
