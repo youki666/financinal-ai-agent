@@ -1,17 +1,18 @@
 """二级市场研究报告 ReAct Agent — 支持 SQLite 对话持久化"""
+import os
 import sqlite3
 import uuid
 from datetime import datetime
+from typing import Literal
 
 from langchain.agents import create_agent
+from langchain.chat_models import init_chat_model
 from langgraph.checkpoint.sqlite import SqliteSaver
 from model.factory import chat_model
 from utils.prompt_loader import load_system_prompts
 from utils.path_tool import get_abs_path
 from utils.logger_handler import logger
-from agent.tools.agent_tools import rag_summarize, stock_brief, industry_overview, generate_report
-from agent.tools.stock_tools import stock_quote_realtime, stock_history
-from agent.tools.news_tools import financial_news, flash_news
+from agent.tools.agent_tools import rag_summarize, stock_quote_realtime, stock_history
 from agent.tools.search_tools import web_search
 from agent.tools.middleware import (
     monitor_tool,
@@ -21,6 +22,60 @@ from agent.tools.middleware import (
     report_prompt_switch,
     response_quality_guard,
 )
+from langchain.agents.middleware import (SummarizationMiddleware,
+                                         ContextEditingMiddleware, ToolCallLimitMiddleware,
+                                         ModelCallLimitMiddleware, PIIMiddleware, ModelFallbackMiddleware,
+                                         LLMToolSelectorMiddleware, ToolRetryMiddleware, ModelRetryMiddleware,
+                                         LLMToolEmulator,
+                                         FilesystemFileSearchMiddleware, AgentMiddleware, ModelRequest
+                                         )
+
+# 2. 定义中间件，在 wrap_model_call 中注入工具
+class DynamicToolMiddleware(AgentMiddleware):
+    def wrap_model_call(self, request: ModelRequest, handler):
+        # 关键：通过 request.override 注入新工具
+        # 将新工具添加到现有工具列表的末尾
+        if request.runtime.context["report"]:
+
+            updated_request = request.override(
+                tools=[*request.tools, stock_quote_realtime,stock_history]
+            )
+            logger.warning("添加工具成功")
+            # 必须调用 handler 并传入更新后的请求
+            return handler(updated_request)
+        return handler(request)
+
+
+dynamic_tool = DynamicToolMiddleware()
+
+from dotenv import load_dotenv
+load_dotenv()
+
+
+
+# 1. 初始化一个用于生成摘要的模型
+
+def _build_summarization_mw() -> SummarizationMiddleware:
+    model = init_chat_model(
+        model="qwen-plus",
+        model_provider="openai",
+        api_key=os.getenv("DASHSCOPE_API_KEY", ""),
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        temperature=0.0,
+    )
+
+    trigger: tuple[Literal["tokens"], int] = ("tokens", 4000)
+    keep: tuple[Literal["messages"], int] = ("messages", 20)
+    # 2. 创建 SummarizationMiddleware 实例
+    return SummarizationMiddleware(
+        model=model,
+        trigger=trigger,
+        keep=keep,
+    )
+
+
+
+
 
 DB_PATH = get_abs_path("data/conversations.db")
 
@@ -37,8 +92,7 @@ class ReactAgent:
         self.agent = create_agent(
             model=chat_model,
             system_prompt=load_system_prompts(),
-            tools=[rag_summarize, stock_brief, industry_overview, generate_report,
-                   stock_quote_realtime, stock_history, financial_news, flash_news,
+            tools=[rag_summarize,
                    web_search],
             middleware=[
                 monitor_tool,
@@ -47,6 +101,9 @@ class ReactAgent:
                 log_before_model,
                 report_prompt_switch,
                 response_quality_guard,
+                _build_summarization_mw(),
+                dynamic_tool
+
             ],
             checkpointer=self.checkpointer,
         )

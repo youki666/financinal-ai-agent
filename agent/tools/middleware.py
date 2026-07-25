@@ -24,6 +24,15 @@ def monitor_tool(
     logger.info(f"[ToolMonitor] 执行工具: {tool_name}")
     logger.info(f"[ToolMonitor] 入参: {tool_args}")
 
+            # # 关键：通过 request.override 注入新工具
+            # # 将新工具添加到现有工具列表的末尾
+            # if request.runtime.context["report"]:
+            #     updated_request = request.override(
+            #         tools=[*request.tools, stock_quote_realtime,stock_history]
+            #     )
+            #     # 必须调用 handler 并传入更新后的请求
+            #     return handler(updated_request)
+
     try:
         result = handler(request)
         # 截断过长结果用于日志
@@ -31,7 +40,7 @@ def monitor_tool(
         logger.info(f"[ToolMonitor] {tool_name} 调用成功, 结果预览: {result_preview}")
 
         # 报告生成场景标记
-        if tool_name == "generate_report":
+        if tool_name == "rag_summarize":
             request.runtime.context["report"] = True
 
         return result
@@ -135,6 +144,7 @@ def log_before_model(
         runtime: Runtime,
 ):
     msg_count = len(state.get("messages", []))
+    logger.warning(state["messages"])
     last_msg = state["messages"][-1] if state.get("messages") else None
     msg_type = type(last_msg).__name__ if last_msg else "N/A"
     logger.info(f"[BeforeModel] 即将调用模型, 消息数={msg_count}, 最后消息类型={msg_type}")
