@@ -181,7 +181,7 @@ class ReportScheduler:
             logger.info(f"[Scheduler] │  [LLM] 生成新闻摘要 ({min(len(raw_news), 4000)} 字符输入)")
             summary = chain.invoke({"news": raw_news[:4000]})
             logger.info(f"[Scheduler] │  [LLM] 摘要完成 ({len(summary)} 字符)")
-            return f"## {topic} 快讯摘要\n\n{summary}\n\n---\n\n### 原始快讯\n\n{raw_news}"
+            return f"## {topic} 快讯摘要\n\n{summary}\n\n"
         except Exception as e:
             logger.error(f"[Scheduler] │  [LLM] 新闻摘要生成失败: {e}")
             return f"## {topic} 快讯\n\n{raw_news}"
