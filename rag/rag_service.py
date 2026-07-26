@@ -163,6 +163,8 @@ class RagSummarizeService:
 
         context_docs = self._filter_irrelevant_docs(query, context_docs)
         context = context_assembler.assemble(query, context_docs)
+        logger.warning(context)
+        logger.warning("=============context==========")
         result = self.chain.invoke({"input": query, "context": context})
         return result
 

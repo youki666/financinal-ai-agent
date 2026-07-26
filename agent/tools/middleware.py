@@ -60,7 +60,7 @@ def retrieval_quality_guard(
     """当 RAG 检索结果为空或过短时记录告警"""
     result = handler(request)
 
-    if request.tool_call["name"] in ("rag_summarize", "stock_brief", "industry_overview"):
+    if request.tool_call["name"] in ("rag_summarize", "stock_quote_realtime", "stock_history"):
         content = ""
         if isinstance(result, ToolMessage):
             content = result.content

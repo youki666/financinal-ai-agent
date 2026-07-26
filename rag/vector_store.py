@@ -49,29 +49,23 @@ class BM25Retriever:
         return [(self.documents[i], scores[i]) for i in top_indices if scores[i] > 0]
 
 
-def rrf_fusion(
-        vector_results: list[Document],
-        bm25_results: list[tuple[Document, float]],
-        k: int = 3,
-        rrf_k: int = 60,
-) -> list[Document]:
-    scores: dict[str, float] = {}
-    all_docs: dict[str, Document] = {}
+def rrf_fusion(vector_results, bm25_results, k=3, rrf_k=60):
+        scores = {}
+        all_docs = {}
 
-    # 处理向量结果
-    for rank, doc in enumerate(vector_results):
-        doc_id = hash(doc.page_content)          # 每次重新计算
-        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
-        all_docs[doc_id] = doc                  # 同时存入
+        for rank, doc in enumerate(vector_results):
+            doc_id = doc.metadata.get("id") or doc.page_content[:50]  # 更可靠
+            scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
+            all_docs[doc_id] = doc
 
-    # 处理 BM25 结果
-    for rank, (doc, _) in enumerate(bm25_results):
-        doc_id = hash(doc.page_content)          # 每次重新计算
-        scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
-        all_docs[doc_id] = doc                  # 同时存入
+        for rank, (doc, _) in enumerate(bm25_results):
+            doc_id = doc.metadata.get("id") or doc.page_content[:50]
+            scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (rrf_k + rank + 1)
+            all_docs[doc_id] = doc
 
-    sorted_ids = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    return [all_docs[doc_id] for doc_id, _ in sorted_ids[:k]]
+        sorted_ids = sorted(scores, key=scores.get, reverse=True)
+        return [all_docs[doc_id] for doc_id in sorted_ids[:k]]
+
 
 
 class VectorStoreService:

@@ -166,7 +166,7 @@ class RoutableChatModel(BaseChatModel):
         model = self._route(messages)
         result_msg = model.invoke(messages, stop=stop)
         return ChatResult(generations=[
-            ChatGeneration(message=result_msg, generation_info={"finish_reason": "stop"})
+            ChatGeneration(message=result_msg, generation_info=None)
         ])
 
     def _stream(
@@ -177,7 +177,7 @@ class RoutableChatModel(BaseChatModel):
         for chunk in model.stream(messages, stop=stop):
             if type(chunk).__name__ == "AIMessageChunk":
                 chunk = ChatGenerationChunk(
-                    message=chunk, generation_info={"finish_reason": "stop"},
+                    message=chunk, generation_info=None,
                 )
             yield chunk
 

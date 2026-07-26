@@ -123,7 +123,7 @@ def stock_quote_realtime(stock_code: str) -> str:
         return "获取行情数据失败，请稍后重试。"
 
 
-@tool(description="获取 A 股历史 K 线数据。入参 stock_code 为股票代码（如 601899），当用户输入股票简称时你需要转换为对应的股票代码（如 紫金矿业、贵州茅台），period 可选 'day'/'week'/'month'，默认 'month'。返回近期开盘价、收盘价、最高、最低、涨跌幅、成交量等。")
+@tool(description="获取 A 股历史 K 线数据。入参 stock_code 为股票代码（如 601899），当用户输入股票简称时你需要转换为对应的股票代码（如 紫金矿业对应 601899），period 可选 'day'/'week'/'month'，默认 'month'。返回近期开盘价、收盘价、最高、最低、涨跌幅、成交量等。")
 def stock_history(stock_code: str, period: str = "month") -> str:
     try:
         code = str(stock_code).strip()

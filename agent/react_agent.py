@@ -74,9 +74,6 @@ def _build_summarization_mw() -> SummarizationMiddleware:
     )
 
 
-
-
-
 DB_PATH = get_abs_path("data/conversations.db")
 
 
@@ -92,7 +89,7 @@ class ReactAgent:
         self.agent = create_agent(
             model=chat_model,
             system_prompt=load_system_prompts(),
-            tools=[rag_summarize,
+            tools=[rag_summarize,stock_quote_realtime, stock_history,
                    web_search],
             middleware=[
                 monitor_tool,
@@ -102,7 +99,12 @@ class ReactAgent:
                 report_prompt_switch,
                 response_quality_guard,
                 _build_summarization_mw(),
-                dynamic_tool
+                # 2. 然后用轻量模型筛选出最相关的3个工具
+                LLMToolSelectorMiddleware(max_tools=3),
+                # 3. 限制模型调用次数，控制成本
+                ModelCallLimitMiddleware(run_limit=10),
+                # 4. 限制工具调用次数，防止死循环
+                ToolCallLimitMiddleware(run_limit=5),
 
             ],
             checkpointer=self.checkpointer,
@@ -248,6 +250,7 @@ class ReactAgent:
                     context={"report": False},
                     config=config,
             ):
+
                 msg_type = type(msg).__name__
 
                 # 工具执行完成 → 显示用户友好的操作提示
@@ -260,8 +263,8 @@ class ReactAgent:
                 # 模型逐 token 输出
                 if msg_type == "AIMessageChunk":
                     # 外层 RoutableChatModel 包装会产生与内层 ChatOpenAI 重复的回调，
-                    # 只保留内层模型（ls_provider != "routablechatmodel"）的 token
-                    if metadata.get("ls_provider") == "routablechatmodel":
+                    # 只保留内层模型（ls_provider != "routable-chat-model"）的 token
+                    if metadata.get("ls_provider") == "routable-chat-model":
                         continue
                     has_tool_calls = getattr(msg, "tool_calls", None)
                     if has_tool_calls:
