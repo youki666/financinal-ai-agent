@@ -193,3 +193,46 @@ chain.invoke({"input": query, "context": assembled_context})
  Phase 4 → 多查询结果合并去重 → 约 5-8 个文档片段
  Phase 5 → 按来源分组 + Token预算(3000) → 结构化上下文字符串
  Phase 6 → Prompt模板填入 {query} + {context} → LLM → 返回用户
+
+
+
+
+
+ 6. 定时任务与多渠道通知系统
+APScheduler + YAML 配置驱动：agent/scheduler.py 基于 BackgroundScheduler（Asia/Shanghai 时区），从 config/scheduler.yaml 加载任务定义，支持 rag（研报生成）和 news（快讯摘要）两种任务类型
+三通道推送：agent/notifier.py 实现了 EmailNotifier（SMTP+SSL，HTML 富文本）、DingTalkNotifier（钉钉机器人 Markdown）、FeishuNotifier（飞书交互式卡片消息），支持多通道同时推送
+预设任务：交易日早盘综述、周五行业周报、盘中快讯摘要（9am/3pm）
+7. 多策略 PDF 解析与并行处理管线
+4 种解析策略：utils/file_handler.py 提供 PyPDF 基础提取、Unstructured hi_res（yolox_quantized 量化模型提速 + 表格/图片元素分离）、fast 模式（chi_sim 中文优化）、原生 partition_pdf 直调
+多进程并行：ProcessPoolExecutor 并行解析 PDF（utils/parallel_pdf_loader.py），支持 tqdm 进度条
+MD5 去重 + 双向一致性校验：rag/vector_store.py 的 load_document2() 在 ChromaDB 和 MD5 存储之间做双向一致性检查，任一方向数据缺失都能自动修复
+元素分类保留：get_file_documents() 将解析结果分类为 texts、tables（保留 HTML 格式）、images，表格数据不丢失
+8. 金融领域专项优化
+交易所前缀自动识别：agent/tools/agent_tools.py 中 stock_quote_realtime() 自动判断 6xxxxx → sh（上证）、其余 → sz（深证），匹配新浪财经 API 规范
+金融术语合规校验：agent/tools/middleware.py 的 QualityGuard 禁止输出中出现「暴涨」「暴跌」「保证收益」「稳赚」「必涨」「必跌」等不合规表述
+股票代码强制匹配：rag/rag_service.py 的 _check_context_relevance() 要求查询中的 6 位股票代码必须在检索上下文中精确命中，否则判定检索失败
+9. 分层容错与优雅降级
+Query Rewrite 降级：LLM 改写失败时自动回退为原始单条查询
+上下文 N-gram 相关性校验：检索结果与查询的 N-gram 重叠度检测（rag/rag_service.py），自动过滤无词汇重叠的文档，保证至少 1 条文档幸存
+7 种流式错误分类诊断：额度耗尽、403 禁止、401 未授权、超时、通用错误等，每种都提供中文诊断提示
+ModelCallLimit(10) / ToolCallLimit(5)：防止 Agent 陷入无限循环
+10. 全链路可观测与评估体系
+引用累积追踪：agent/tools/middleware.py 的 CitationTracker 跨多轮工具调用累积 【来源:...】 引用，供前端可视化展示
+LangSmith 全链路追踪：所有 LangGraph 运行自动上报 LangSmith
+RAGAS 中文适配评估：evaluation/eval_runner.py 将 RAGAS 4 项指标的 Prompt 示例自动翻译为中文，内置 12 题金融 Q&A 测试集（覆盖紫金矿业、茅台、阳光电源等），当前评估结果：faithfulness 0.67、answer_relevancy 0.74、context_recall 0.50
+结构化日志：utils/logger_handler.py 双输出（控制台 INFO + 每日 DEBUG 日志文件），全模块统一 [ComponentName] 前缀规范
+11. 前端体验优化
+品牌化 UI：app.py 中包含约 300 行自定义 CSS，定义了蓝金配色、卡片式布局、聊天气泡、引用块样式、脉冲动画停止按钮
+流式对话 + 实时取消：daemon 线程执行 Agent，主线程 0.5s 轮询刷新，停止按钮立即中断并标记 [已中断]
+示例查询按钮：4 个预设快捷入口（分析紫金矿业、有色金属展望、茅台近期走势、生成阳光电源研报）
+对话导出：当前会话导出为 TXT 文件，含时间戳和角色前缀
+数据库浏览器：viewer.py 独立 Streamlit 应用，可浏览 ChromaDB 集合内容
+12. 工程化实践
+配置/密钥分离：config/*.yaml 存结构配置，.env 存密钥（已 gitignore）
+Streamlit Secrets 降级：model/factory.py 先读环境变量，读不到再读 st.secrets
+ChromaDB 批量插入：500 条/批，避免 OOM
+SQLite WAL + busy_timeout：保障高并发下的稳定性
+模块级自测：vector_store.py、rag_service.py、react_agent.py、prompt_loader.py 均在 __main__ 中内嵌可执行测试用例
+总结：这 12 个维度中，定时任务+多渠道通知（第 6 点）、金融领域专项优化（第 8 点）、分层容错降级（第 9 点）、RAGAS 中文评估体系（第 10 点）是最能体现项目深度和领域壁垒的额外亮点，适合在简历或答辩中重点展开。
+
+

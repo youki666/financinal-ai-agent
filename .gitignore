@@ -1,3 +1,8 @@
 .env
 .env.example
 logs/*
+assets
+.agents
+.claude
+.idea
+result.json

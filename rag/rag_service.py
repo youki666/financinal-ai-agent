@@ -56,6 +56,40 @@ def _check_context_relevance(query: str, context_docs: list[Document]) -> bool:
     return True
 
 
+def _filter_irrelevant_docs(query: str, docs: list[Document]) -> list[Document]:
+    """逐篇过滤：只保留与查询有 n-gram 交集的文档。
+
+    全局 `_check_context_relevance` 检查整体是否有交集，
+    这个函数进一步逐篇过滤，确保每篇文档都至少包含一个查询 n-gram。
+    被过滤掉的文档不会进入上下文，LLM 自然也不会引用它们。
+    """
+    if not docs:
+        return docs
+
+    clean = re.sub(r"[\d\s，,。\.！!？?：:；;、""''（）()a-zA-Z]+", "", query)
+    if len(clean) < 4:
+        return docs
+
+    grams = set()
+    for n in (3, 4):
+        for i in range(len(clean) - n + 1):
+            grams.add(clean[i:i + n])
+
+    kept = []
+    for doc in docs:
+        if any(g in doc.page_content for g in grams):
+            kept.append(doc)
+
+    if len(kept) < len(docs):
+        logger.info(
+            f"[RAG] 逐篇过滤: {len(docs)} → {len(kept)} 篇 "
+            f"(移除 {len(docs) - len(kept)} 篇无关文档)"
+        )
+
+    # 至少保留一篇（极端情况下全局检查通过了但逐篇全挂，留一篇给 LLM）
+    return kept if kept else docs[:1]
+
+
 class RagSummarizeService:
 
     def __init__(self):
@@ -87,39 +121,6 @@ class RagSummarizeService:
 
         return list(all_docs.values())
 
-    def _filter_irrelevant_docs(self, query: str, docs: list[Document]) -> list[Document]:
-        """逐篇过滤：只保留与查询有 n-gram 交集的文档。
-
-        全局 `_check_context_relevance` 检查整体是否有交集，
-        这个函数进一步逐篇过滤，确保每篇文档都至少包含一个查询 n-gram。
-        被过滤掉的文档不会进入上下文，LLM 自然也不会引用它们。
-        """
-        if not docs:
-            return docs
-
-        clean = re.sub(r"[\d\s，,。\.！!？?：:；;、""''（）()a-zA-Z]+", "", query)
-        if len(clean) < 4:
-            return docs
-
-        grams = set()
-        for n in (3, 4):
-            for i in range(len(clean) - n + 1):
-                grams.add(clean[i:i + n])
-
-        kept = []
-        for doc in docs:
-            if any(g in doc.page_content for g in grams):
-                kept.append(doc)
-
-        if len(kept) < len(docs):
-            logger.info(
-                f"[RAG] 逐篇过滤: {len(docs)} → {len(kept)} 篇 "
-                f"(移除 {len(docs) - len(kept)} 篇无关文档)"
-            )
-
-        # 至少保留一篇（极端情况下全局检查通过了但逐篇全挂，留一篇给 LLM）
-        return kept if kept else docs[:1]
-
     def summarize_with_context(self, query: str) -> dict:
         """完整的 RAG 总结流程，同时返回检索到的上下文文档列表（供评估使用）。
 
@@ -140,7 +141,7 @@ class RagSummarizeService:
                 "contexts": [],
             }
 
-        context_docs = self._filter_irrelevant_docs(query, context_docs)
+        context_docs = _filter_irrelevant_docs(query, context_docs)
         context = context_assembler.assemble(query, context_docs)
         result = self.chain.invoke({"input": query, "context": context})
         return {
@@ -161,10 +162,8 @@ class RagSummarizeService:
                 "建议：1) 尝试使用更具体的检索词 2) 上传相关研究报告 PDF 到知识库"
             )
 
-        context_docs = self._filter_irrelevant_docs(query, context_docs)
+        context_docs = _filter_irrelevant_docs(query, context_docs)
         context = context_assembler.assemble(query, context_docs)
-        logger.warning(context)
-        logger.warning("=============context==========")
         result = self.chain.invoke({"input": query, "context": context})
         return result
 
