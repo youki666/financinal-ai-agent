@@ -2,13 +2,15 @@ import os
 from dataclasses import dataclass
 from typing import Any, Iterator, Sequence
 
+from langchain_core.embeddings import Embeddings
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
-from langchain_community.embeddings import DashScopeEmbeddings
+from langchain_community.embeddings import DashScopeEmbeddings, HuggingFaceEmbeddings
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_core.outputs import ChatResult, ChatGeneration, ChatGenerationChunk
 from langchain_core.tools import BaseTool
+
 
 from utils.config_handler import rag_conf
 from utils.logger_handler import logger
@@ -32,10 +34,77 @@ def _get_api_key() -> str:
 # ============================================================
 # Embedding
 # ============================================================
+
+
+# ---- 本地 BGE Embedding 模型 ----
+
+# BGE 模型查询专用 instruction 前缀
+_BGE_QUERY_INSTRUCTION = "为这个句子生成表示以用于检索相关文章："
+
+# 模型路径：项目根目录/embedding/bge-large-zh-v1.5
+_EMBED_MODEL_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "embedding", "bge-large-zh-v1.5",
+)
+
+
+class BGEEmbeddings(Embeddings):
+    """本地 BAAI/bge-large-zh-v1.5，查询时自动加 instruction 前缀"""
+
+    def __init__(self, model_path: str = _EMBED_MODEL_PATH):
+        from sentence_transformers import SentenceTransformer
+        self._model = SentenceTransformer(model_path, device="cpu")  # M1/M2/M3 加速
+
+    def encode(self, sentence, **kwargs):
+        """直接调用内部模型的 encode 方法"""
+        return self._model.encode(sentence, **kwargs)
+
+    # 在类中添加
+    def get_dimension(self):
+        return self._model.get_embedding_dimension()
+
+
+    def embed_documents(self, texts: list[str]):
+        # 文档编码：不加 instruction
+        return self._model.encode(
+            texts, normalize_embeddings=True, show_progress_bar=False,convert_to_numpy=True
+        )
+
+    def embed_query(self, text: str) -> list[float]:
+        # 查询编码：加 BGE instruction 前缀
+        return self._model.encode(
+            _BGE_QUERY_INSTRUCTION + text,
+            normalize_embeddings=True,
+        ).tolist()
+
+
+_embed_model_cache: BGEEmbeddings | None = None
+
+
+def get_embed_model() -> BGEEmbeddings:
+    global _embed_model_cache
+    if _embed_model_cache is None:
+        logger.info(f"[EmbedModel] 加载本地 BGE 模型: {_EMBED_MODEL_PATH}")
+        _embed_model_cache = BGEEmbeddings()
+        logger.info("[EmbedModel] BGE 模型加载完成")
+    return _embed_model_cache
+
+
+# 兼容旧代码的模块级引用（延迟加载，首次访问时才初始化模型）
+class _LazyEmbedModel:
+    def __getattr__(self, name):
+        return getattr(get_embed_model(), name)
+
+    def __call__(self, *args, **kwargs):
+        return get_embed_model()
+
+
+embed_model = _LazyEmbedModel()
+
 _embed_model_cache: DashScopeEmbeddings | None = None
 
 
-def get_embed_model() -> DashScopeEmbeddings:
+def get_embed_model2() -> DashScopeEmbeddings:
     global _embed_model_cache
     if _embed_model_cache is None:
         _embed_model_cache = DashScopeEmbeddings(
@@ -196,7 +265,7 @@ class RoutableChatModel(BaseChatModel):
 _model_configs: dict[str, LLMConfig] = {
     "fast": LLMConfig(
         provider="openai",
-        model_name="qwen-plus",
+        model_name="qwen-turbo",
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,

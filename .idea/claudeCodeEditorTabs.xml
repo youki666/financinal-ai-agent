@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ClaudeCodeEditorTabs">
-    <option name="activeSessionId" value="1e04e46c-1433-4af3-aacd-37bd707d887f" />
+    <option name="activeSessionId" value="2b02e298-ba52-4d08-ae5c-148aa0c3335c" />
     <option name="openSessionIds">
       <list>
         <option value="71c9d92b-493b-4901-b6b8-3767ddd65e11" />
         <option value="230d213a-ef48-49ef-8912-eff36b3ba196" />
         <option value="3d710470-5069-4654-b8c4-d612301a978f" />
-        <option value="1e04e46c-1433-4af3-aacd-37bd707d887f" />
+        <option value="2b02e298-ba52-4d08-ae5c-148aa0c3335c" />
       </list>
     </option>
     <option name="sessionPaths">
       <map>
-        <entry key="1e04e46c-1433-4af3-aacd-37bd707d887f" value="/sessions/070d0754-aba8-40f8-a6df-c60b3cf4eaa1" />
         <entry key="230d213a-ef48-49ef-8912-eff36b3ba196" value="/sessions/e482413f-b933-4098-b2ea-de56450b46d5" />
+        <entry key="2b02e298-ba52-4d08-ae5c-148aa0c3335c" value="/sessions/9030c74e-c76c-41a6-9c0d-b38434d1b557" />
         <entry key="3d710470-5069-4654-b8c4-d612301a978f" value="/sessions/9329b665-0566-4656-bca5-dca2415720f1" />
         <entry key="71c9d92b-493b-4901-b6b8-3767ddd65e11" value="/sessions/62f7f25b-da6f-41c9-8974-49f9604a5d8f" />
       </map>
     </option>
     <option name="sessionTitles">
       <map>
-        <entry key="1e04e46c-1433-4af3-aacd-37bd707d887f" value="1、设计并实现完整的多阶段RAG检索增强生成管道，包含LLM驱动的Query Rewriting（口" />
         <entry key="230d213a-ef48-49ef-8912-eff36b3ba196" value="Settings" />
+        <entry key="2b02e298-ba52-4d08-ae5c-148aa0c3335c" value="python -m rag.vector_store /Users/youki/Downloads/" />
         <entry key="3d710470-5069-4654-b8c4-d612301a978f" value="BM25 索引每次创建时都会创建吗，调用链路讲一下" />
         <entry key="71c9d92b-493b-4901-b6b8-3767ddd65e11" value="uv run python -m rag.rag_service 之后为什么不输出紫金矿业相关内容而" />
       </map>

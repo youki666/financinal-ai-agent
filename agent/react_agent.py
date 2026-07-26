@@ -100,7 +100,7 @@ class ReactAgent:
                 response_quality_guard,
                 _build_summarization_mw(),
                 # 2. 然后用轻量模型筛选出最相关的3个工具
-                LLMToolSelectorMiddleware(max_tools=3),
+                #LLMToolSelectorMiddleware(max_tools=10),
                 # 3. 限制模型调用次数，控制成本
                 ModelCallLimitMiddleware(run_limit=10),
                 # 4. 限制工具调用次数，防止死循环

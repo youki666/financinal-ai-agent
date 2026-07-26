@@ -72,6 +72,39 @@ def process_multiple_pdfs(
                 print(f"⚠️ {filepath} 发生意外错误: {e}")
     return all_docs
 
+# ========== 全量 PDF 处理（文本+表格+图片+VLM） ==========
+
+def process_pdf_full(
+    filepath: str,
+    describe_tables: bool = False,
+    describe_images: bool = False,
+    loader_mode: str = "hybrid",
+) -> list[Document]:
+    """
+    单文件全量处理：文本 + 表格 + 图片 + 可选 VLM 描述。
+    供 ProcessPoolExecutor 子进程调用，每个进程独立加载 env 和模型。
+    """
+    from dotenv import load_dotenv
+    load_dotenv(override=True)
+
+    from utils.file_handler import pdf_loader_hybrid, pdf_loader_with_table_and_image
+
+    if loader_mode == "hybrid":
+        return pdf_loader_hybrid(
+            filepath,
+            describe_tables=describe_tables,
+            describe_images=describe_images,
+        )
+    else:
+        return pdf_loader_with_table_and_image(
+            filepath,
+            extract_images=True,
+            describe_images=describe_images,
+            describe_tables=describe_tables,
+            infer_tables=True,
+        )
+
+
 # ========== 使用示例 ==========
 if __name__ == "__main__":
     # 1. 设置PDF文件夹路径

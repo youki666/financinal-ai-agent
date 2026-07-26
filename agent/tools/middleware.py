@@ -195,3 +195,16 @@ def response_quality_guard(
         logger.warning(f"[ResponseGuard] 输出过短 ({len(content_str)} 字符)")
 
     return None
+
+
+
+@after_model
+def log_after_model(
+        state: AgentState,
+        runtime: Runtime,
+):
+    msg_count = len(state.get("messages", []))
+    last_msg = state["messages"][-1] if state.get("messages") else None
+    msg_type = type(last_msg).__name__ if last_msg else "N/A"
+    logger.info(f"[after_model] 调用模型结束, 消息数={msg_count}, 最后消息类型={msg_type}")
+    return None

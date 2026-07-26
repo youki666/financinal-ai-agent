@@ -12,7 +12,7 @@ from rank_bm25 import BM25Okapi
 from model.factory import get_embed_model
 
 from utils.config_handler import chroma_conf
-from utils.file_handler import txt_loader, pdf_loader, listdir_with_allowed_type, get_file_md5_hex, pdf_loader2
+from utils.file_handler import txt_loader, pdf_loader, listdir_with_allowed_type, get_file_md5_hex, pdf_loader2, pdf_loader_with_table_and_image, table_html_to_text, pdf_loader_hybrid
 from utils.logger_handler import logger
 from utils.path_tool import get_abs_path
 
@@ -163,37 +163,32 @@ class VectorStoreService:
 
         def get_file_documents(read_path: str) -> list[Document]:
             if read_path.endswith("pdf"):
-                # 2. 加载文档，获取元素列表
-                elements: list[Document] = pdf_loader2(read_path)
-                # 3. 分类处理不同类型的元素
-                texts = []
-                tables = []
-                images = []
+                import os as _os
+                loader_mode = _os.getenv("PDF_LOADER_MODE", "hybrid")
 
-                for elem in elements:
-                    category = elem.metadata.get("category")
+                if loader_mode == "hybrid":
+                    # VLM_DESCRIBE=1 一键开启表格+图片描述
+                    vlm_describe = _os.getenv("VLM_DESCRIBE", "1").lower() in ("true", "1", "yes")
+                    describe_tables = vlm_describe or _os.getenv("DESCRIBE_PDF_TABLES", "false").lower() == "true"
+                    describe_images = vlm_describe or _os.getenv("DESCRIBE_PDF_IMAGES", "false").lower() == "true"
+                    return pdf_loader_hybrid(
+                        read_path,
+                        describe_tables=describe_tables,
+                        describe_images=describe_images,
+                    )
 
-                    if category == "Title" or category == "Paragraph":
-                        texts.append(elem.page_content)
-                    elif category == "Table":
-                        # 表格数据可以以多种形式获取
-                        table_text = elem.page_content  # 纯文本形式
-                        table_html = elem.metadata.get("text_as_html")  # HTML格式，结构更好[reference:2]
-                        tables.append({
-                            "text": table_text,
-                            "html": table_html,
-                            "metadata": elem.metadata
-                        })
-                    elif category == "Image":
-                        # 图片元素包含路径等信息
-                        images.append({
-                            "image_path": elem.metadata.get("image_path"),
-                            "page_number": elem.metadata.get("page_number"),
-                            "metadata": elem.metadata
-                        })
-
-                print(f"提取到 {len(texts)} 个文本块, {len(tables)} 个表格, {len(images)} 张图片")
-                return elements
+                vlm_describe = _os.getenv("VLM_DESCRIBE", "").lower() in ("true", "1", "yes")
+                extract_images = _os.getenv("EXTRACT_PDF_IMAGES", "false").lower() == "true"
+                describe_images = vlm_describe or _os.getenv("DESCRIBE_PDF_IMAGES", "false").lower() == "true"
+                describe_tables = vlm_describe or _os.getenv("DESCRIBE_PDF_TABLES", "false").lower() == "true"
+                infer_tables = _os.getenv("INFER_TABLE_STRUCTURE", "true").lower() == "true"
+                return pdf_loader_with_table_and_image(
+                    read_path,
+                    extract_images=extract_images,
+                    describe_images=describe_images,
+                    describe_tables=describe_tables,
+                    infer_tables=infer_tables,
+                )
             if read_path.endswith("txt"):
                 return txt_loader(read_path)
             # if read_path.endswith("pdf"):
@@ -218,6 +213,7 @@ class VectorStoreService:
 
             try:
                 documents: list[Document] = get_file_documents(path)
+                # print(documents)
                 if not documents:
                     logger.warning(f"[加载知识库] {path} 内没有有效文本内容，跳过")
                     continue
@@ -232,8 +228,8 @@ class VectorStoreService:
                 split_document: list[Document] = self.spliter.split_documents(documents)
                 # 过滤掉 UnstructuredPDFLoader 产出的复杂 metadata（如 coordinates）
                 split_document = filter_complex_metadata(split_document)
-                logger.warning(split_document)
-                logger.info("==========split_document==============")
+                logger.info(split_document)
+                logger.info("logger.info(split_document======")
                 if not split_document:
                     logger.warning(f"[加载知识库] {path} 分片后没有有效文本内容，跳过")
                     continue
@@ -250,8 +246,8 @@ class VectorStoreService:
             self._rebuild_bm25_index()
 
     def load_document2(self, max_workers: int = 4):
-        """并行加载文档：ProcessPoolExecutor 并行解析 PDF → 分片 → 过滤 metadata → 批量入库（MD5去重）"""
-        from utils.parallel_pdf_loader import process_single_pdf
+        """并行全量加载：ProcessPoolExecutor 并行解析 PDF（文本+表格+图片+VLM）→ 汇总分片 → 分批入库(500/批) → MD5↔ChromaDB 双向校验"""
+        from utils.parallel_pdf_loader import process_pdf_full
 
         md5_store_path = get_abs_path(chroma_conf["md5_hex_store"])
         md5_lock = Lock()
@@ -347,14 +343,19 @@ class VectorStoreService:
                     all_documents.extend(docs)
 
         if new_pdfs:
+            import os as _os
+            loader_mode = _os.getenv("PDF_LOADER_MODE", "hybrid")
+            vlm_describe = _os.getenv("VLM_DESCRIBE", "").lower() in ("true", "1", "yes")
+            describe_tables = vlm_describe or _os.getenv("DESCRIBE_PDF_TABLES", "false").lower() == "true"
+            describe_images = vlm_describe or _os.getenv("DESCRIBE_PDF_IMAGES", "false").lower() == "true"
+
             with ProcessPoolExecutor(max_workers=max_workers) as executor:
                 futures = {
                     executor.submit(
-                        process_single_pdf, p,
-                        strategy="fast",
-                        languages=["chi_sim"],
-                        extract_images=False,
-                        ocr_mode="never",
+                        process_pdf_full, p,
+                        describe_tables=describe_tables,
+                        describe_images=describe_images,
+                        loader_mode=loader_mode,
                     ): p
                     for p in new_pdfs
                 }
