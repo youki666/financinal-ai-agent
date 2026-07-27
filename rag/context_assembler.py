@@ -15,14 +15,16 @@ class ContextAssembler:
     def max_chars(self) -> int:
         return int(self.max_tokens * self._chars_per_token)
 
-    def _group_by_source(self, documents: list[Document]) -> dict[str, list[Document]]:
+    @staticmethod
+    def _group_by_source(documents: list[Document]) -> dict[str, list[Document]]:
         groups: dict[str, list[Document]] = defaultdict(list)
         for doc in documents:
             source = doc.metadata.get("source", "未知来源")
             groups[source].append(doc)
         return dict(groups)
 
-    def _sort_groups(self, groups: dict[str, list[Document]], query: str) -> list[tuple[str, list[Document]]]:
+    @staticmethod
+    def _sort_groups(groups: dict[str, list[Document]], query: str) -> list[tuple[str, list[Document]]]:
         """按与查询的相关性排序来源组"""
         def group_score(item):
             source, docs = item[0], item[1]

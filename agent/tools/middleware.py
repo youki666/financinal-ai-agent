@@ -1,7 +1,8 @@
 """增强中间件：查询重写监控、检索质量监控、引用溯源、兜底策略"""
 from typing import Callable
 from langchain.agents import AgentState
-from langchain.agents.middleware import wrap_tool_call, before_model, dynamic_prompt, after_model, ModelRequest, ModelResponse
+from langchain.agents.middleware import wrap_tool_call, before_model, dynamic_prompt, after_model, ModelRequest, \
+    ModelResponse, wrap_model_call
 from langchain.tools.tool_node import ToolCallRequest
 from langchain_core.messages import ToolMessage, AIMessage
 from langgraph.runtime import Runtime
@@ -48,6 +49,29 @@ def monitor_tool(
         logger.error(f"[ToolMonitor] {tool_name} 调用失败: {e}", exc_info=True)
         raise e
 
+
+cache = {}
+
+
+@wrap_model_call
+def cache_middleware(request, handler):
+    cache_key = str(request.messages)  # 简化示例
+    if cache_key in cache:
+        print("返回缓存结果")
+        return cache[cache_key]
+
+    response = handler(request)
+    cache[cache_key] = response
+    return response
+
+@wrap_model_call
+def filter_middleware(request, handler):
+    response = handler(request)
+    # 假设对响应内容进行过滤
+    if "敏感词" in response.content:
+        # 可以修改响应或抛出异常
+        response.content = "内容被过滤"
+    return response
 
 # ============================================================
 # 2. 检索质量监控中间件
