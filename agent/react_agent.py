@@ -21,6 +21,7 @@ from agent.tools.middleware import (
     log_before_model,
     report_prompt_switch,
     response_quality_guard,
+    hitl_guard,
 )
 from langchain.agents.middleware import (SummarizationMiddleware,
                                          ContextEditingMiddleware, ToolCallLimitMiddleware,
@@ -85,6 +86,7 @@ class ReactAgent:
         self.conn.execute("PRAGMA busy_timeout=5000")
         self._init_threads_table()
         self.checkpointer = SqliteSaver(self.conn)
+        self._hitl_context: dict | None = None  # 存储待审批的 HITL 信息
 
         self.agent = create_agent(
             model=chat_model,
@@ -92,6 +94,7 @@ class ReactAgent:
             tools=[rag_summarize,stock_quote_realtime, stock_history,
                    web_search],
             middleware=[
+                hitl_guard,          # 最先触发，需要审批的工具在此暂停
                 monitor_tool,
                 retrieval_quality_guard,
                 citation_tracker,
@@ -278,7 +281,19 @@ class ReactAgent:
                     if content:
                         yield content
 
-            self.touch_thread(thread_id)
+            # 检查是否因 interrupt() 暂停（HITL）
+            graph_state = self.agent.get_state(config)
+            if graph_state and getattr(graph_state, "interrupts", None):
+                first_interrupt = graph_state.interrupts[0]
+                self._hitl_context = {
+                    "thread_id": thread_id,
+                    "interrupt_id": getattr(first_interrupt, "id", None),
+                    "tool": first_interrupt.value.get("tool", ""),
+                    "args": first_interrupt.value.get("args", {}),
+                }
+                logger.info(f"[HITL] 已暂停, 等待审批: {first_interrupt.value.get('tool')}")
+            else:
+                self.touch_thread(thread_id)
         except Exception as e:
             err = str(e) or type(e).__name__
             logger.error(f"[Agent] 执行异常: {type(e).__name__}: {err}", exc_info=True)
@@ -305,6 +320,95 @@ class ReactAgent:
                 yield "模型响应超时，请稍后重试。如持续出现此问题，可尝试切换为 qwen-turbo 等更轻量的模型。"
             else:
                 yield f"分析过程中出现错误，请稍后重试。如需帮助，请检查运行日志。({type(e).__name__})"
+
+    # ============================================================
+    # HITL 人工介入方法
+    # ============================================================
+    def has_pending_interrupt(self) -> bool:
+        return self._hitl_context is not None
+
+    def get_interrupt_info(self) -> dict | None:
+        return self._hitl_context
+
+    def resume_stream(self, approved: bool):
+        """恢复被 interrupt() 暂停的流，传入人工决策"""
+        if not self._hitl_context:
+            yield "没有待处理的审批请求。"
+            return
+
+        thread_id = self._hitl_context["thread_id"]
+        interrupt_id = self._hitl_context.get("interrupt_id")
+        config = {"configurable": {"thread_id": thread_id}}
+        self._hitl_context = None
+
+        _tool_labels = {
+            "rag_summarize": "正在检索研究报告...",
+            "stock_brief": "正在查询股票概况...",
+            "industry_overview": "正在分析行业数据...",
+            "generate_report": "正在生成研究报告...",
+            "stock_quote_realtime": "正在获取实时行情...",
+            "stock_history": "正在查询历史走势...",
+            "financial_news": "正在检索最新财经新闻...",
+            "flash_news": "正在获取市场实时快讯...",
+            "web_search": "正在联网搜索最新信息...",
+        }
+
+        def _tool_label(tool_name: str) -> str:
+            return _tool_labels.get(tool_name, f"正在执行 {tool_name}...")
+
+        try:
+            from langgraph.types import Command
+            # 有 interrupt_id 时用 dict 形式，避免多个 pending interrupt 报错
+            resume_value = {"approved": approved}
+            cmd = Command(
+                resume={interrupt_id: resume_value} if interrupt_id else resume_value,
+            )
+            for msg, metadata in self.agent.stream(
+                    cmd,
+                    stream_mode="messages",
+                    context={"report": False},
+                    config=config,
+            ):
+                msg_type = type(msg).__name__
+
+                if msg_type == "ToolMessage":
+                    tool_name = getattr(msg, "name", "") or ""
+                    label = _tool_label(tool_name)
+                    yield f"\n> {label}\n\n"
+                    continue
+
+                if msg_type == "AIMessageChunk":
+                    if metadata.get("ls_provider") == "routable-chat-model":
+                        continue
+                    has_tool_calls = getattr(msg, "tool_calls", None)
+                    if has_tool_calls:
+                        continue
+                    content = getattr(msg, "content", "")
+                    if isinstance(content, list):
+                        content = "".join(
+                            p.get("text", "") if isinstance(p, dict) else str(p)
+                            for p in content
+                        )
+                    if content:
+                        yield content
+
+            self.touch_thread(thread_id)
+
+            # 再次检查是否有新的 interrupt（如连续多次调用同一工具）
+            graph_state = self.agent.get_state(config)
+            if graph_state and getattr(graph_state, "interrupts", None):
+                first = graph_state.interrupts[0]
+                self._hitl_context = {
+                    "thread_id": thread_id,
+                    "interrupt_id": getattr(first, "id", None),
+                    "tool": first.value.get("tool", ""),
+                    "args": first.value.get("args", {}),
+                }
+
+        except Exception as e:
+            err = str(e) or type(e).__name__
+            logger.error(f"[Agent] 恢复执行异常: {type(e).__name__}: {err}", exc_info=True)
+            yield f"恢复执行时出错（{err[:100]}）。"
 
     def close(self):
         self.conn.close()

@@ -416,6 +416,10 @@ def _start_run(query: str):
     st.session_state["_run_chunks"] = []
 
     agent = st.session_state["agent"]
+    # 清除上一轮可能残留的 HITL 状态
+    if agent.has_pending_interrupt():
+        agent._hitl_context = None
+    st.session_state["_hitl_pending"] = False
     thread_id = st.session_state["thread_id"]
     chunks_list: list[str] = st.session_state["_run_chunks"]
 
@@ -430,6 +434,27 @@ def _start_run(query: str):
     thread = threading.Thread(target=_agent_thread, daemon=True)
     st.session_state["_run_thread"] = thread
     st.session_state["_run_active"] = True
+    thread.start()
+    st.rerun()
+
+
+def _resume_run(approved: bool):
+    """HITL 审批后恢复 Agent 执行"""
+    agent = st.session_state["agent"]
+    chunks_list: list[str] = st.session_state["_run_chunks"]
+
+    def _agent_thread():
+        try:
+            for chunk in agent.resume_stream(approved=approved):
+                chunks_list.append(chunk)
+        except Exception as e:
+            err = str(e) or type(e).__name__
+            chunks_list.append(f"\n分析过程中出现错误（{err}）。请稍后重试或尝试其他查询。\n")
+
+    thread = threading.Thread(target=_agent_thread, daemon=True)
+    st.session_state["_run_thread"] = thread
+    st.session_state["_run_active"] = True
+    st.session_state["_hitl_pending"] = False
     thread.start()
     st.rerun()
 
@@ -494,6 +519,8 @@ with st.sidebar:
         if st.button("＋ 新对话", use_container_width=True, type="primary"):
             st.session_state["thread_id"] = None
             st.session_state["messages"] = []
+            st.session_state["_hitl_pending"] = False
+            st.session_state["agent"]._hitl_context = None
             clear_citations()
             st.rerun()
     with c_clear:
@@ -650,7 +677,7 @@ if pending_query and not st.session_state["_run_active"]:
 # --- 输入 ---
 prompt = st.chat_input("请输入您的研究问题...")
 
-if prompt and not st.session_state["_run_active"]:
+if prompt and not st.session_state["_run_active"] and not st.session_state.get("_hitl_pending"):
     _start_run(prompt)
 
 # --- 活跃运行中的展示 ---
@@ -691,21 +718,50 @@ if st.session_state["_run_active"]:
     # 检查后台线程是否完成
     thread = st.session_state.get("_run_thread")
     if thread and not thread.is_alive():
-        full = re.sub(
-            r'\n?> 正在.{2,20}\.\.\.\n\n?', '',
-            "".join(st.session_state["_run_chunks"]),
-        ).strip()
-        if full:
-            citations = get_citations()
-            st.session_state["messages"].append({
-                "role": "assistant",
-                "content": full,
-                "sources": citations if citations else [],
-            })
-        st.session_state["_run_active"] = False
-        st.session_state["_run_chunks"] = []
-        st.rerun()
+        agent = st.session_state["agent"]
+        if agent.has_pending_interrupt():
+            # HITL 中断：不保存最终结果，等待人工审批
+            st.session_state["_run_active"] = False
+            st.session_state["_hitl_pending"] = True
+            st.rerun()
+        else:
+            # 正常完成：保存结果
+            full = re.sub(
+                r'\n?> 正在.{2,20}\.\.\.\n\n?', '',
+                "".join(st.session_state["_run_chunks"]),
+            ).strip()
+            if full:
+                citations = get_citations()
+                st.session_state["messages"].append({
+                    "role": "assistant",
+                    "content": full,
+                    "sources": citations if citations else [],
+                })
+            st.session_state["_run_active"] = False
+            st.session_state["_run_chunks"] = []
+            st.rerun()
     else:
         # 仍在运行，短暂等待后通过 st.rerun() 刷新——实现实时交互
         time.sleep(0.5)
         st.rerun()
+
+# --- HITL 人工审批 UI ---
+if st.session_state.get("_hitl_pending"):
+    agent = st.session_state["agent"]
+    info = agent.get_interrupt_info()
+    if info:
+        st.warning(f"工具 `{info['tool']}` 需要人工审批")
+        # with st.expander("查看调用参数", expanded=False):
+        #     st.json(info.get("args", {}))
+        col_approve, col_reject = st.columns(2)
+        with col_approve:
+            if st.button("批准", use_container_width=True, type="primary", key="hitl_approve"):
+                _resume_run(approved=True)
+        with col_reject:
+            if st.button("拒绝", use_container_width=True, key="hitl_reject"):
+                _resume_run(approved=False)
+
+    # HITL 待审批时也显示已生成的部分内容
+    current_text = "".join(st.session_state["_run_chunks"])
+    if current_text.strip():
+        st.chat_message("assistant").markdown(current_text)

@@ -1,4 +1,4 @@
-"""增强中间件：查询重写监控、检索质量监控、引用溯源、兜底策略"""
+"""增强中间件：查询重写监控、检索质量监控、引用溯源、兜底策略、HITL 人工介入"""
 from typing import Callable
 from langchain.agents import AgentState
 from langchain.agents.middleware import wrap_tool_call, before_model, dynamic_prompt, after_model, ModelRequest, \
@@ -6,9 +6,15 @@ from langchain.agents.middleware import wrap_tool_call, before_model, dynamic_pr
 from langchain.tools.tool_node import ToolCallRequest
 from langchain_core.messages import ToolMessage, AIMessage
 from langgraph.runtime import Runtime
-from langgraph.types import Command
+from langgraph.types import Command, interrupt
 from utils.logger_handler import logger
 from utils.prompt_loader import load_system_prompts, load_report_prompts
+
+
+# ============================================================
+# 需要人工审批的工具集合（可按需修改）
+# ============================================================
+HITL_TOOLS: set[str] = {"web_search"}
 
 
 # ============================================================
@@ -168,7 +174,6 @@ def log_before_model(
         runtime: Runtime,
 ):
     msg_count = len(state.get("messages", []))
-    logger.warning(state["messages"])
     last_msg = state["messages"][-1] if state.get("messages") else None
     msg_type = type(last_msg).__name__ if last_msg else "N/A"
     logger.info(f"[BeforeModel] 即将调用模型, 消息数={msg_count}, 最后消息类型={msg_type}")
@@ -232,3 +237,40 @@ def log_after_model(
     msg_type = type(last_msg).__name__ if last_msg else "N/A"
     logger.info(f"[after_model] 调用模型结束, 消息数={msg_count}, 最后消息类型={msg_type}")
     return None
+
+
+# ============================================================
+# 7. HITL 人工介入中间件
+# ============================================================
+@wrap_tool_call
+def hitl_guard(
+        request: ToolCallRequest,
+        handler: Callable[[ToolCallRequest], ToolMessage | Command],
+) -> ToolMessage | Command:
+    """对特定工具在执行前暂停，等待人工审批"""
+    tool_name = request.tool_call["name"]
+
+    if tool_name not in HITL_TOOLS:
+        return handler(request)
+
+    tool_args = request.tool_call.get("args", {})
+    logger.info(f"[HITL] 暂停等待审批: {tool_name}({tool_args})")
+
+    # interrupt() 会暂停整个 Graph，将决策权交给外部
+    decision = interrupt({
+        "type": "hitl",
+        "tool": tool_name,
+        "args": tool_args,
+        "message": f"即将调用工具: {tool_name}",
+    })
+
+    # 恢复后 decision 是 Command(resume=...) 传入的值
+    if isinstance(decision, dict) and not decision.get("approved", True):
+        logger.info(f"[HITL] 用户拒绝: {tool_name}")
+        return ToolMessage(
+            content=f"[人工介入] 工具 {tool_name} 调用已被用户拒绝。",
+            tool_call_id=request.tool_call["id"],
+        )
+
+    logger.info(f"[HITL] 用户批准: {tool_name}")
+    return handler(request)
