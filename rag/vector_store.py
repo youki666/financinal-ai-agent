@@ -9,7 +9,7 @@ from langchain_core.documents import Document
 from langchain_community.vectorstores.utils import filter_complex_metadata
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from rank_bm25 import BM25Okapi
-from model.factory import get_embed_model
+from model.factory import get_embed_model2
 
 from utils.config_handler import chroma_conf
 from utils.file_handler import txt_loader, pdf_loader, listdir_with_allowed_type, get_file_md5_hex, pdf_loader2, pdf_loader_with_table_and_image, table_html_to_text, pdf_loader_hybrid
@@ -73,7 +73,7 @@ class VectorStoreService:
     def __init__(self):
         self.vectors = Chroma(
             collection_name=chroma_conf["collection_name"],
-            embedding_function=get_embed_model(),
+            embedding_function=get_embed_model2(),
             persist_directory=chroma_conf["persist_directory"],
         )
 

@@ -6,3 +6,4 @@ assets
 .claude
 .idea
 result.json
+./embedding
