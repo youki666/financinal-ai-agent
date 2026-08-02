@@ -44,6 +44,7 @@ unstructured==0.18.32
 unstructured-client==0.42.12
 onnxruntime==1.23.2
 tqdm==4.68.3
+pi_heif
 
 # --- 通用工具 ---
 requests==2.34.2
