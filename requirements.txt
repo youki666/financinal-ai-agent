@@ -32,7 +32,7 @@ python-dotenv==1.2.2
 PyYAML==6.0.2
 
 # --- 数据处理 ---
-numpy==1.26.4
+numpy
 pandas==2.3.3
 matplotlib==3.10.9
 Pillow==11.3.0
@@ -42,13 +42,13 @@ rank-bm25==0.2.2
 
 # --- PDF 解析 ---
 pypdf==5.1.0
-pdfplumber==0.11.10
+pdfplumber==0.10.4
 pdfminer.six==20260107
 
 # --- Unstructured (PDF 表格/图片提取, hi_res 策略) ---
 unstructured==0.18.32
 unstructured-client==0.42.12
-onnxruntime==1.23.2
+onnxruntime>=1.24.1
 tqdm==4.68.3
 
 # --- 通用工具 ---
