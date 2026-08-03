@@ -1,3 +1,12 @@
+# app.py 第一行（必须是文件开头）
+import subprocess
+import sys
+
+# 强制安装 opencv-python-headless（覆盖任何已有的 opencv-python）
+subprocess.check_call([
+    sys.executable, "-m", "pip", "install",
+    "--upgrade", "--force-reinstall", "opencv-python-headless"
+])
 """二级市场研究报告分析平台"""
 import os
 import re
