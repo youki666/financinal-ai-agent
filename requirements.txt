@@ -48,3 +48,5 @@ pi_heif
 
 # --- 通用工具 ---
 requests==2.34.2
+
+unstructured-inference>=0.7.0
