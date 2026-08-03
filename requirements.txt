@@ -28,7 +28,7 @@ python-dotenv==1.2.2
 PyYAML==6.0.2
 
 # --- 数据处理 ---
-numpy
+numpy>=2.1,<2.3
 pandas==2.3.3
 matplotlib==3.10.9
 
@@ -48,6 +48,3 @@ pi_heif
 
 # --- 通用工具 ---
 requests==2.34.2
-
-unstructured-inference>=0.7.0
-opencv-python-headless>=4.8.0

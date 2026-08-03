@@ -1,11 +1,3 @@
-import subprocess
-import sys
-
-# 强制安装 opencv-python-headless（覆盖已有 opencv-python），不触碰 numpy
-subprocess.check_call([
-    sys.executable, "-m", "pip", "install",
-    "--ignore-installed", "--no-deps", "opencv-python-headless"
-])
 """二级市场研究报告分析平台"""
 import os
 import re
