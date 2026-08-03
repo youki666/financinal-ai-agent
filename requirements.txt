@@ -50,3 +50,4 @@ pi_heif
 requests==2.34.2
 
 unstructured-inference>=0.7.0
+opencv-python-headless>=4.8.0
