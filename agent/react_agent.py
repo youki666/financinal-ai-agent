@@ -7,6 +7,17 @@ from langchain.agents import create_agent
 from langgraph.checkpoint.sqlite import SqliteSaver
 from model.factory import chat_model
 from utils.prompt_loader import load_system_prompts
+
+def _build_system_prompt():
+    """注入当前日期到系统提示词，确保模型能正确回答日期相关问题"""
+    base = load_system_prompts()
+    now = datetime.now()
+    weekday = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][now.weekday()]
+    date_line = (
+        f"\n### 当前时间\n今天是 {now.year}年{now.month}月{now.day}日 {weekday}。"
+        f"回答日期、星期、时间相关问题时，以此时间为准。\n"
+    )
+    return date_line + base
 from utils.path_tool import get_abs_path
 from utils.logger_handler import logger
 from agent.tools.agent_tools import rag_summarize, stock_brief, industry_overview, generate_report
@@ -36,7 +47,7 @@ class ReactAgent:
 
         self.agent = create_agent(
             model=chat_model,
-            system_prompt=load_system_prompts(),
+            system_prompt=_build_system_prompt(),
             tools=[rag_summarize, stock_brief, industry_overview, generate_report,
                    stock_quote_realtime, stock_history, financial_news, flash_news,
                    web_search],

@@ -38,7 +38,7 @@ def get_embed_model() -> DashScopeEmbeddings:
 model_configs: dict[str, LLMConfig] = {
     "fast": LLMConfig(
         provider="openai",
-        model_name="qwen-plus",
+        model_name="qwen-max",
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,
@@ -46,7 +46,7 @@ model_configs: dict[str, LLMConfig] = {
     ),
     "standard": LLMConfig(
         provider="openai",
-        model_name="qwen-plus",
+        model_name="qwen-max",
         api_key=os.getenv("DASHSCOPE_API_KEY", ""),
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         temperature=0.0,
